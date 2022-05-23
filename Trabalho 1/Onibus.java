@@ -117,11 +117,11 @@ public class Onibus
 
     }
 
-    public void printPassageiro()
+    public void addPassageiro()
     {
         Scanner sc = new Scanner(System.in);
         int x, y;
-        this.getAssentos();
+        this.printAssentos();
 
         System.out.println("Informe a fileira: ");
         x = sc.nextInt();
