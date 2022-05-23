@@ -1,4 +1,7 @@
 import java.util.Calendar;
+import java.util.Scanner;
+
+
 
 public class Onibus
 {
@@ -6,7 +9,7 @@ public class Onibus
     private int ano;
     private String marca;
     private double km;
-    //private locAssentos;      CRIAR COM ARRAYLIST
+    private int assentos[][] = new int[10][4];
 
     private static int year = Calendar.getInstance().get(Calendar.YEAR); // Ano atual
     
@@ -27,6 +30,12 @@ public class Onibus
             this.km = km;
         else    
             System.out.println("Quilometragem invalida!");
+
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 4; j++)
+                assentos[i][j] = 0;
+
+        
     }
 
     public Onibus(int ano, double km)
@@ -87,5 +96,40 @@ public class Onibus
     public double getKm()
     {
         return this.km;
+    }
+
+    // Assentos
+
+    public void printAssentos()
+    {
+        System.out.print("\t 1 2   3 4\n");
+        for(int i = 0; i < 10; i++)
+        {
+            System.out.print((i+1)+"\t");
+            for(int j = 0; j < 4; j++)
+            {
+                if(j == 2)
+                    System.out.print("  ");
+                System.out.print(" "+assentos[i][j]);
+            }
+            System.out.print("\n");
+        }
+
+    }
+
+    public void printPassageiro()
+    {
+        Scanner sc = new Scanner(System.in);
+        int x, y;
+        this.getAssentos();
+
+        System.out.println("Informe a fileira: ");
+        x = sc.nextInt();
+        x--;
+        System.out.println("Informe a cadeira: ");
+        y = sc.nextInt();
+        y--;
+
+        assentos[x][y] = 1;
     }
 }
