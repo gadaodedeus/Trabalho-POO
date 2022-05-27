@@ -2,12 +2,12 @@ public class Passageiro
 {
     private int doc;
     private String nome;
-    private int dataNascimento;
+    private Date dataNascimento;
     private String end;
 
     // Construtores
 
-    public Passageiro(int doc, String nome, int dataNascimento, String end)
+    public Passageiro(int doc, String nome, int diaNasc, int mesNasc, int anoNasc, String end)
     {
         if(doc > 0)
             this.doc = doc;
@@ -16,10 +16,7 @@ public class Passageiro
 
         this.nome = nome;
 
-        if(dataNascimento/100000 >= 1)
-            this.dataNascimento = dataNascimento
-        else
-            System.out.println("Data invalida!");
+        this.dataNascimento = new Date(diaNasc, mesNasc, anoNasc);
 
         this.end = end;
     }
@@ -27,24 +24,21 @@ public class Passageiro
     public Passageiro(int doc, String nome)
     {
         if(doc > 0)
-            this(doc, nome, 0, "");
+            this(doc, nome, 0, 0, 0, "");
         else   
             System.out.println("Dados inalidos!");
     }
 
     public Passageiro(int doc, String nome)
     {
-        this(0, "", 0, "");
+        this(0, "", 0, 0, 0, "");
     }
 
     // Setters
 
-    public void setData(int dataNascimento)
+    public void setData(int diaNasc, int mesNasc, int anoNasc)
     {
-        if(dataNascimento/100000 >= 1)
-            this.dataNascimento = dataNascimento;
-        else
-            System.out.println("Data invalida!");
+        this.dataNascimento = new Date(diaNasc, mesNasc, anoNasc);
     }
 
     public void setNome(String nome)
@@ -77,7 +71,7 @@ public class Passageiro
         return this.nome;
     }
 
-    public int getDataNascimento(int dataNascimento)
+    public Date getDataNascimento(int dataNascimento)
     {
         return this.dataNascimento;
     }
