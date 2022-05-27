@@ -47,6 +47,11 @@ public class Date{
         this(0, 0, 0, 0, 0);
     }
 
+    public Date(int dia, int mes, int ano)
+    {
+        this(dia, mes, ano, 0, 0);
+    }
+
     //Setters
     public void setDia(int dia) {
         if(dia < 1 || dia > 31){
