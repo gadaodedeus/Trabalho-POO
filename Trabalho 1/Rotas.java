@@ -6,10 +6,11 @@ public class Cidades
     private Date saida;
     private Date chegada;
     private Onibus bus;
+    private double valor;
     
     // Construtores
 
-    public Cidades(String o, String p, String d, int sDia, int sMes, int sAno, int sHora, int cMin, int cDia, int cMes, int cAno, int cHora, int cMin, Onibus bus)
+    public Cidades(String o, String p, String d, int sDia, int sMes, int sAno, int sHora, int sMin, int cDia, int cMes, int cAno, int cHora, int cMin, Onibus bus, double valor)
     {
         this.origem = o;
         
@@ -24,11 +25,14 @@ public class Cidades
         this.chegada = new Date(cDia, cMes, cAno, cHora, cMin);
 
         this.bus = bus;
+
+        if(valor > 0)
+            this.valor = valor;
     }
     
     public Cidades()
     {
-        this("","","");
+        this("","","", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0.0);
     }
     
     // Setters
@@ -63,6 +67,12 @@ public class Cidades
         this.bus = bus;
     }
 
+    public void setValor(double valor)
+    {
+        if(valor > 0)
+            this.valor = valor;
+    }
+
     // Getters
     
     public String getOrigem()
@@ -93,6 +103,11 @@ public class Cidades
     public Onibus getBus()
     {
         return this.bus;
+    }
+
+    public double getValor()
+    {
+        return this.valor;
     }
 
 }
