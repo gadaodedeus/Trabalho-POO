@@ -132,4 +132,19 @@ public class Onibus
 
         assentos[x][y] = 1;
     }
+    
+        public void retirarPassegeiro()
+    {
+        Scanner sc = new Scanner(System.in);
+        int x,y;
+        
+        System.out.println("Digite a fileira: ");
+        x= sc.nextInt();
+        x--;
+        System.out.println("Digite a cadeira: ");
+        y= sc.nextInt();
+        y--;
+        
+        assentos[x][y]=0;
+    }
 }
