@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Calendar;
-Scanner input = new Scanner(System.in);
+import java.util.ArrayList;
+
 
 // Criar ArrayLists de Motorista, Onibus, Rotas e Passageiros
 
@@ -8,11 +9,18 @@ private static int year = Calendar.getInstance().get(Calendar.YEAR); // Ano atua
 
 public class Main{
 
+    Scanner input = new Scanner(System.in);
+    ArrayList<Motorista> listMoto = new ArrayList();
+    ArrayList<Onibus> listBus = new ArrayList();
+    ArrayList<Rotas> listRotas = new ArrayList();
+    ArrayList<Passageiro> listPass = new ArrayList();
+
     private static void programaAdm(){
         System.out.println("Olá, você está executando como administrador!");
         int op;
         do
         {
+
             System.out.println("----------------------------------");
             System.out.println("-----------MENU DE OPCOES---------");
             System.out.println("----------------------------------");
@@ -23,7 +31,7 @@ public class Main{
             System.out.println("5- Remover motorista");
             System.out.println("6- Remover rota");
             System.out.println("7- Mostrar onibus");
-            System.out.println("8- Mostrar moristas");
+            System.out.println("8- Mostrar motoristas");
             System.out.println("9- Mostrar rotas");
             System.out.println("10- Buscar rota");
             System.out.println("11- Comprar passagem");
@@ -37,20 +45,19 @@ public class Main{
             {
                 Onibus temp = new Obibus();
                 temp = this.CriarOnibus();
-                // Add arraylist
+                listBus.add(temp);
             }
 
             if(op == 2)
             {
                 Motorista temp = new Motorista();
                 temp = this.CriarMoto();
-                // Add arraylist
+                listMoto.add(temp);
             }
 
 
 
-
-            if(op == 10)
+            /*if(op == 10)
             {
                 int i;
                 String orig, dest;
@@ -60,15 +67,15 @@ public class Main{
                 System.out.println("Informe sua cidade de destino");
                 dest = input.nextString();
 
-                while(i < /*Array.length*/)
+                while(i < Array.length)
                 {
-                    if(/*rota.origem == orig && rota.destino == dest*/)
-                        /*rota.printInfo;*/
+                    if(/*rota.origem == orig && rota.destino == dest)
+                        /*rota.printInfo;
                     i++;
                 }
-            }
+            }*/
 
-        }while(op);
+        }while(op == 0);
         
     }
 
