@@ -1,0 +1,108 @@
+import java.util.Calendar;
+
+public class Date{
+    //Atributos
+    private int dia;
+    private int mes;
+    private int ano;
+    private int hora;
+    private int min;
+
+    private static int year = Calendar.getInstance().get(Calendar.YEAR); // Ano atual
+
+    //Construtores
+    public Date(int dia, int mes, int ano, int hora, int min) {
+        if(dia < 1 || dia > 31){
+            System.out.println("Dia inválido, digite novamente!");
+        }else{
+            this.dia = dia;
+        }
+
+        if(mes < 1 || mes > 12){
+            System.out.println("Mês inválido, digite novamente!");
+        }else{
+            this.mes = mes;
+        }
+
+        if(ano < year){
+            System.out.println("Ano inválido, digite novamente!");
+        }else{
+            this.ano = ano;
+        }
+
+        if(hora < 0 || hora > 23){
+            System.out.println("Hora inválida, digite novamente!");
+        }else{
+            this.hora = hora;
+        }
+
+        if(min < 0 || min > 59){
+            System.out.println("Minuto inválido, digite novamente!");
+        }else{
+            this.min = min;
+        }
+    }
+    
+    public Date(){
+        this(0, 0, 0, 0, 0);
+    }
+
+    public Date(int dia, int mes, int ano)
+    {
+        this(dia, mes, ano, 0, 0);
+    }
+
+    //Setters
+    public void setDia(int dia) {
+        if(dia < 1 || dia > 31){
+            System.out.println("Dia inválido, digite novamente!");
+        }else{
+            this.dia = dia;
+        }
+    }
+    public void setMes(int mes) {
+        if(mes < 1 || mes > 12){
+            System.out.println("Mês inválido, digite novamente!");
+        }else{
+            this.mes = mes;
+        }
+    }
+    public void setAno(int ano) {
+        if(ano < year){
+            System.out.println("Ano inválido, digite novamente!");
+        }else{
+            this.ano = ano;
+        }
+    }
+    public void setHora(int hora) {
+        if(hora < 0 || hora > 23){
+            System.out.println("Hora inválida, digite novamente!");
+        }else{
+            this.hora = hora;
+        }
+    }
+    public void setMin(int min) {
+        if(min < 0 || min > 59){
+            System.out.println("Minuto inválido, digite novamente!");
+        }else{
+            this.min = min;
+        }
+    }
+
+    //Getters
+    public int getDia() {
+        return dia;
+    }
+    public int getMin() {
+        return min;
+    }
+    public int getHora() {
+        return hora;
+    }
+    public int getAno() {
+        return ano;
+    }
+    public int getMes() {
+        return mes;
+    }
+}
