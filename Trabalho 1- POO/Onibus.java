@@ -10,7 +10,7 @@ public class Onibus
     private String marca;
     private double km;
     private int assentos[][] = new int[10][4];
-    private Motorista motorista = new Motorista();
+    public Motorista motorista = new Motorista();
 
     private static int year = Calendar.getInstance().get(Calendar.YEAR); // Ano atual
     
@@ -108,7 +108,7 @@ public class Onibus
 
     public Motorista getMotorista()
     {
-        return this.motorista
+        return this.motorista;
     }
 
     // Assentos

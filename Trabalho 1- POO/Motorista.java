@@ -10,7 +10,7 @@ public class Motorista
   {
     this.nome = nome;
     this.numero_cnh = numero_cnh;
-    this dataAdmissao = new Date(diaAdmissao, mesAdmissao, anoAdmissao);
+    this.dataAdmissao = new Date(diaAdmissao, mesAdmissao, anoAdmissao);
   }
   
   public Motorista(String nome, int numero_cnh)
@@ -19,7 +19,7 @@ public class Motorista
   }
   public Motorista ()
   {
-    this ("", 0, 0)
+    this("", 0, 0, 0, 0);
   }
   
 
@@ -48,8 +48,16 @@ public class Motorista
   {
     return this.numero_cnh;
   }
-  public Date getAdmissao ()
+  public int getdiaAdmissao ()
   {
-    return this.admissao;
+    return this.dataAdmissao.getDia();
+  }
+  public int getmesAdmissao ()
+  {
+    return this.dataAdmissao.getMes();
+  }
+  public int getanoAdmissao ()
+  {
+    return this.dataAdmissao.getAno();
   }
 }

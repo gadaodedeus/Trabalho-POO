@@ -1,4 +1,4 @@
-public class Cidades
+public class Rotas
 {
     private String origem;
     private String parada;
@@ -10,7 +10,7 @@ public class Cidades
     
     // Construtores
 
-    public Cidades(String o, String p, String d, int sDia, int sMes, int sAno, int sHora, int sMin, int cDia, int cMes, int cAno, int cHora, int cMin, Onibus bus, double valor)
+    public Rotas(String o, String p, String d, int sDia, int sMes, int sAno, int sHora, int sMin, int cDia, int cMes, int cAno, int cHora, int cMin, Onibus bus, double valor)
     {
         this.origem = o;
         
@@ -30,7 +30,7 @@ public class Cidades
             this.valor = valor;
     }
     
-    public Cidades()
+    public Rotas()
     {
         this("","","", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0.0);
     }
@@ -52,14 +52,14 @@ public class Cidades
         this.destino = d;
     }
 
-    public void setSaida(int sDia, int sMes, int sAno, int sHora)
+    public void setSaida(int sDia, int sMes, int sAno, int sHora, int sMin)
     {
-        this.saida = new Date(sDia, sMes, sAno, sHora);
+        this.saida = new Date(sDia, sMes, sAno, sHora, sMin);
     }
 
-    public void setChegada(int cDia, int cMes, int cAno, int cHora)
+    public void setChegada(int cDia, int cMes, int cAno, int cHora, int cMin)
     {
-        this.chegada = new Date(cDia, cMes, cAno, cHora);
+        this.chegada = new Date(cDia, cMes, cAno, cHora, cMin);
     }
 
     public void setOnibus(Onibus bus)
@@ -114,13 +114,13 @@ public class Cidades
 
     public void printInfo()
     {
-        System.out.printl("---------------------------------");
-        System.out.printl("Rota: "+this.origem+" -> "+this.parada+" -> "+this.origem);
-        System.out.printl("Saida: "+this.saida.getHora+":"+this.saida.getMin+"\tChegada: "+this.chegada.getHora+":"+this.chegada.getMin);
-        System.out.printl("Motorista: "+this.motorista.getNome);
-        System.out.printl("Valor da passagem: R$"+this.valor);
+        System.out.println("---------------------------------");
+        System.out.println("Rota: "+this.origem+" -> "+this.parada+" -> "+this.origem);
+        System.out.println("Saida: "+this.saida.getHora()+":"+this.saida.getMin()+"\tChegada: "+this.chegada.getHora()+":"+this.chegada.getMin());
+        System.out.println("Motorista: "+this.bus.motorista.getNome());
+        System.out.println("Valor da passagem: R$"+this.valor);
         this.bus.printAssentos();
-        System.out.printl("---------------------------------");
+        System.out.println("---------------------------------");
     }
 
 }

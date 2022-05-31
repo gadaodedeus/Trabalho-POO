@@ -5,15 +5,16 @@ import java.util.ArrayList;
 
 // Criar ArrayLists de Motorista, Onibus, Rotas e Passageiros
 
-private static int year = Calendar.getInstance().get(Calendar.YEAR); // Ano atual
+
 
 public class Main{
-
-    Scanner input = new Scanner(System.in);
-    ArrayList<Motorista> listMoto = new ArrayList();
-    ArrayList<Onibus> listBus = new ArrayList();
-    ArrayList<Rotas> listRotas = new ArrayList();
-    ArrayList<Passageiro> listPass = new ArrayList();
+    
+    private static int year = Calendar.getInstance().get(Calendar.YEAR); // Ano atual
+    static Scanner input = new Scanner(System.in);
+    static ArrayList<Motorista> listMoto = new ArrayList<>();
+    static ArrayList<Onibus> listBus = new ArrayList<>();
+    static ArrayList<Rotas> listRotas = new ArrayList<>();
+    ArrayList<Passageiro> listPass = new ArrayList<>();
 
     private static void programaAdm(){
         System.out.println("Olá, você está executando como administrador!");
@@ -33,8 +34,6 @@ public class Main{
             System.out.println("7- Mostrar onibus");
             System.out.println("8- Mostrar motoristas");
             System.out.println("9- Mostrar rotas");
-            System.out.println("10- Buscar rota");
-            System.out.println("11- Comprar passagem");
             System.out.println("0- Sair");
             System.out.println("----------------------------------");
             op = input.nextInt();
@@ -43,20 +42,36 @@ public class Main{
 
             if(op == 1)
             {
-                Onibus temp = new Obibus();
-                temp = this.CriarOnibus();
+                Onibus temp = new Onibus();
+                temp = CriarOnibus();
                 listBus.add(temp);
             }
 
             if(op == 2)
             {
                 Motorista temp = new Motorista();
-                temp = this.CriarMoto();
+                temp = CriarMoto();
                 listMoto.add(temp);
+            }
+
+            if(op == 3)
+            {
+                Rotas temp = new Rotas();
+                temp = CriarRota();
+                listRotas.add(temp);
             }
 
 
 
+          
+        }while(op != 0);
+        
+    }
+
+    private static void programaCli(){
+        System.out.println("Olá, você está executando como cliente!");  
+        
+        
             /*if(op == 10)
             {
                 int i;
@@ -75,12 +90,6 @@ public class Main{
                 }
             }*/
 
-        }while(op == 0);
-        
-    }
-
-    private static void programaCli(){
-        System.out.println("Olá, você está executando como cliente!");
 
     }
 
@@ -104,22 +113,26 @@ public class Main{
 
     private static Onibus CriarOnibus()
     {
-        private String modelo;
-        private int ano;
-        private String marca;
-        private double km;
+        String modelo;
+        int ano;
+        String marca;
+        double km;
 
+        input.nextLine();
         System.out.println("Informe o modelo do onibus");
-        modelo = input.nextString();
+        modelo = input.toString();
+        input.nextLine();
 
         do
         {
             System.out.println("Informe o ano do onibus");
             ano = input.nextInt();
-        }while(ano < (year-20);
-        )
+        }while(ano < (year-20));
+        
+        input.nextLine();
         System.out.println("Informe a marca do onibus");
-        marca = input.nextString();
+        marca = input.toString();
+        input.nextLine();
 
         do 
         {
@@ -129,21 +142,23 @@ public class Main{
 
         // Motorista
         
-        Onibus temp = new Obibus(modelo, ano, marca, km);
+        Onibus temp = new Onibus(modelo, ano, marca, km, null);
 
         return temp;
     }
 
     private static Motorista CriarMoto()
     {
-        private String nome;
-        private int numero_cnh;
-        private int dia;
-        private int mes;
-        private int ano;
+        String nome;
+        int numero_cnh;
+        int dia;
+        int mes;
+        int ano;
 
+        input.nextLine();
         System.out.println("Informe o nome do motorista");
-        nome = input.nextString();
+        nome = input.toString();
+        input.nextLine();
 
         do
         {
@@ -171,6 +186,86 @@ public class Main{
 
         Motorista temp = new Motorista(nome, numero_cnh, dia, mes, ano);
         return temp;
+    }
+
+    private static Rotas CriarRota()
+    {
+        String origem;
+        String parada;
+        String destino;
+        double valor;
+        int diaS;
+        int diaC;
+        int mes;
+        int ano;
+        int hora_chegada;
+        int min_chegada;
+        int hora_saida;
+        int min_saida;
+
+        input.nextLine();
+        System.out.println("Digite a cidade de origem");
+        origem=input.toString();
+        input.nextLine();
+
+       
+        System.out.println("Digite a cidade de parada");
+        parada=input.toString();
+        input.nextLine();
+
+        
+        System.out.println("Digite a cidade de destino");
+        destino=input.toString();
+        input.nextLine();
+
+        do{
+            System.out.println("Digite a hora de saida: ");
+            hora_saida=input.nextInt();
+        }while(hora_saida<0 || hora_saida>23);
+
+        do{
+            System.out.println("Digite o minuto de saida: ");
+            min_saida=input.nextInt();
+        }while(min_saida<0 || min_saida>60);
+
+        do{
+            System.out.println("Digite a hora de chegada: ");
+            hora_chegada=input.nextInt();
+        }while(hora_chegada<0 || hora_chegada>23);
+
+        do{
+            System.out.println("Digite o minuto de chegada: ");
+            min_chegada=input.nextInt();
+        }while(min_chegada<0 || min_chegada>60);
+
+        do{
+            System.out.println("Digite o dia de saida: ");
+            diaS=input.nextInt();
+        }while(diaS<1 || diaS>31);
+
+        do{
+            System.out.println("Digite o dia de chegada: ");
+            diaC=input.nextInt();
+        }while(diaC<1 || diaC>31 && diaC<diaS);
+
+        do{
+            System.out.println("Digite o mes da viagem: ");
+            mes=input.nextInt();
+        }while(mes<1 || mes>12);
+
+        do{
+            System.out.println("Digite o ano da viagem: ");
+            ano=input.nextInt();
+        }while(ano<year);
+
+        do{
+            System.out.println("Digite o valor da passagem: ");
+            valor=input.nextDouble();
+        }while(valor<=0.0);
+
+        Rotas temp = new Rotas(origem, parada, destino, diaS, mes, ano, hora_saida, min_saida, diaC, mes, ano, hora_chegada, min_chegada, null, valor);
+        return temp;
+
     }
 
     

@@ -21,18 +21,13 @@ public class Passageiro
         this.end = end;
     }
 
-    public Passageiro(int doc, String nome)
+    /*public Passageiro(int doc, String nome)
     {
         if(doc > 0)
             this(doc, nome, 0, 0, 0, "");
         else   
             System.out.println("Dados inalidos!");
-    }
-
-    public Passageiro(int doc, String nome)
-    {
-        this(0, "", 0, 0, 0, "");
-    }
+    }*/
 
     // Setters
 
