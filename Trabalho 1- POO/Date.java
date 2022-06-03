@@ -24,7 +24,7 @@ public class Date{
             this.mes = mes;
         }
 
-        if(ano < year){
+        if(ano > year){
             System.out.println("Ano inválido, digite novamente!");
         }else{
             this.ano = ano;

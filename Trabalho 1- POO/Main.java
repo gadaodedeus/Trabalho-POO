@@ -42,27 +42,89 @@ public class Main{
 
             if(op == 1)
             {
-                Onibus temp = new Onibus();
-                temp = CriarOnibus();
-                listBus.add(temp);
+                if(listMoto.size()>0)
+                {
+                    Onibus temp = new Onibus("", 2022, "", 0.1, null);
+                    temp = CriarOnibus();
+                    if(temp.flag != 0)
+                        listBus.add(temp);
+                }
+                else System.out.println("Nao ha motoristas disponiveis!");
             }
 
             if(op == 2)
             {
-                Motorista temp = new Motorista();
+                Motorista temp = new Motorista("", 1, 1, 1, 2022);
                 temp = CriarMoto();
                 listMoto.add(temp);
             }
 
             if(op == 3)
             {
-                Rotas temp = new Rotas();
-                temp = CriarRota();
-                listRotas.add(temp);
+                if(listBus.size()>0)
+                {
+                    Rotas temp = new Rotas("", "", "", 1, 1, 2022, 1, 1, 1, 1, 2022, 1, 1, null, 0.1);
+                    temp = CriarRota();
+                    if(temp.flag != 0)
+                        listRotas.add(temp);
+                }
+                else System.out.println("Nao ha onibus disponiveis!");
             }
 
+            if(op == 4)
+            {
+                int i;
+                System.out.println("Informe o indíce do onibus a ser removido: [0-"+(listBus.size()-1)+"]");
+                i = input.nextInt();
+                listBus.remove(i);
+            }
 
+            if(op == 5)
+            {
+                int i;
+                System.out.println("Informe o indíce do motorista a ser removido: [0-"+(listMoto.size()-1)+"]");
+                i = input.nextInt();
+                listMoto.remove(i);
+            }
 
+            if(op == 6)
+            {
+                int i;
+                System.out.println("Informe o indíce da rota a ser removida: [0-"+(listRotas.size()-1)+"]");
+                i = input.nextInt();
+                listRotas.remove(i);
+            }
+
+            if(op == 7)
+            {
+                for(int i = 0; i<listBus.size(); i++)
+                    //listBus[i].printInfo;
+                    {
+                        System.out.println("Numero do onibus: "+i);
+                        listBus.get(i).printInfo();
+                    }
+                    
+            }
+
+            if(op == 8)
+            {
+                for(int i = 0; i<listMoto.size(); i++)
+                {
+                    System.out.println("Numero do motorista: "+i);
+                    listMoto.get(i).printInfo();
+                }
+                    
+            }
+
+            if(op == 9)
+            {
+                for(int i = 0; i<listRotas.size(); i++)
+                {
+                    System.out.println("Numero da rota: "+i);
+                    listRotas.get(i).printInfo();
+                }
+                    
+            }
           
         }while(op != 0);
         
@@ -120,8 +182,7 @@ public class Main{
 
         input.nextLine();
         System.out.println("Informe o modelo do onibus");
-        modelo = input.toString();
-        input.nextLine();
+        modelo = input.nextLine();
 
         do
         {
@@ -131,8 +192,7 @@ public class Main{
         
         input.nextLine();
         System.out.println("Informe a marca do onibus");
-        marca = input.toString();
-        input.nextLine();
+        marca = input.nextLine();
 
         do 
         {
@@ -140,9 +200,14 @@ public class Main{
             km = input.nextDouble();
         }while(km < 0.0);
 
-        // Motorista
+        int numMoto;
+        do
+        {
+            System.out.println("Informe o numero do motorista entre 0-"+(listMoto.size()-1));
+            numMoto = input.nextInt();
+        }while(numMoto < 0 || numMoto>listMoto.size());
         
-        Onibus temp = new Onibus(modelo, ano, marca, km, null);
+        Onibus temp = new Onibus(modelo, ano, marca, km, listMoto.get(numMoto));
 
         return temp;
     }
@@ -157,8 +222,7 @@ public class Main{
 
         input.nextLine();
         System.out.println("Informe o nome do motorista");
-        nome = input.toString();
-        input.nextLine();
+        nome = input.nextLine();
 
         do
         {
@@ -205,17 +269,17 @@ public class Main{
 
         input.nextLine();
         System.out.println("Digite a cidade de origem");
-        origem=input.toString();
+        origem=input.nextLine();
         input.nextLine();
 
        
         System.out.println("Digite a cidade de parada");
-        parada=input.toString();
+        parada=input.nextLine();
         input.nextLine();
 
         
         System.out.println("Digite a cidade de destino");
-        destino=input.toString();
+        destino=input.nextLine();
         input.nextLine();
 
         do{
@@ -258,12 +322,19 @@ public class Main{
             ano=input.nextInt();
         }while(ano<year);
 
+        int numBus;
+        do
+        {
+            System.out.println("Informe o numero do onibus entre 0-"+(listBus.size()-1));
+            numBus = input.nextInt();
+        }while(numBus < 0 || numBus>listBus.size());
+
         do{
             System.out.println("Digite o valor da passagem: ");
             valor=input.nextDouble();
         }while(valor<=0.0);
 
-        Rotas temp = new Rotas(origem, parada, destino, diaS, mes, ano, hora_saida, min_saida, diaC, mes, ano, hora_chegada, min_chegada, null, valor);
+        Rotas temp = new Rotas(origem, parada, destino, diaS, mes, ano, hora_saida, min_saida, diaC, mes, ano, hora_chegada, min_chegada, listBus.get(numBus), valor);
         return temp;
 
     }

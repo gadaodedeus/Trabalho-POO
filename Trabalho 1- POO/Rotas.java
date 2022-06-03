@@ -7,6 +7,7 @@ public class Rotas
     private Date chegada;
     private Onibus bus;
     private double valor;
+    public int flag=1;
     
     // Construtores
 
@@ -16,9 +17,19 @@ public class Rotas
         
         if(o != p)
             this.parada = p;
+        else
+        {
+            System.out.println("ERRO: origem e parada sao a mesma cidade");
+            flag=0;
+        }
 
         if(d != p && o != d)
            this.destino = d;
+        else
+        {
+            System.out.println("ERRO: cidades repetidas");
+            flag=0;
+        }
 
         this.saida = new Date(sDia, sMes, sAno, sHora, sMin);
 
@@ -28,6 +39,11 @@ public class Rotas
 
         if(valor > 0)
             this.valor = valor;
+        else
+        {
+            System.out.println("Valor invalido!");
+            flag=0;
+        }
     }
     
     public Rotas()
@@ -115,7 +131,7 @@ public class Rotas
     public void printInfo()
     {
         System.out.println("---------------------------------");
-        System.out.println("Rota: "+this.origem+" -> "+this.parada+" -> "+this.origem);
+        System.out.println("Rota: "+this.origem+" -> "+this.parada+" -> "+this.destino);
         System.out.println("Saida: "+this.saida.getHora()+":"+this.saida.getMin()+"\tChegada: "+this.chegada.getHora()+":"+this.chegada.getMin());
         System.out.println("Motorista: "+this.bus.motorista.getNome());
         System.out.println("Valor da passagem: R$"+this.valor);

@@ -60,4 +60,13 @@ public class Motorista
   {
     return this.dataAdmissao.getAno();
   }
+
+  public void printInfo()
+  {
+    System.out.println("---------------------------------");
+    System.out.println("Nome: "+this.nome);
+    System.out.println("CNH: "+this.numero_cnh);
+    System.out.println("Data de admissão: "+this.getdiaAdmissao()+"/"+this.getmesAdmissao()+"/"+this.getanoAdmissao());
+    System.out.println("---------------------------------");
+  }
 }
