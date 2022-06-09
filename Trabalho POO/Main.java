@@ -1,9 +1,12 @@
 import java.util.Scanner;
+
+import javax.swing.ListSelectionModel;
+
 import java.util.Calendar;
 import java.util.ArrayList;
 
 
-// Criar ArrayLists de Motorista, Onibus, Rotas e Passageiros
+// Criar ArrayLists de Passageiros
 
 
 
@@ -17,14 +20,14 @@ public class Main{
     ArrayList<Passageiro> listPass = new ArrayList<>();
 
     private static void programaAdm(){
-        System.out.println("Olá, você está executando como administrador!");
+        System.out.println("Ola, voce esta executando como administrador!");
         int op;
         do
         {
 
-            System.out.println("----------------------------------");
-            System.out.println("-----------MENU DE OPCOES---------");
-            System.out.println("----------------------------------");
+            System.out.println("------------------------------------------------");
+            System.out.println("----------------MENU DE OPCOES------------------");
+            System.out.println("------------------------------------------------");
             System.out.println("1- Adicionar onibus");
             System.out.println("2- Adicionar motorista");
             System.out.println("3- Adicionar rota");
@@ -36,7 +39,7 @@ public class Main{
             System.out.println("9- Mostrar rotas");
             System.out.println("10- Mostrar os onibus que um motorista dirige");
             System.out.println("0- Sair");
-            System.out.println("----------------------------------");
+            System.out.println("------------------------------------------------");
             op = input.nextInt();
             if(op<0 || op>11)
                 System.out.println("Opcao invalida!!");
@@ -75,23 +78,47 @@ public class Main{
             if(op == 4)
             {
                 int i;
-                System.out.println("Informe o indíce do onibus a ser removido: [0-"+(listBus.size()-1)+"]");
+                System.out.println("Informe o indice do onibus a ser removido: [0-"+(listBus.size()-1)+"]");
                 i = input.nextInt();
+
+                int j=0;
+                for(j=0;j<listRotas.size();j++)
+                {
+                    if(listRotas.get(j).getBus().getModelo() == listBus.get(i).getModelo())
+                        {
+                            listRotas.get(j).setOnibus(null);
+                            break;
+                        }
+                    j++;
+                }
+                
                 listBus.remove(i);
             }
 
             if(op == 5)
             {
                 int i;
-                System.out.println("Informe o indíce do motorista a ser removido: [0-"+(listMoto.size()-1)+"]");
+                System.out.println("Informe o indice do motorista a ser removido: [0-"+(listMoto.size()-1)+"]");
                 i = input.nextInt();
+
+                int j;
+                for(j=0;j<listBus.size();j++)
+                {
+                    if(listBus.get(j).getMotorista().getNumero_cnh() == listMoto.get(i).getNumero_cnh())
+                        {
+                            listBus.get(j).setMotorista(null);
+                            break;
+                        }
+                    j++;
+                }
+
                 listMoto.remove(i);
             }
 
             if(op == 6)
             {
                 int i;
-                System.out.println("Informe o indíce da rota a ser removida: [0-"+(listRotas.size()-1)+"]");
+                System.out.println("Informe o indice da rota a ser removida: [0-"+(listRotas.size()-1)+"]");
                 i = input.nextInt();
                 listRotas.remove(i);
             }
@@ -99,7 +126,6 @@ public class Main{
             if(op == 7)
             {
                 for(int i = 0; i<listBus.size(); i++)
-                    //listBus[i].printInfo;
                     {
                         System.out.println("Numero do onibus: "+i);
                         listBus.get(i).printInfo();
@@ -134,6 +160,7 @@ public class Main{
                     System.out.println(i+"- "+listMoto.get(i).getNome());
                 System.out.println("Escolha um motorista pelo numero: ");
                 aux = input.nextInt();
+
                 listMoto.get(aux).printBus();
                     
             }
