@@ -190,6 +190,39 @@ public class Main{
                     i++;
                 }
             }*/
+        
+        /*
+        do{
+            System.out.println("------------------------------------------------");
+            System.out.println("----------------MENU DE OPCOES------------------");
+            System.out.println("------------------------------------------------");
+            System.out.println("1- Escolher sua passagem");
+            System.out.println("0- Sair");
+            System.out.println("------------------------------------------------");
+            op = input.nextInt();
+            if(op<0 || op>1)
+                System.out.println("Opcao invalida!!");
+        
+            if(op == 1){
+                for(int i = 0; i<listRotas.size(); i++)
+                {
+                    System.out.println("Numero da rota: "+i);
+                    listRotas.get(i).printInfo();
+                }
+                System.out.println("Escolha sua rota");
+            }
+            
+            
+        }while(op != 0);
+            
+
+        
+        
+        
+        */
+        
+        
+        
 
 
     }
