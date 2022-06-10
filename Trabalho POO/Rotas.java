@@ -19,7 +19,7 @@ public class Rotas
             this.parada = p;
         else
         {
-            System.out.println("ERRO: origem e parada sao a mesma cidade");
+            //System.out.println("ERRO: origem e parada sao a mesma cidade");
             flag=0;
         }
 
@@ -27,7 +27,7 @@ public class Rotas
            this.destino = d;
         else
         {
-            System.out.println("ERRO: cidades repetidas");
+           // System.out.println("ERRO: cidades repetidas");
             flag=0;
         }
 
