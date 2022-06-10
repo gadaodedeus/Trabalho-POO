@@ -4,7 +4,8 @@ public class Passageiro
     private String nome;
     private Date dataNascimento;
     private String end;
-
+    private int x,y; //coordenadas da passagem
+    
     // Construtores
 
     public Passageiro(int doc, String nome, int diaNasc, int mesNasc, int anoNasc, String end)
@@ -31,6 +32,12 @@ public class Passageiro
 
     // Setters
 
+    public void setPassagem(int x, int y)
+    {
+        this.x=x;
+        this.y=y;
+    }
+
     public void setData(int diaNasc, int mesNasc, int anoNasc)
     {
         this.dataNascimento = new Date(diaNasc, mesNasc, anoNasc);
@@ -56,22 +63,32 @@ public class Passageiro
 
     // Getters
 
-    public int getDoc(int doc)
+    public int getX()
+    {
+        return this.x;
+    }
+
+    public int getY()
+    {
+        return this.y;
+    }
+
+    public int getDoc()
     {
         return this.doc;
     }
 
-    public String getNome(String nome)
+    public String getNome()
     {
         return this.nome;
     }
 
-    public Date getDataNascimento(int dataNascimento)
+    public Date getDataNascimento()
     {
         return this.dataNascimento;
     }
 
-    public String getEnd(String end)
+    public String getEnd()
     {
         return this.end;
     }

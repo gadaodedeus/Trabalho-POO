@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
 public class Rotas
 {
     private String origem;
@@ -8,6 +11,8 @@ public class Rotas
     private Onibus bus;
     private double valor;
     public int flag=1;
+    private int assentos[][] = new int[10][4];
+    private ArrayList<Passageiro> listPass = new ArrayList<>();
     
     // Construtores
 
@@ -44,6 +49,11 @@ public class Rotas
             System.out.println("Valor invalido!");
             flag=0;
         }
+
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 4; j++)
+                assentos[i][j] = 0;
+
     }
     
     public Rotas()
@@ -136,6 +146,97 @@ public class Rotas
         System.out.println("Motorista: "+this.bus.motorista.getNome());
         System.out.println("Valor da passagem: R$"+this.valor);
         System.out.println("---------------------------------");
+    }
+
+     // Assentos
+
+     public void printAssentos()
+     {
+         System.out.println("-Assentos disponiveis-");
+         System.out.print("\t 1 2   3 4\n");
+         for(int i = 0; i < 10; i++)
+         {
+             System.out.print((i+1)+"\t");
+             for(int j = 0; j < 4; j++)
+             {
+                 if(j == 2)
+                     System.out.print("  ");
+                 System.out.print(" "+assentos[i][j]);
+             }
+             System.out.print("\n");
+         }
+ 
+     }
+ 
+     public void addPassageiro(Passageiro pass)
+     {
+         Scanner sc = new Scanner(System.in);
+         int x, y;
+         this.printAssentos();
+ 
+         do
+         {
+             do
+             {
+                 System.out.println("Informe a fileira: ");
+                 x = sc.nextInt();
+                 x--;
+             }while(x<0 || x>9);
+           
+         
+             do
+             {
+                 System.out.println("Informe a cadeira: ");
+                 y = sc.nextInt();
+                 y--;
+             }while(y<0 || y>3);
+ 
+             if(assentos[x][y] == 1)
+                 System.out.println("Assento ocupado");
+ 
+         }while(assentos[x][y] == 1);
+
+         listPass.add(pass);
+         pass.setPassagem(x, y);
+ 
+         assentos[x][y] = 1;
+     }
+     
+    
+    public void retirarPassegeiro()
+    {
+        Scanner sc = new Scanner(System.in);
+        int x,y,doc_pas, flag=0, i=0;
+
+        System.out.println("Informe seu documento");
+        doc_pas = sc.nextInt();
+
+        while(i<listPass.size())
+        {
+            //int doc_temp =doc_temp
+            if(listPass.get(i).getDoc() == doc_pas)
+            {
+                flag=1;
+                break;
+            }
+
+            else
+                i++;
+        }
+
+        if(flag == 1)
+        {
+            x= listPass.get(i).getX();
+            y= listPass.get(i).getY();
+            assentos[x][y]=0;
+        }
+
+        else
+            System.out.println("O portador do documento nao realizou nenhuma compra para esta rota");
+        
+        
+        
+        
     }
 
 }

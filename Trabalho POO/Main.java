@@ -206,6 +206,7 @@ public class Main{
             System.out.println("------------------------------------------------");
             System.out.println("1- Comprar sua passagem");
             System.out.println("2- Fazer cadastro");
+            System.out.println("3- Cancelar compra");
             System.out.println("0- Sair");
             System.out.println("------------------------------------------------");
             op = input.nextInt();
@@ -214,30 +215,39 @@ public class Main{
         
             if(op == 1){
                 
-                int i;
+                int i, doc_pas;
                 String orig, dest;
 
+               
                 System.out.println("Informe sua cidade de partida");
                 input.nextLine();
                 orig = input.nextLine();
                 
                 System.out.println("Informe sua cidade de destino");
                 dest = input.nextLine();
+                
+                System.out.println("Informe seu documento de cadastro");
+                doc_pas = input.nextInt();
+
 
                 for(i = 0; i<listRotas.size(); i++)
                 {
                     if(listRotas.get(i).getOrigem().equals(orig) && listRotas.get(i).getDestino().equals(dest))
                     {
                         System.out.println("Numero da rota: "+i);
-                        listRotas.get(i).printInfo(); // Não está printando. Mentiroso, tá simmmmm!!!
+                        listRotas.get(i).printInfo(); // Não está printando. Mentiroso, tá simmmmm!!! 
+                                                        //vamooooooooocaralhoooooo
                         
                     }
                 }
                 
                 System.out.println("Escolha sua rota");
                 int aux = input.nextInt();
+                i=0;
+                while(listPass.get(i).getDoc() != doc_pas)
+                    i++;
 
-                listRotas.get(aux).getBus().addPassageiro();
+                listRotas.get(aux).addPassageiro(listPass.get(i));
             }
             
             if(op == 2)
@@ -245,6 +255,21 @@ public class Main{
                 Passageiro temp = new Passageiro(0, "", 0, 0, 0, "");
                 temp = criarPass();
                 listPass.add(temp);
+            }
+
+            if(op == 3)
+            {
+                int i=0;
+                while(listRotas.size()>i)
+                {
+                    System.out.println(("Numero da rota: "+i));
+                    listRotas.get(i).printInfo();
+                }
+                System.out.println("Informe a rota que voce tem a passagem");
+                int rota = input.nextInt();
+
+                listRotas.get(i).retirarPassegeiro();
+
             }
             
         }while(op != 0);

@@ -9,7 +9,6 @@ public class Onibus
     private int ano;
     private String marca;
     private double km;
-    private int assentos[][] = new int[10][4];
     public Motorista motorista = new Motorista();
     public int flag=1;
 
@@ -41,10 +40,7 @@ public class Onibus
         }  
             
 
-        for(int i = 0; i < 10; i++)
-            for(int j = 0; j < 4; j++)
-                assentos[i][j] = 0;
-
+       
         this.motorista = motorista;
 
         
@@ -120,71 +116,7 @@ public class Onibus
         return this.motorista;
     }
 
-    // Assentos
-
-    public void printAssentos()
-    {
-        System.out.println("-Assentos disponiveis-");
-        System.out.print("\t 1 2   3 4\n");
-        for(int i = 0; i < 10; i++)
-        {
-            System.out.print((i+1)+"\t");
-            for(int j = 0; j < 4; j++)
-            {
-                if(j == 2)
-                    System.out.print("  ");
-                System.out.print(" "+assentos[i][j]);
-            }
-            System.out.print("\n");
-        }
-
-    }
-
-    public void addPassageiro()
-    {
-        Scanner sc = new Scanner(System.in);
-        int x, y;
-        this.printAssentos();
-
-        do
-        {
-            do
-            {
-                System.out.println("Informe a fileira: ");
-                x = sc.nextInt();
-                x--;
-            }while(x<0 || x>9);
-          
-        
-            do
-            {
-                System.out.println("Informe a cadeira: ");
-                y = sc.nextInt();
-                y--;
-            }while(y<0 || y>3);
-
-            if(assentos[x][y] == 1)
-                System.out.println("Assento ocupado");
-
-        }while(assentos[x][y] == 1);
-
-        assentos[x][y] = 1;
-    }
-    
-    public void retirarPassegeiro()
-    {
-        Scanner sc = new Scanner(System.in);
-        int x,y;
-        
-        System.out.println("Digite a fileira: ");
-        x= sc.nextInt();
-        x--;
-        System.out.println("Digite a cadeira: ");
-        y= sc.nextInt();
-        y--;
-        
-        assentos[x][y]=0;
-    }
+   
 
     public void printInfo()
     {
