@@ -47,7 +47,6 @@ public class Motorista
 
   public void setBus(Onibus b)
   {
-    if(b == null)
     bus.add(b);
   }
 

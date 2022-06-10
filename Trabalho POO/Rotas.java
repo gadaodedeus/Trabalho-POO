@@ -135,7 +135,6 @@ public class Rotas
         System.out.println("Saida: "+this.saida.getHora()+":"+this.saida.getMin()+"\tChegada: "+this.chegada.getHora()+":"+this.chegada.getMin());
         System.out.println("Motorista: "+this.bus.motorista.getNome());
         System.out.println("Valor da passagem: R$"+this.valor);
-        this.bus.printAssentos();
         System.out.println("---------------------------------");
     }
 

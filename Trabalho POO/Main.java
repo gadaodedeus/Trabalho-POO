@@ -17,7 +17,7 @@ public class Main{
     static ArrayList<Motorista> listMoto = new ArrayList<>();
     static ArrayList<Onibus> listBus = new ArrayList<>();
     static ArrayList<Rotas> listRotas = new ArrayList<>();
-    ArrayList<Passageiro> listPass = new ArrayList<>();
+    static ArrayList<Passageiro> listPass = new ArrayList<>();
 
     private static void programaAdm(){
         System.out.println("Ola, voce esta executando como administrador!");
@@ -38,6 +38,8 @@ public class Main{
             System.out.println("8- Mostrar motoristas");
             System.out.println("9- Mostrar rotas");
             System.out.println("10- Mostrar os onibus que um motorista dirige");
+            System.out.println("11- Realocar motorista em um onibus");
+            System.out.println("12- Realocar onibus em uma rota");
             System.out.println("0- Sair");
             System.out.println("------------------------------------------------");
             op = input.nextInt();
@@ -81,7 +83,9 @@ public class Main{
                 System.out.println("Informe o indice do onibus a ser removido: [0-"+(listBus.size()-1)+"]");
                 i = input.nextInt();
 
-                int j=0;
+                // Remoçao do onibus das classes que ele participa (nao funciionou)
+
+                /*int j=0;
                 for(j=0;j<listRotas.size();j++)
                 {
                     if(listRotas.get(j).getBus().getModelo() == listBus.get(i).getModelo())
@@ -90,7 +94,7 @@ public class Main{
                             break;
                         }
                     j++;
-                }
+                }*/
                 
                 listBus.remove(i);
             }
@@ -101,7 +105,9 @@ public class Main{
                 System.out.println("Informe o indice do motorista a ser removido: [0-"+(listMoto.size()-1)+"]");
                 i = input.nextInt();
 
-                int j;
+                // Remoçao do motorista das classes que ele participa (nao funciionou)
+
+                /*int j;
                 for(j=0;j<listBus.size();j++)
                 {
                     if(listBus.get(j).getMotorista().getNumero_cnh() == listMoto.get(i).getNumero_cnh())
@@ -110,7 +116,7 @@ public class Main{
                             break;
                         }
                     j++;
-                }
+                }*/
 
                 listMoto.remove(i);
             }
@@ -164,6 +170,28 @@ public class Main{
                 listMoto.get(aux).printBus();
                     
             }
+
+            if(op == 11)
+            {
+                int i, j;
+                System.out.println("Insira o indice do onibus que deseja trocar de motorista [0-"+listBus.size()+"]");
+                j = input.nextInt();
+                System.out.println("Insira o indice do novo motorista [0-"+listMoto.size()+"]");
+                i = input.nextInt();
+
+                listBus.get(j).setMotorista(listMoto.get(i));
+            }
+
+            if(op == 12)
+            {
+                int i, j;
+                System.out.println("Insira o indice da rota que deseja trocar de onibus [0-"+listRotas.size()+"]");
+                j = input.nextInt();
+                System.out.println("Insira o indice do novo onibus [0-"+listBus.size()+"]");
+                i = input.nextInt();
+
+                listRotas.get(j).setOnibus(listBus.get(i));
+            }
           
         }while(op != 0);
         
@@ -172,76 +200,85 @@ public class Main{
     private static void programaCli(){
         System.out.println("Olá, você está executando como cliente!");  
         
-        
-            /*if(op == 10)
-            {
-                int i;
-                String orig, dest;
-
-                System.out.println("Informe sua cidade de partida");
-                orig = input.nextString();
-                System.out.println("Informe sua cidade de destino");
-                dest = input.nextString();
-
-                while(i < Array.length)
-                {
-                    if(/*rota.origem == orig && rota.destino == dest)
-                        /*rota.printInfo;
-                    i++;
-                }
-            }*/
-        
-        /*
+        int op;
+            
         do{
             System.out.println("------------------------------------------------");
             System.out.println("----------------MENU DE OPCOES------------------");
             System.out.println("------------------------------------------------");
-            System.out.println("1- Escolher sua passagem");
+            System.out.println("1- Comprar sua passagem");
+            System.out.println("2- Fazer cadastro");
             System.out.println("0- Sair");
             System.out.println("------------------------------------------------");
             op = input.nextInt();
-            if(op<0 || op>1)
+            if(op<0 || op>2)
                 System.out.println("Opcao invalida!!");
         
             if(op == 1){
-                for(int i = 0; i<listRotas.size(); i++)
+                
+                int i;
+                String orig, dest;
+
+                System.out.println("Informe sua cidade de partida");
+                orig = input.nextLine();
+                input.nextLine();
+                System.out.println("Informe sua cidade de destino");
+                dest = input.nextLine();
+                input.nextLine();
+
+                for(i = 0; i<listRotas.size(); i++)
                 {
-                    System.out.println("Numero da rota: "+i);
-                    listRotas.get(i).printInfo();
+                    if(listRotas.get(i).getOrigem() == orig && listRotas.get(i).getDestino() == dest)
+                    {
+                        System.out.println("Numero da rota: "+i);
+                        listRotas.get(i).printInfo(); // Nao ta printando
+                    }
                 }
+                
                 System.out.println("Escolha sua rota");
+                int aux = input.nextInt();
+
+                listRotas.get(aux).getBus().addPassageiro();
             }
             
+            if(op == 2) // Cadastro nao serve para nada em relacao a comprar passagem
+            {
+                Passageiro temp = new Passageiro(0, "", 0, 0, 0, "");
+                temp = criarPass();
+                listPass.add(temp);
+            }
             
         }while(op != 0);
             
 
         
         
-        
-        */
-        
-        
+      
         
 
 
     }
 
     public static void main(String[] args) {
-       
         
-        System.out.println("Bem vindo ao sistema de viagem de ônibus, por favor informe seu tipo de acesso (Administrador[1]/ Cliente[2]): ");
-        int tipoAcess = input.nextInt();
-        
-        if(tipoAcess == 1){
-            //Codigo administrador:
-            Main.programaAdm();
-            
-        }else if(tipoAcess == 2){
-            //Codigo cliente:
-            Main.programaCli();
+        int tipoAcess;
+
+        do
+        {
+            System.out.println("Bem vindo ao sistema de viagem de ônibus, por favor informe seu tipo de acesso (Administrador[1]/ Cliente[2]): ");
+            tipoAcess = input.nextInt();
+
+            if(tipoAcess == 1){
+                //Codigo administrador:
+                Main.programaAdm();
+                
+            }else if(tipoAcess == 2){
+                //Codigo cliente:
+                Main.programaCli();
 
         }
+        }while(tipoAcess != 0);
+        
 
     }
 
@@ -345,17 +382,17 @@ public class Main{
         input.nextLine();
         System.out.println("Digite a cidade de origem");
         origem=input.nextLine();
-        input.nextLine();
+        //input.nextLine();
 
        
         System.out.println("Digite a cidade de parada");
         parada=input.nextLine();
-        input.nextLine();
+        //input.nextLine();
 
         
         System.out.println("Digite a cidade de destino");
         destino=input.nextLine();
-        input.nextLine();
+        //input.nextLine();
 
         do{
             System.out.println("Digite a hora de saida: ");
@@ -413,6 +450,46 @@ public class Main{
         return temp;
 
     }
+    
+    public static Passageiro criarPass()
+    {
+        int doc, dia, mes, ano;
+        String nome, end;
 
+        do
+        {
+            System.out.println("Informe o seu documento: ");
+            doc = input.nextInt();
+        }while(doc<=0);
+
+        System.out.println("Informe seu nome: ");
+        nome = input.nextLine();
+
+        do
+        {
+            System.out.println("Insira o dia de seu nascimento: ");
+            dia = input.nextInt();
+        }while(dia<1 || dia>31);
+
+        do
+        {
+            System.out.println("Insira o mes de seu nascimento: ");
+            mes = input.nextInt();
+        }while(mes<1 || mes>12);
+
+        do
+        {
+            System.out.println("Insira o ano que nasceu: ");
+            ano = input.nextInt();
+        }while(ano<1900);
+
+        System.out.println("Informe seu endereco: ");
+        end = input.nextLine();
+        
+        Passageiro temp = new Passageiro(doc, nome, dia, mes, ano, end);
+
+        return temp;
+
+    }
     
 }

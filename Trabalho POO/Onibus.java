@@ -146,17 +146,32 @@ public class Onibus
         int x, y;
         this.printAssentos();
 
-        System.out.println("Informe a fileira: ");
-        x = sc.nextInt();
-        x--;
-        System.out.println("Informe a cadeira: ");
-        y = sc.nextInt();
-        y--;
+        do
+        {
+            do
+            {
+                System.out.println("Informe a fileira: ");
+                x = sc.nextInt();
+                x--;
+            }while(x<0 || x>9);
+          
+        
+            do
+            {
+                System.out.println("Informe a cadeira: ");
+                y = sc.nextInt();
+                y--;
+            }while(y<0 || y>3);
+
+            if(assentos[x][y] == 1)
+                System.out.println("Assento ocupado");
+
+        }while(assentos[x][y] == 1);
 
         assentos[x][y] = 1;
     }
     
-        public void retirarPassegeiro()
+    public void retirarPassegeiro()
     {
         Scanner sc = new Scanner(System.in);
         int x,y;
