@@ -22,11 +22,11 @@ public class Motorista
   
   public Motorista(String nome, int numero_cnh)
   {
-    this(nome, numero_cnh, 0, 0, 0);
+    this(nome, numero_cnh, 1, 1, 1);
   }
   public Motorista ()
   {
-    this("", 0, 0, 0, 0);
+    this("", 0, 1, 1, 1);
   }
   
 
