@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.ArrayList;
 
 
-// Criar ArrayLists de Passageiros
-
 
 
 public class Main{
