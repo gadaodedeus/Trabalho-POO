@@ -231,7 +231,8 @@ public class Main{
                     if(listRotas.get(i).getOrigem().equals(orig) && listRotas.get(i).getDestino().equals(dest))
                     {
                         System.out.println("Numero da rota: "+i);
-                        listRotas.get(i).printInfo(); // Nao ta printando
+                        listRotas.get(i).printInfo(); // Não está printando. Mentiroso, tá simmmmm!!!
+                        
                     }
                 }
                 
@@ -241,7 +242,7 @@ public class Main{
                 listRotas.get(aux).getBus().addPassageiro();
             }
             
-            if(op == 2) // Cadastro nao serve para nada em relacao a comprar passagem
+            if(op == 2)
             {
                 Passageiro temp = new Passageiro(0, "", 0, 0, 0, "");
                 temp = criarPass();
