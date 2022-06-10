@@ -220,15 +220,15 @@ public class Main{
                 String orig, dest;
 
                 System.out.println("Informe sua cidade de partida");
-                orig = input.nextLine();
                 input.nextLine();
+                orig = input.nextLine();
+                
                 System.out.println("Informe sua cidade de destino");
                 dest = input.nextLine();
-                input.nextLine();
 
                 for(i = 0; i<listRotas.size(); i++)
                 {
-                    if(listRotas.get(i).getOrigem() == orig && listRotas.get(i).getDestino() == dest)
+                    if(listRotas.get(i).getOrigem().equals(orig) && listRotas.get(i).getDestino().equals(dest))
                     {
                         System.out.println("Numero da rota: "+i);
                         listRotas.get(i).printInfo(); // Nao ta printando
