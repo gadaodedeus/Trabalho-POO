@@ -462,7 +462,9 @@ public class Main{
             doc = input.nextInt();
         }while(doc<=0);
 
+        
         System.out.println("Informe seu nome: ");
+        input.nextLine();
         nome = input.nextLine();
 
         do
@@ -484,6 +486,7 @@ public class Main{
         }while(ano<1900);
 
         System.out.println("Informe seu endereco: ");
+        input.nextLine();
         end = input.nextLine();
         
         Passageiro temp = new Passageiro(doc, nome, dia, mes, ano, end);
