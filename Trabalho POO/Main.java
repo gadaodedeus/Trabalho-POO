@@ -314,7 +314,7 @@ public class Main{
                 
                 if(flag == 1)
                 {
-                    i=0;
+                    int j = 0;
                     System.out.println("Informe sua cidade de partida");
                     input.nextLine();
                     orig = input.nextLine();
@@ -322,12 +322,12 @@ public class Main{
                     System.out.println("Informe sua cidade de destino");
                     dest = input.nextLine();
                 
-                    for(i = 0; i<listRotas.size(); i++)
+                    for(j = 0; j<listRotas.size(); j++)
                     {
-                        if(listRotas.get(i).getOrigem().equals(orig) && listRotas.get(i).getDestino().equals(dest))
+                        if(listRotas.get(j).getOrigem().equals(orig) && listRotas.get(j).getDestino().equals(dest))
                         {
-                            System.out.println("Numero da rota: "+i);
-                            listRotas.get(i).printInfo();
+                            System.out.println("Numero da rota: "+j);
+                            listRotas.get(j).printInfo();
                             
                         }
                     }
