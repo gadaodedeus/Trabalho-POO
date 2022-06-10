@@ -6,7 +6,7 @@ public class Motorista
   private String nome;
   private int numero_cnh;
   private Date dataAdmissao;
-  private ArrayList<Onibus> bus = new ArrayList<>();
+  public ArrayList<Onibus> bus = new ArrayList<>(); //Onibus que este motorista dirige
 
   static Scanner input = new Scanner(System.in);
 

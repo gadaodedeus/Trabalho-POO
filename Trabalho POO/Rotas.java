@@ -10,9 +10,10 @@ public class Rotas
     private Date chegada;
     private Onibus bus;
     private double valor;
-    public int flag=1;
+    public int flag=1; //para add ou nao na array da main
     private int assentos[][] = new int[10][4];
-    private ArrayList<Passageiro> listPass = new ArrayList<>();
+    private ArrayList<Passageiro> listPass = new ArrayList<>(); //passageiros que compraram passagem
+                                                                //para esta viagem
     
     // Construtores
 
@@ -20,21 +21,12 @@ public class Rotas
     {
         this.origem = o;
         
+        this.parada = p;
+        
         if(o != p)
-            this.parada = p;
+            this.destino = d;
         else
-        {
-            //System.out.println("ERRO: origem e parada sao a mesma cidade");
             flag=0;
-        }
-
-        if(d != p && o != d)
-           this.destino = d;
-        else
-        {
-           // System.out.println("ERRO: cidades repetidas");
-            flag=0;
-        }
 
         this.saida = new Date(sDia, sMes, sAno, sHora, sMin);
 
@@ -143,14 +135,17 @@ public class Rotas
         System.out.println("---------------------------------");
         System.out.println("Rota: "+this.origem+" -> "+this.parada+" -> "+this.destino);
         System.out.println("Saida: "+this.saida.getHora()+":"+this.saida.getMin()+"\tChegada: "+this.chegada.getHora()+":"+this.chegada.getMin());
-        System.out.println("Motorista: "+this.bus.motorista.getNome());
+        if(this.bus.getMotorista() == null)
+            System.out.println("Sem motorista para este onibus");
+        else
+            System.out.println("Motorista: "+this.bus.motorista.getNome());
         System.out.println("Valor da passagem: R$"+this.valor);
         System.out.println("---------------------------------");
     }
 
      // Assentos
 
-     public void printAssentos()
+     public void printAssentos() //Printa a situação atual dos assentos
      {
          System.out.println("-Assentos disponiveis-");
          System.out.print("\t 1 2   3 4\n");
@@ -168,7 +163,8 @@ public class Rotas
  
      }
  
-     public void addPassageiro(Passageiro pass)
+     //Compra da passagem
+     public void addPassageiro(Passageiro pass) //OBS: apenas um compra por documento pode ser feita
      {
          Scanner sc = new Scanner(System.in);
          int x, y;
@@ -186,7 +182,7 @@ public class Rotas
          
              do
              {
-                 System.out.println("Informe a cadeira: ");
+                 System.out.println("Informe a coluna: ");
                  y = sc.nextInt();
                  y--;
              }while(y<0 || y>3);
@@ -196,14 +192,15 @@ public class Rotas
  
          }while(assentos[x][y] == 1);
 
-         listPass.add(pass);
-         pass.setPassagem(x, y);
+         listPass.add(pass);    //add na array de passageiros que compraram esta viagem
+         pass.setPassagem(x, y);    //add a informaçao de seu assento no obj Passageiro que 
+                                    //realizou a compra
  
          assentos[x][y] = 1;
      }
      
     
-    public void retirarPassegeiro()
+    public void retirarPassegeiro() //Cancelar a compra de um passageiro
     {
         Scanner sc = new Scanner(System.in);
         int x,y,doc_pas, flag=0, i=0;
@@ -213,7 +210,6 @@ public class Rotas
 
         while(i<listPass.size())
         {
-            //int doc_temp =doc_temp
             if(listPass.get(i).getDoc() == doc_pas)
             {
                 flag=1;
@@ -224,19 +220,35 @@ public class Rotas
                 i++;
         }
 
-        if(flag == 1)
+        if(flag == 1) 
         {
             x= listPass.get(i).getX();
             y= listPass.get(i).getY();
             assentos[x][y]=0;
+            listPass.remove(i); //remove o passageiro 
         }
 
         else
-            System.out.println("O portador do documento nao realizou nenhuma compra para esta rota");
+            System.out.println("O portador do documento nao realizou nenhuma compra para esta rota");    
+
+    }
+
+    //Printa todos os passageiros que irao viajar nesta rota
+    public void printPass()
+    {
+        int i=0;
+        while(i<listPass.size())
+        {
+            this.listPass.get(i).printPass();
+            i++;
+        }
         
-        
-        
-        
+    }
+
+    //Informa o numero de passagens vendidas
+    public int numPass()
+    {
+        return listPass.size();
     }
 
 }

@@ -10,7 +10,7 @@ public class Onibus
     private String marca;
     private double km;
     public Motorista motorista = new Motorista();
-    public int flag=1;
+    public int flag=1; //Para add ou nao no array da main
 
     private static int year = Calendar.getInstance().get(Calendar.YEAR); // Ano atual
     
@@ -27,23 +27,18 @@ public class Onibus
             System.out.println("Este onibus nao se encaixa no artigo 22 , IX , da Constituicao Federal!");
             flag=0;
         }
-           
-        
+         
         this.marca = marca;
 
-        if(km > 0.0)
+        if(km >= 0.0)
             this.km = km;
         else  
         {
            System.out.println("Quilometragem invalida!");
            flag=0;
         }  
-            
-
-       
+    
         this.motorista = motorista;
-
-        
     }
 
     public Onibus(int ano, double km)
@@ -78,7 +73,7 @@ public class Onibus
 
     public void setKm(double km)
     {
-        if(km > 0.0)
+        if(km >= 0.0)
             this.km = km;
         else    
             System.out.println("Quilometragem invalida!");
@@ -116,7 +111,7 @@ public class Onibus
         return this.motorista;
     }
 
-   
+    //Print
 
     public void printInfo()
     {
@@ -124,7 +119,10 @@ public class Onibus
         System.out.println("Modelo: "+this.modelo);
         System.out.println("marca: " + this.marca);
         System.out.println("Ano: "+this.ano);
-        System.out.println("Nome do motorista: "+this.motorista.getNome());
+        if(motorista == null)
+            System.out.println("Sem motorista para esse onibus!");
+        else
+            System.out.println("Nome do motorista: "+this.motorista.getNome());
         System.out.println("Km: "+this.km);
         System.out.println("---------------------------------");
     }

@@ -1,7 +1,5 @@
 import java.util.Scanner;
-
 import javax.swing.ListSelectionModel;
-
 import java.util.Calendar;
 import java.util.ArrayList;
 
@@ -16,6 +14,28 @@ public class Main{
     static ArrayList<Onibus> listBus = new ArrayList<>();
     static ArrayList<Rotas> listRotas = new ArrayList<>();
     static ArrayList<Passageiro> listPass = new ArrayList<>();
+
+    public static void main(String[] args) {
+        int tipoAcess;
+
+        do
+        {
+            System.out.println("Bem vindo ao sistema de viagem de ônibus, por favor informe seu tipo de acesso (Administrador[1]/ Cliente[2]): ");
+            tipoAcess = input.nextInt();
+
+            if(tipoAcess == 1){
+                //Codigo administrador:
+                Main.programaAdm();
+                
+            }else if(tipoAcess == 2){
+                //Codigo cliente:
+                Main.programaCli();
+
+        }
+        }while(tipoAcess != 0);
+        
+
+    }
 
     private static void programaAdm(){
         System.out.println("Ola, voce esta executando como administrador!");
@@ -38,13 +58,16 @@ public class Main{
             System.out.println("10- Mostrar os onibus que um motorista dirige");
             System.out.println("11- Realocar motorista em um onibus");
             System.out.println("12- Realocar onibus em uma rota");
+            System.out.println("13- Informar lotacao de uma rota");
+            System.out.println("14- Mostrar passageiros de uma rota");
             System.out.println("0- Sair");
             System.out.println("------------------------------------------------");
             op = input.nextInt();
-            if(op<0 || op>11)
+            do{
                 System.out.println("Opcao invalida!!");
+            }while(op<0 || op>14);
 
-            if(op == 1)
+            if(op == 1) // add Onibus
             {
                 if(listMoto.size()>0)
                 {
@@ -52,18 +75,20 @@ public class Main{
                     temp = CriarOnibus();
                     if(temp.flag != 0)
                         listBus.add(temp);
+                    else    
+                        System.out.println("O onibus nao se encaixa nos padroes");
                 }
                 else System.out.println("Nao ha motoristas disponiveis!");
             }
 
-            if(op == 2)
+            if(op == 2) // add Motorista
             {
                 Motorista temp = new Motorista("", 1, 1, 1, 2022);
                 temp = CriarMoto();
                 listMoto.add(temp);
             }
 
-            if(op == 3)
+            if(op == 3) // add Rota
             {
                 if(listBus.size()>0)
                 {
@@ -71,73 +96,101 @@ public class Main{
                     temp = CriarRota();
                     if(temp.flag != 0)
                         listRotas.add(temp);
+                    else    
+                        System.out.println("A rota nao se encaixa nos padroes");
                 }
                 else System.out.println("Nao ha onibus disponiveis!");
             }
 
-            if(op == 4)
+            if(op == 4) // Remover Onibus
             {
-                int i;
-                System.out.println("Informe o indice do onibus a ser removido: [0-"+(listBus.size()-1)+"]");
-                i = input.nextInt();
-
-                // Remoçao do onibus das classes que ele participa (nao funciionou)
-
-                /*int j=0;
-                for(j=0;j<listRotas.size();j++)
+                if(listBus.size()>0)
                 {
-                    if(listRotas.get(j).getBus().getModelo() == listBus.get(i).getModelo())
-                        {
-                            listRotas.get(j).setOnibus(null);
-                            break;
-                        }
-                    j++;
-                }*/
+                    int i, j=0;
+                    System.out.println("Informe o indice do onibus a ser removido: [0-"+(listBus.size()-1)+"]");
+                    i = input.nextInt();
+
+                    //Obj auxiliar == onibus que sera removido
+                    Onibus temp = new Onibus();
+                    temp = listBus.get(i);
+
+                    //Remocao do onibus na lista dentro do motorista
+                    while(!(temp.getMotorista().bus.get(j).equals(temp)) && j < temp.getMotorista().bus.size())
+                        j++;
+                    temp.getMotorista().bus.remove(j);
+                    i=0;j=0;
+                    
+                    //Remocao do onibus no obj Rotas
+                    for(j=0;j<listRotas.size();j++)
+                    {
+                        if(listRotas.get(j).getBus().equals(temp)) //Encotra a rota que esse onibus
+                            {                                       //fazia
+                                listRotas.get(j).setOnibus(null);
+                                break;
+                            }
+                        j++;
+                    }
                 
-                listBus.remove(i);
+                    listBus.remove(i);
+                }
+                else
+                    System.out.println("Nao ha rotas para serem removidas");
+                
             }
 
-            if(op == 5)
+            if(op == 5) // Remover Motorista
             {
-                int i;
-                System.out.println("Informe o indice do motorista a ser removido: [0-"+(listMoto.size()-1)+"]");
-                i = input.nextInt();
-
-                // Remoçao do motorista das classes que ele participa (nao funciionou)
-
-                /*int j;
-                for(j=0;j<listBus.size();j++)
+                if(listMoto.size()>0)
                 {
-                    if(listBus.get(j).getMotorista().getNumero_cnh() == listMoto.get(i).getNumero_cnh())
-                        {
-                            listBus.get(j).setMotorista(null);
-                            break;
-                        }
-                    j++;
-                }*/
+                    int i;
+                    System.out.println("Informe o indice do motorista a ser removido: [0-"+(listMoto.size()-1)+"]");
+                    i = input.nextInt();
 
-                listMoto.remove(i);
+                    //Remocao do motorista do obj Onibus que ele dirigia
+                    int j;
+                    for(j=0;j<listBus.size();j++)
+                    {
+                        if(listBus.get(j).getMotorista().getNumero_cnh() == listMoto.get(i).getNumero_cnh())
+                            {
+                                listBus.get(j).setMotorista(null);
+                                break;
+                            }
+                        j++;
+                    }
+
+                    listMoto.remove(i);
+                }
+                else
+                    System.out.println("Nao ha onibus para serem removidos");
+                
             }
 
-            if(op == 6)
+            if(op == 6) // Remover Rota
             {
-                int i;
-                System.out.println("Informe o indice da rota a ser removida: [0-"+(listRotas.size()-1)+"]");
-                i = input.nextInt();
-                listRotas.remove(i);
+                if(listRotas.size()>0)
+                {
+                    printRotas();
+                    int i;
+                    System.out.println("Informe o indice da rota a ser removida: [0-"+(listRotas.size()-1)+"]");
+                    i = input.nextInt();
+                    listRotas.remove(i); 
+                }
+                else    
+                    System.out.println("Nao ha rotas para serem removidas");
+                
             }
 
-            if(op == 7)
+            if(op == 7) //Mostrar onibus
             {
                 for(int i = 0; i<listBus.size(); i++)
-                    {
-                        System.out.println("Numero do onibus: "+i);
-                        listBus.get(i).printInfo();
-                    }
+                {
+                    System.out.println("Numero do onibus: "+i);
+                    listBus.get(i).printInfo();
+                }
                     
             }
 
-            if(op == 8)
+            if(op == 8) //Mostrar Motoristas
             {
                 for(int i = 0; i<listMoto.size(); i++)
                 {
@@ -147,17 +200,12 @@ public class Main{
                     
             }
 
-            if(op == 9)
+            if(op == 9) // Mostar Rotas
             {
-                for(int i = 0; i<listRotas.size(); i++)
-                {
-                    System.out.println("Numero da rota: "+i);
-                    listRotas.get(i).printInfo();
-                }
-                    
+                printRotas();                    
             }
 
-            if(op == 10)
+            if(op == 10) //Mostra todos os onibus que um motorista dirige
             {
                 int aux, i;
                 for(i = 0; i<listMoto.size(); i++)
@@ -169,26 +217,59 @@ public class Main{
                     
             }
 
-            if(op == 11)
+            if(op == 11) //Realocar motorista (seta um novo motorista para um onibus)
             {
-                int i, j;
-                System.out.println("Insira o indice do onibus que deseja trocar de motorista [0-"+listBus.size()+"]");
-                j = input.nextInt();
-                System.out.println("Insira o indice do novo motorista [0-"+listMoto.size()+"]");
-                i = input.nextInt();
+                if(listMoto.size()>0 && listBus.size()>0)
+                {
+                    int i, j;
+                    System.out.println("Insira o indice do onibus que deseja trocar de motorista [0-"+(listBus.size()-1)+"]");
+                    j = input.nextInt();
+                    System.out.println("Insira o indice do novo motorista [0-"+(listMoto.size()-1)+"]");
+                    i = input.nextInt();
 
-                listBus.get(j).setMotorista(listMoto.get(i));
+                    listMoto.get(i).setBus(listBus.get(j)); //add um novo onibus na lista do motorista
+                    listBus.get(j).setMotorista(listMoto.get(i)); // seta o novo motorista
+                }
+                else
+                    System.out.println("Nao ha motorista ou onibus cadastrados");
+                
             }
 
-            if(op == 12)
+            if(op == 12) //Realocar onibus (seta um novo onibus para uma rota)
             {
-                int i, j;
-                System.out.println("Insira o indice da rota que deseja trocar de onibus [0-"+listRotas.size()+"]");
-                j = input.nextInt();
-                System.out.println("Insira o indice do novo onibus [0-"+listBus.size()+"]");
-                i = input.nextInt();
+                if(listBus.size()>0 && listRotas.size()>0)
+                {
+                     int i, j;
+                    System.out.println("Insira o indice da rota que deseja trocar de onibus [0-"+(listRotas.size()-1)+"]");
+                    j = input.nextInt();
+                    System.out.println("Insira o indice do novo onibus [0-"+(listBus.size()-1)+"]");
+                    i = input.nextInt();
 
-                listRotas.get(j).setOnibus(listBus.get(i));
+                    listRotas.get(j).setOnibus(listBus.get(i)); //seta um novo onibus para a rota
+                }
+                else   
+                    System.out.println("Nao ha onibus ou rotas cadastrados");
+            }
+
+            if(op == 13) //Informar lotação
+            {
+                int ind;
+                printRotas();
+                System.out.println("Informe o indice da rota desejada: ");
+                ind = input.nextInt();
+
+                System.out.println("Lotacao: "+listRotas.get(ind).numPass()+"/40"); 
+                                        //40 é a quantidade padrao de assentos em nosso programa
+            }
+
+            if(op == 14) //Mostra todos os passageiros que viajarao nesta rota
+            {
+                int ind;
+                printRotas();
+                System.out.println("Informe o indice da rota desejada: ");
+                ind = input.nextInt();
+
+                listRotas.get(ind).printPass();
             }
           
         }while(op != 0);
@@ -210,61 +291,70 @@ public class Main{
             System.out.println("0- Sair");
             System.out.println("------------------------------------------------");
             op = input.nextInt();
-            if(op<0 || op>2)
+            do{
                 System.out.println("Opcao invalida!!");
-        
-            if(op == 1){
-                
-                int i, doc_pas;
-                String orig, dest;
+            }while(op<0 || op>3);
 
-               
-                System.out.println("Informe sua cidade de partida");
-                input.nextLine();
-                orig = input.nextLine();
+            if(op == 1){ //Comprar passagem
                 
-                System.out.println("Informe sua cidade de destino");
-                dest = input.nextLine();
+                int i=0, doc_pas, flag = 0;
+                String orig, dest;
                 
                 System.out.println("Informe seu documento de cadastro");
                 doc_pas = input.nextInt();
-
-
-                for(i = 0; i<listRotas.size(); i++)
+                while(i<listPass.size())
                 {
-                    if(listRotas.get(i).getOrigem().equals(orig) && listRotas.get(i).getDestino().equals(dest))
+                    if(listPass.get(i).getDoc() == doc_pas)
                     {
-                        System.out.println("Numero da rota: "+i);
-                        listRotas.get(i).printInfo(); // Não está printando. Mentiroso, tá simmmmm!!! 
-                                                        //vamooooooooocaralhoooooo
-                        
+                        flag = 1;
+                        break;
                     }
+                    i++;
                 }
                 
-                System.out.println("Escolha sua rota");
-                int aux = input.nextInt();
-                i=0;
-                while(listPass.get(i).getDoc() != doc_pas)
-                    i++;
+                if(flag == 1)
+                {
+                    i=0;
+                    System.out.println("Informe sua cidade de partida");
+                    input.nextLine();
+                    orig = input.nextLine();
+                
+                    System.out.println("Informe sua cidade de destino");
+                    dest = input.nextLine();
+                
+                    for(i = 0; i<listRotas.size(); i++)
+                    {
+                        if(listRotas.get(i).getOrigem().equals(orig) && listRotas.get(i).getDestino().equals(dest))
+                        {
+                            System.out.println("Numero da rota: "+i);
+                            listRotas.get(i).printInfo();
+                            
+                        }
+                    }
 
-                listRotas.get(aux).addPassageiro(listPass.get(i));
+                    System.out.println("Escolha sua rota");
+                    int aux = input.nextInt();
+
+                    listRotas.get(aux).addPassageiro(listPass.get(i));
+                
+                }
+                
+                    
+                else
+                    System.out.println("Documento nao cadastrado");
             }
             
-            if(op == 2)
+            if(op == 2) //Cadastro do novo passageiro
             {
                 Passageiro temp = new Passageiro(0, "", 0, 0, 0, "");
                 temp = criarPass();
                 listPass.add(temp);
             }
 
-            if(op == 3)
+            if(op == 3) //Cancelar compra
             {
                 int i=0;
-                while(listRotas.size()>i)
-                {
-                    System.out.println(("Numero da rota: "+i));
-                    listRotas.get(i).printInfo();
-                }
+                printRotas();
                 System.out.println("Informe a rota que voce tem a passagem");
                 int rota = input.nextInt();
 
@@ -273,40 +363,12 @@ public class Main{
             }
             
         }while(op != 0);
-            
-
         
-        
-      
-        
-
-
     }
 
-    public static void main(String[] args) {
-        
-        int tipoAcess;
+   
 
-        do
-        {
-            System.out.println("Bem vindo ao sistema de viagem de ônibus, por favor informe seu tipo de acesso (Administrador[1]/ Cliente[2]): ");
-            tipoAcess = input.nextInt();
-
-            if(tipoAcess == 1){
-                //Codigo administrador:
-                Main.programaAdm();
-                
-            }else if(tipoAcess == 2){
-                //Codigo cliente:
-                Main.programaCli();
-
-        }
-        }while(tipoAcess != 0);
-        
-
-    }
-
-    private static Onibus CriarOnibus()
+    private static Onibus CriarOnibus() //Cria um novo obj do tipo onibus
     {
         String modelo;
         int ano;
@@ -348,7 +410,7 @@ public class Main{
         return temp;
     }
 
-    private static Motorista CriarMoto()
+    private static Motorista CriarMoto() //Cria um novo obj do tipo Mototrista
     {
         String nome;
         int numero_cnh;
@@ -388,7 +450,7 @@ public class Main{
         return temp;
     }
 
-    private static Rotas CriarRota()
+    private static Rotas CriarRota() //Cria um novo obj do tipo Rotas
     {
         String origem;
         String parada;
@@ -475,7 +537,7 @@ public class Main{
 
     }
     
-    public static Passageiro criarPass()
+    public static Passageiro criarPass() //Cria um novo obj do tipo Passageiro
     {
         int doc, dia, mes, ano;
         String nome, end;
@@ -517,6 +579,15 @@ public class Main{
 
         return temp;
 
+    }
+
+    public static void printRotas() //printa as rotas cadastradas
+    {
+        for(int i = 0; i<listRotas.size(); i++)
+        {
+            System.out.println("Indice da rota: "+i);
+            listRotas.get(i).printInfo();
+        }
     }
     
 }

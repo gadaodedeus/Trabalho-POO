@@ -1,6 +1,6 @@
 import java.util.Calendar;
 
-public class Date{
+public class Date{      //Esta classe contem atributos dia/mes/ano hora:minutos
     //Atributos
     private int dia;
     private int mes;

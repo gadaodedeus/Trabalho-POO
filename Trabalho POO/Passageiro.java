@@ -22,14 +22,6 @@ public class Passageiro
         this.end = end;
     }
 
-    /*public Passageiro(int doc, String nome)
-    {
-        if(doc > 0)
-            this(doc, nome, 0, 0, 0, "");
-        else   
-            System.out.println("Dados inalidos!");
-    }*/
-
     // Setters
 
     public void setPassagem(int x, int y)
@@ -91,5 +83,16 @@ public class Passageiro
     public String getEnd()
     {
         return this.end;
+    }
+
+    //print
+
+    public void printPass()
+    {
+        System.out.println("---------------------------------");
+        System.out.println("Nome: "+this.nome);
+        System.out.println("Documento: " + this.doc);
+        System.out.println("Poltrona: "+(this.x+1)+"/"+(this.y+1));
+        System.out.println("---------------------------------");
     }
 }
