@@ -63,9 +63,10 @@ public class Main{
             System.out.println("0- Sair");
             System.out.println("------------------------------------------------");
             op = input.nextInt();
-            do{
+            while(op<0 || op>14){
                 System.out.println("Opcao invalida!!");
-            }while(op<0 || op>14);
+                op = input.nextInt();
+            }    
 
             if(op == 1) // add Onibus
             {
@@ -291,9 +292,10 @@ public class Main{
             System.out.println("0- Sair");
             System.out.println("------------------------------------------------");
             op = input.nextInt();
-            do{
+            while(op<0 || op>3){
                 System.out.println("Opcao invalida!!");
-            }while(op<0 || op>3);
+                op = input.nextInt();
+            }
 
             if(op == 1){ //Comprar passagem
                 

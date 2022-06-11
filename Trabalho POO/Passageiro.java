@@ -13,7 +13,7 @@ public class Passageiro
         if(doc > 0)
             this.doc = doc;
         else
-            System.out.println("Documento invalido!");
+            //System.out.println("Documento invalido!");
 
         this.nome = nome;
 

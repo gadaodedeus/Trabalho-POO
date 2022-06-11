@@ -11,9 +11,9 @@ public class Rotas
     private Onibus bus;
     private double valor;
     public int flag=1; //para add ou nao na array da main
-    private int assentos[][] = new int[10][4];
-    private ArrayList<Passageiro> listPass = new ArrayList<>(); //passageiros que compraram passagem
-                                                                //para esta viagem
+    private int assentos[][] = new int[10][4];                  
+    private ArrayList<Passageiro> listPass = new ArrayList<>(); //passageiros que compraram passagem para essa viagem
+                                                                
     
     // Construtores
 

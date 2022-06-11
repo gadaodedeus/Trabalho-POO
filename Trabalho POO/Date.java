@@ -13,31 +13,31 @@ public class Date{      //Esta classe contem atributos dia/mes/ano hora:minutos
     //Construtores
     public Date(int dia, int mes, int ano, int hora, int min) {
         if(dia < 1 || dia > 31){
-            System.out.println("Dia inválido, digite novamente!");
+            //System.out.println("Dia inválido, digite novamente!");
         }else{
             this.dia = dia;
         }
 
         if(mes < 1 || mes > 12){
-            System.out.println("Mês inválido, digite novamente!");
+            //System.out.println("Mês inválido, digite novamente!");
         }else{
             this.mes = mes;
         }
 
         if(ano > year){
-            System.out.println("Ano inválido, digite novamente!");
+            //System.out.println("Ano inválido, digite novamente!");
         }else{
             this.ano = ano;
         }
 
         if(hora < 0 || hora > 23){
-            System.out.println("Hora inválida, digite novamente!");
+            //System.out.println("Hora inválida, digite novamente!");
         }else{
             this.hora = hora;
         }
 
         if(min < 0 || min > 59){
-            System.out.println("Minuto inválido, digite novamente!");
+            //System.out.println("Minuto inválido, digite novamente!");
         }else{
             this.min = min;
         }
@@ -55,35 +55,35 @@ public class Date{      //Esta classe contem atributos dia/mes/ano hora:minutos
     //Setters
     public void setDia(int dia) {
         if(dia < 1 || dia > 31){
-            System.out.println("Dia inválido, digite novamente!");
+            //System.out.println("Dia inválido, digite novamente!");
         }else{
             this.dia = dia;
         }
     }
     public void setMes(int mes) {
         if(mes < 1 || mes > 12){
-            System.out.println("Mês inválido, digite novamente!");
+            //System.out.println("Mês inválido, digite novamente!");
         }else{
             this.mes = mes;
         }
     }
     public void setAno(int ano) {
         if(ano < year){
-            System.out.println("Ano inválido, digite novamente!");
+            //System.out.println("Ano inválido, digite novamente!");
         }else{
             this.ano = ano;
         }
     }
     public void setHora(int hora) {
         if(hora < 0 || hora > 23){
-            System.out.println("Hora inválida, digite novamente!");
+            //System.out.println("Hora inválida, digite novamente!");
         }else{
             this.hora = hora;
         }
     }
     public void setMin(int min) {
         if(min < 0 || min > 59){
-            System.out.println("Minuto inválido, digite novamente!");
+            //System.out.println("Minuto inválido, digite novamente!");
         }else{
             this.min = min;
         }
