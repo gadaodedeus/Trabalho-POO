@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class Cliente
 {
     private int cpf;
@@ -20,9 +22,14 @@ public class Cliente
         this.dependentes = dependentes;
     }
 
+    public Cliente(int cpf, String nome)
+    {
+        this(cpf, nome, 0, 0, 0, "", 0, "", "", 0.0, 0);
+    }
+
     public Cliente()
     {
-        this();
+        this(0, "", 0, 0, 0, "", 0, "", "", 0.0, 0);
     }
 
     //Setters
@@ -87,6 +94,25 @@ public class Cliente
     public int getDependentes()
     {
         return this.dependentes;
+    }
+
+    public void printInfo()
+    {
+        String arqCli = "Clientes.txt";
+        try
+        {
+            File arquivoCli = new File(arqCli);
+            FileWriter escritorCli = new FileWriter(arquivoCli, true); 
+            escritorCli.write("------------------------------\n");
+            escritorCli.write("CPF: "+this.getCpf()+"\n");
+            escritorCli.write("Nome: "+this.getNome()+"\n");
+            escritorCli.write("------------------------------\n");
+            escritorCli.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro!\n"+e);
+        }
     }
 
 }

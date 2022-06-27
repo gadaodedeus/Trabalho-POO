@@ -1,31 +1,74 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.*;
 
 public class Main
 {
-    //ArrayList<Vendedor> vendedores = new ArrayList<>();
-    //ArrayList<Cliente> clientes = new ArrayList<>();
     public static ArrayList<Login> cadastros = new ArrayList<>();
     public static ArrayList<String> users = new ArrayList<>();
+    public static ArrayList<Cliente> cli = new ArrayList<>();
+
+    
 
     public static void main(String[] args)
     {
         Scanner input = new Scanner(System.in);
+        String arqBoot = "boot.txt";
+        
 
-        System.out.println("\n\n\n\tBem vindo ao sistema de vendas!\n\nPara continuar faca o cadastro do gerente local");
+        int dados_arq;
+        try
+        {
+            FileReader arqLeitura = new FileReader(arqBoot);
+            BufferedReader leitor = new BufferedReader(arqLeitura);
+            dados_arq = Integer.parseInt(leitor.readLine());
+            
+            if(dados_arq != 0)
+            {
+                String user = leitor.readLine();
+                String pass = leitor.readLine();
+                int acss= Integer.parseInt(leitor.readLine());
+                Login admin = new Login(user, pass, acss);
+                cadastros.add(admin);
+                users.add(admin.getUser());
+            }
+        }
+        catch(IOException e)
+        {
+            dados_arq=0;
+        }
+            
+        if(dados_arq == 0)
+        {
+            try
+            {
+                System.out.println("\n\n\n\tBem vindo ao sistema de vendas!\n\nPara continuar faca o cadastro do gerente local");
 
+                File arq = new File(arqBoot);
+                FileWriter escritor = new FileWriter(arq, true);   
+                escritor.write("1\n");
 
-        //Este bloco deve ser executado apenas na primeira execuçao do programa
-        //////////////////////////////////////////////////////
-        Gerente gerente_local = new Gerente();
-        gerente_local = novoGerente();
-        Login admin = new Login("admin", "adminpass", 3);
-        cadastros.add(admin);
-        users.add(admin.getUser());
-        //////////////////////////////////////////////////////
+                Gerente gerente_local = new Gerente();
+                gerente_local = novoGerente();
+                Login admin = new Login("admin", "adminpass", 3);
+                cadastros.add(admin);
+                users.add(admin.getUser());
+                
+                escritor.write("admin\nadminpass\n3");
+                
+                escritor.close();
+            }
+            catch(IOException e)
+            {
+                System.out.println("Erro!\n"+e);
+            }
 
-        //Else
+        }
+            
+        //else
         //Recuperar dados nos arquivos e reconstruir os ArrayList
+        
+
         
         int flag = 1;
         int acesso = fazerLogin();
@@ -34,6 +77,8 @@ public class Main
         {
             if(log == 1)
                 acesso = fazerLogin();
+
+            System.out.println(acesso);
 
             if(acesso == 3)
                 flag = menuGerente();
@@ -70,7 +115,14 @@ public class Main
                 op = input.nextInt();
             }while(op<0 || op>10);
 
-            //if(op ==1)
+            if(op ==1)
+            {
+                Cliente temp = new Cliente();
+                temp = novoCli();
+                cli.add(temp);
+                temp.printInfo();
+            }   
+
             
             if(op == 10) return 1;
 
@@ -79,6 +131,21 @@ public class Main
         return 0;
     }
 
+    private static Cliente novoCli()
+    {
+        Scanner input = new Scanner(System.in);
+        int cpf;
+        String nome;
+        System.out.println("CPF: ");
+        cpf = input.nextInt();
+        input.nextLine();
+        System.out.println("Nome: ");
+        nome = input.nextLine();
+        Cliente temp = new Cliente(cpf, nome);
+
+
+        return temp;
+    }
 
     private static int fazerLogin()
     {
@@ -102,7 +169,6 @@ public class Main
         System.out.println("Senha: ");
         password = input.nextLine();
         
-        
         while(tentativas<3)
         {
             if(temp.getPassword().equals(password))
@@ -115,8 +181,6 @@ public class Main
             password = input.nextLine();
 
         }
-
-        
 
         if(flag)
             return temp.getAcesso();
