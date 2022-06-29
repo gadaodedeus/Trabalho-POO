@@ -117,10 +117,7 @@ public class Main
 
             if(op ==1)
             {
-                Cliente temp = new Cliente();
-                temp = novoCli();
-                cli.add(temp);
-                temp.printInfo();
+                CadastroCli();
             }   
 
             
@@ -131,6 +128,14 @@ public class Main
         return 0;
     }
 
+    public static void CadastroCli()
+    {
+        Cliente temp = new Cliente();
+        temp = novoCli();
+        cli.add(temp);
+        temp.printInfo();
+    }
+    
     private static Cliente novoCli()
     {
         Scanner input = new Scanner(System.in);
@@ -278,6 +283,8 @@ public class Main
         
         return temp;
     }
+
+    
 
 }
 
