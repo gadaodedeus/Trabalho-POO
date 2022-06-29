@@ -24,7 +24,7 @@ public class Veiculo
 
     public Veiculo()
     {
-        this(0, "", "", 0, 0.0, "", 0.0, 0);
+        this(0, "", "", 0, 0.0, "", 0.0, false);
     }
 
     //Setters
