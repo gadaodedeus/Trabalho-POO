@@ -14,7 +14,7 @@ public class Main
     {
         Scanner input = new Scanner(System.in);
         String arqBoot = "boot.txt";
-        
+        String arqCli = "Clientes.txt";
 
         int dados_arq;
         try
@@ -31,6 +31,8 @@ public class Main
                 Login admin = new Login(user, pass, acss);
                 cadastros.add(admin);
                 users.add(admin.getUser());
+
+                backupCli();
             }
         }
         catch(IOException e)
@@ -53,10 +55,13 @@ public class Main
                 Login admin = new Login("admin", "adminpass", 3);
                 cadastros.add(admin);
                 users.add(admin.getUser());
-                
                 escritor.write("admin\nadminpass\n3");
-                
                 escritor.close();
+
+                //File arquivoCli = new File(arqCli);
+                //FileWriter escritor = new FileWriter(arquivoCli, true);   
+                //escritor.write("1\n");
+                //escritor.close();
             }
             catch(IOException e)
             {
@@ -82,6 +87,7 @@ public class Main
 
             if(acesso == 3)
                 flag = menuGerente();
+
             
             log = 1;
         }while(acesso != 0 && flag == 1);
@@ -100,53 +106,146 @@ public class Main
             System.out.println("1- Cadastrar Cliente");
             System.out.println("2- Alterar Cliente");
             System.out.println("3- Excluir Cliente");
-            System.out.println("4- Cadastrar Funcionario");
-            System.out.println("5- Alterar Funcionario");
-            System.out.println("6- Excluir Funcionario");
-            System.out.println("7- Cadastrar Veiculo");
-            System.out.println("8- Alterar Veiculo");
-            System.out.println("9- Excluir Veiculo");
-            System.out.println("10- Trocar Login");
+            System.out.println("4- Mostrar Clientes");
+
+            System.out.println("5- Cadastrar Funcionario");
+            System.out.println("6- Alterar Funcionario");
+            System.out.println("7- Excluir Funcionario");
+            System.out.println("8- Mostrar Funcionarios");
+
+            System.out.println("9- Cadastrar Veiculo");
+            System.out.println("10- Alterar Veiculo");
+            System.out.println("11- Excluir Veiculo");
+            System.out.println("12- Mostrar Veiculos");
+
+            System.out.println("13- Trocar Login");
             System.out.println("0- Sair");
             System.out.println("-----------------------------------");
             do
             {
                 System.out.println("Selecione uma opcao!");
                 op = input.nextInt();
-            }while(op<0 || op>10);
+            }while(op<0 || op>13);
 
             if(op ==1)
             {
-                CadastroCli();
+                Cliente temp = new Cliente();
+                temp = novoCli();
+                cli.add(temp);
+                temp.printArq();
             }   
 
+            //op 2 e 3
+
+            if(op == 4)
+            {
+                int i=0;
+                
+                while(cli.size() > i)
+                {
+                    cli.get(i).printInfo();
+                    i++;
+                }
+            }
             
-            if(op == 10) return 1;
+            if(op == 13) return 1;
 
             if(op == 0) return 0;
         }
         return 0;
     }
 
-    public static void CadastroCli()
+    public static void backupCli()
     {
-        Cliente temp = new Cliente();
-        temp = novoCli();
-        cli.add(temp);
-        temp.printInfo();
+        int on;
+        String arqCli = "Clientes.txt";
+
+        try
+        {
+            FileReader arqLeitura = new FileReader(arqCli);
+            BufferedReader leitor = new BufferedReader(arqLeitura);
+            String lin;
+
+            while(leitor.readLine() != null)
+            {
+                int cpf;
+                String nome;
+                int auxdata, dia, mes, ano, num;
+                String rua, bairro, cidade;
+                double renda;
+                int dependentes;
+
+                cpf = Integer.parseInt(leitor.readLine());
+                nome = leitor.readLine();
+                auxdata = Integer.parseInt(leitor.readLine());
+                ano = auxdata%10000;
+                auxdata = auxdata/10000;
+                mes = auxdata%100;
+                auxdata = auxdata/100;
+                dia = auxdata;
+                rua = leitor.readLine();
+                num = Integer.parseInt(leitor.readLine());
+                bairro = leitor.readLine();
+                cidade = leitor.readLine();
+                renda = Double.parseDouble(leitor.readLine());
+                dependentes = Integer.parseInt(leitor.readLine());
+
+                Cliente temp = new Cliente(cpf, nome, dia, mes, ano, rua, num, bairro, cidade, renda, dependentes);
+                cli.add(temp);
+
+                
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("ERRO!\n"+e);
+        }
     }
-    
+
     private static Cliente novoCli()
     {
         Scanner input = new Scanner(System.in);
         int cpf;
         String nome;
+        int dia, mes, ano, num;
+        String rua, bairro, cidade;
+        double renda;
+        int dependentes;
+
         System.out.println("CPF: ");
         cpf = input.nextInt();
+
         input.nextLine();
         System.out.println("Nome: ");
         nome = input.nextLine();
-        Cliente temp = new Cliente(cpf, nome);
+
+        System.out.println("Dia: ");
+        dia = input.nextInt();
+        System.out.println("Mes: ");
+        mes = input.nextInt();
+        System.out.println("Ano: ");
+        ano = input.nextInt();
+
+        input.nextLine();
+        System.out.println("Rua: ");
+        rua = input.nextLine();
+        System.out.println("Numero: ");
+        num = input.nextInt();
+        input.nextLine();
+        System.out.println("Bairro: ");
+        bairro = input.nextLine();
+        System.out.println("Cidade: ");
+        cidade = input.nextLine();
+
+        System.out.println("Renda: ");
+        renda = input.nextDouble();
+
+        System.out.println("Dependentes: ");
+        dependentes = input.nextInt();
+
+
+
+        Cliente temp = new Cliente(cpf, nome, dia, mes, ano, rua, num, bairro, cidade, renda, dependentes);
 
 
         return temp;

@@ -96,23 +96,47 @@ public class Cliente
         return this.dependentes;
     }
 
-    public void printInfo()
+    public void printArq()
     {
         String arqCli = "Clientes.txt";
         try
         {
+            Date dataux = new Date();
+            Endereco endaux = new Endereco();
             File arquivoCli = new File(arqCli);
             FileWriter escritorCli = new FileWriter(arquivoCli, true); 
-            escritorCli.write("------------------------------\n");
-            escritorCli.write("CPF: "+this.getCpf()+"\n");
-            escritorCli.write("Nome: "+this.getNome()+"\n");
-            escritorCli.write("------------------------------\n");
+            //escritorCli.write("------------------------------\n");
+            escritorCli.write("1\n");
+            escritorCli.write(this.getCpf()+"\n");
+            escritorCli.write(this.getNome()+"\n");
+            dataux = getDataNascimento();
+            escritorCli.write(dataux.getDia()+dataux.getMes()+dataux.getAno()+"\n");
+            endaux = getEndereco();
+            escritorCli.write(endaux.getRua()+"\n");
+            escritorCli.write(endaux.getNum()+"\n");
+            escritorCli.write(endaux.getBairro()+"\n");
+            escritorCli.write(endaux.getCidade()+"\n");
+            escritorCli.write(this.getRenda()+"\n");
+            escritorCli.write(this.getDependentes()+"\n");
+            //escritorCli.write("------------------------------\n");
             escritorCli.close();
         }
         catch(IOException e)
         {
             System.out.println("Erro!\n"+e);
         }
+    }
+
+    public void printInfo()
+    {
+        System.out.println("------------------------------\n");
+        System.out.println("CPF: "+getCpf());
+        System.out.println("Nome: "+getNome());
+        System.out.println("Data Nascimento: "+getDataNascimento().getDia()+"/"+getDataNascimento().getMes()+"/"+getDataNascimento().getAno());
+        System.out.println("Endereco: \n"+getEndereco().getRua()+", "+getEndereco().getNum()+"\n"+getEndereco().getBairro()+", "+getEndereco().getCidade());
+        System.out.println("Renda: R$"+getRenda());
+        System.out.println("Dependentes: "+getDependentes());
+        System.out.println("------------------------------\n");
     }
 
 }
