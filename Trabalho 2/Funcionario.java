@@ -1,35 +1,13 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Funcionario{
+public abstract class Funcionario{
   protected int rg;
   protected String nome;
   protected double salario;
   protected Date data_nasc;
   protected Date data_admi;
-  protected int acesso;       //1: Cliente //2: Vendedor //3: Gerente
   protected Login log;
-
-  //construtores
-  public Funcionario(int rg, String nome, double salario, int dia_nasc, int mes_nasc, int ano_nasc, int dia_admi, int mes_admi, int ano_admi, int acesso)
-  {
-    this.rg=rg;
-    this.nome=nome;
-    this.salario=salario;
-    this.data_nasc= new Date(dia_nasc, mes_nasc, ano_nasc);
-    this.data_admi= new Date(dia_admi, mes_admi, ano_admi);
-    this.acesso = acesso;
-  }
-
-  public Funcionario(int rg,String nome, double salario)
-  {
-    this(rg, nome, salario, 1, 1, 1, 1, 1, 1,1);
-  }
-
-  public Funcionario()
-  {
-    this(0,"", 0.0,1,1,1,1,1,1,1);
-  }
 
   //setters
   public void setLogin(Login x)
