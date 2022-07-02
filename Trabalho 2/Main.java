@@ -138,124 +138,7 @@ public class Main
             if(op == 2)
             {
                 if(cli.size() > 0)
-                {
-                    int ind, opCli;
-                    printCli();
-                    System.out.println("Informe o indice do cliente que deseja alterar as informacoes");
-                    ind = input.nextInt();
-                    Cliente temp = new Cliente();
-                    temp = cli.get(ind);
-                    System.out.println("1- CPF");
-                    System.out.println("2- Nome");
-                    System.out.println("3- Data de Nascimento");
-                        System.out.println("4- Endereco");
-                    System.out.println("5- Renda");
-                    System.out.println("6- Dependentes");
-                    do
-                    {
-                        System.out.println("Escolha a informacao que sera alterada: ");
-                        op = input.nextInt();
-                    }while(op<1 || op>6);
-
-                    if(op == 1)
-                    {
-                        int tempcpf;
-                        do
-                        {
-                            System.out.println("Informe o novo CPF:");
-                            tempcpf = input.nextInt();
-                        }while(tempcpf < 0);
-                        
-                        temp.setCpf(tempcpf);
-                    }
-
-                    if(op == 2)
-                    {
-                        String tempnome;
-                        input.nextLine();
-                        System.out.println("Informe o novo nome:");
-                        tempnome = input.nextLine();
-                        temp.setNome(tempnome);
-                    }
-
-                    if(op == 3)
-                    {
-                        int tempdia, tempmes, tempano;
-                        System.out.println("Informe a nova data de nascimento");
-                        do
-                        {
-                            System.out.println("Dia:");
-                            tempdia = input.nextInt();
-                        }while(tempdia<1 || tempdia>31);
-
-                        do
-                        {
-                            System.out.println("Mes:");
-                            tempmes = input.nextInt();
-                        }while(tempmes<1 || tempmes>12);
-                    
-                        do
-                        {
-                            System.out.println("Ano:");
-                            tempano = input.nextInt();
-                        }while(tempano<1900);
-                   
-                        temp.setDataNascimento(tempdia, tempmes, tempano);
-                    }
-
-                    if(op == 4)
-                    {
-                        String temprua, tempbairro, tempcid;
-                        int tempnum;
-
-                        System.out.println("Informe o novo endereco");
-
-                        input.nextLine();
-                        System.out.println("Rua: ");
-                        temprua = input.nextLine();
-
-                        do
-                        {
-                            System.out.println("Numero: ");
-                            tempnum = input.nextInt();
-                        }while(tempnum<0);
-
-                        input.nextLine();
-                        System.out.println("Bairro: ");
-                        tempbairro = input.nextLine();
-
-                        System.out.println("Cidade: ");
-                        tempcid = input.nextLine();
-
-                        temp.setEndereco(temprua, tempnum, tempbairro, tempcid);
-                    }
-
-                    if(op == 5)
-                    {
-                        double temprenda;
-                        do
-                        {
-                            System.out.println("Informe a nova renda: ");
-                            temprenda = input.nextDouble();
-                        }while(temprenda<0.0);
-                        temp.setRenda(temprenda);
-                    }
-
-                    if(op == 6)
-                    {
-                        int tempdep;
-                        do
-                        {
-                            System.out.println("Informe o novo numero de dependentes: ");
-                            tempdep = input.nextInt();
-                        }while(tempdep<0);
-                        temp.setDependentes(tempdep);
-                    }
-
-                    cli.set(ind, temp);
-                    printCliArq();
-
-                }  
+                    alterarCli();  
                 else
                     System.out.println("Nao ha clientes cadastrados");
             } 
@@ -307,6 +190,125 @@ public class Main
             if(op == 0) return 0;
         }
         return 0;
+    }
+
+    public static void alterarCli()
+    {
+        int ind, opCli;
+        printCli();
+        System.out.println("Informe o indice do cliente que deseja alterar as informacoes");
+        ind = input.nextInt();
+        Cliente temp = new Cliente();
+        temp = cli.get(ind);
+        System.out.println("1- CPF");
+        System.out.println("2- Nome");
+        System.out.println("3- Data de Nascimento");
+        System.out.println("4- Endereco");
+        System.out.println("5- Renda");
+        System.out.println("6- Dependentes");
+        do
+        {
+            System.out.println("Escolha a informacao que sera alterada: ");
+            op = input.nextInt();
+        }while(op<1 || op>6);
+
+        if(op == 1)
+        {
+            int tempcpf;
+            do
+            {
+                System.out.println("Informe o novo CPF:");
+                tempcpf = input.nextInt();
+            }while(tempcpf < 0);
+                        
+            temp.setCpf(tempcpf);
+        }
+
+        if(op == 2)
+        {
+            String tempnome;
+            input.nextLine();
+            System.out.println("Informe o novo nome:");
+            tempnome = input.nextLine();
+            temp.setNome(tempnome);
+        }
+
+        if(op == 3)
+        {
+            int tempdia, tempmes, tempano;
+            System.out.println("Informe a nova data de nascimento");
+            do
+            {
+                System.out.println("Dia:");
+                tempdia = input.nextInt();
+            }while(tempdia<1 || tempdia>31);
+
+            do
+            {
+                System.out.println("Mes:");
+                tempmes = input.nextInt();
+            }while(tempmes<1 || tempmes>12);
+                    
+            do
+            {
+                System.out.println("Ano:");
+                tempano = input.nextInt();
+            }while(tempano<1900);
+                   
+            temp.setDataNascimento(tempdia, tempmes, tempano);
+        }
+
+        if(op == 4)
+        {
+            String temprua, tempbairro, tempcid;
+            int tempnum;
+
+            System.out.println("Informe o novo endereco");
+
+            input.nextLine();
+            System.out.println("Rua: ");
+            temprua = input.nextLine();
+
+            do
+            {
+                System.out.println("Numero: ");
+                tempnum = input.nextInt();
+            }while(tempnum<0);
+
+            input.nextLine();
+            System.out.println("Bairro: ");
+            tempbairro = input.nextLine();
+
+            System.out.println("Cidade: ");
+            tempcid = input.nextLine();
+
+            temp.setEndereco(temprua, tempnum, tempbairro, tempcid);
+        }
+
+        if(op == 5)
+        {
+            double temprenda;
+            do
+            {
+                System.out.println("Informe a nova renda: ");
+                temprenda = input.nextDouble();
+            }while(temprenda<0.0);
+            temp.setRenda(temprenda);
+        }
+
+        if(op == 6)
+        {
+            int tempdep;
+            do
+            {
+                System.out.println("Informe o novo numero de dependentes: ");
+                tempdep = input.nextInt();
+            }while(tempdep<0);
+            temp.setDependentes(tempdep);
+        }
+
+        cli.set(ind, temp);
+        printCliArq();
     }
 
     public static void printCliArq()
