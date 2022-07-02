@@ -96,7 +96,7 @@ public class Cliente
         return this.dependentes;
     }
 
-    public void printArq()
+    public void printArq(boolean x)
     {
         String arqCli = "Clientes.txt";
         try
@@ -104,13 +104,16 @@ public class Cliente
             Date dataux = new Date();
             Endereco endaux = new Endereco();
             File arquivoCli = new File(arqCli);
-            FileWriter escritorCli = new FileWriter(arquivoCli, true); 
+            FileWriter escritorCli = new FileWriter(arquivoCli, x); 
+            
             //escritorCli.write("------------------------------\n");
             escritorCli.write("1\n");
             escritorCli.write(this.getCpf()+"\n");
             escritorCli.write(this.getNome()+"\n");
             dataux = getDataNascimento();
-            escritorCli.write(dataux.getDia()+dataux.getMes()+dataux.getAno()+"\n");
+            escritorCli.write(dataux.getDia()+"\n");
+            escritorCli.write(dataux.getMes()+"\n");
+            escritorCli.write(dataux.getAno()+"\n");
             endaux = getEndereco();
             escritorCli.write(endaux.getRua()+"\n");
             escritorCli.write(endaux.getNum()+"\n");

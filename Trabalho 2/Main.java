@@ -132,27 +132,207 @@ public class Main
                 Cliente temp = new Cliente();
                 temp = novoCli();
                 cli.add(temp);
-                temp.printArq();
+                temp.printArq(true);
             }   
 
-            //op 2 e 3
+            if(op == 2)
+            {
+                if(cli.size() > 0)
+                {
+                    int ind, opCli;
+                    printCli();
+                    System.out.println("Informe o indice do cliente que deseja alterar as informacoes");
+                    ind = input.nextInt();
+                    Cliente temp = new Cliente();
+                    temp = cli.get(ind);
+                    System.out.println("1- CPF");
+                    System.out.println("2- Nome");
+                    System.out.println("3- Data de Nascimento");
+                        System.out.println("4- Endereco");
+                    System.out.println("5- Renda");
+                    System.out.println("6- Dependentes");
+                    do
+                    {
+                        System.out.println("Escolha a informacao que sera alterada: ");
+                        op = input.nextInt();
+                    }while(op<1 || op>6);
+
+                    if(op == 1)
+                    {
+                        int tempcpf;
+                        do
+                        {
+                            System.out.println("Informe o novo CPF:");
+                            tempcpf = input.nextInt();
+                        }while(tempcpf < 0);
+                        
+                        temp.setCpf(tempcpf);
+                    }
+
+                    if(op == 2)
+                    {
+                        String tempnome;
+                        input.nextLine();
+                        System.out.println("Informe o novo nome:");
+                        tempnome = input.nextLine();
+                        temp.setNome(tempnome);
+                    }
+
+                    if(op == 3)
+                    {
+                        int tempdia, tempmes, tempano;
+                        System.out.println("Informe a nova data de nascimento");
+                        do
+                        {
+                            System.out.println("Dia:");
+                            tempdia = input.nextInt();
+                        }while(tempdia<1 || tempdia>31);
+
+                        do
+                        {
+                            System.out.println("Mes:");
+                            tempmes = input.nextInt();
+                        }while(tempmes<1 || tempmes>12);
+                    
+                        do
+                        {
+                            System.out.println("Ano:");
+                            tempano = input.nextInt();
+                        }while(tempano<1900);
+                   
+                        temp.setDataNascimento(tempdia, tempmes, tempano);
+                    }
+
+                    if(op == 4)
+                    {
+                        String temprua, tempbairro, tempcid;
+                        int tempnum;
+
+                        System.out.println("Informe o novo endereco");
+
+                        input.nextLine();
+                        System.out.println("Rua: ");
+                        temprua = input.nextLine();
+
+                        do
+                        {
+                            System.out.println("Numero: ");
+                            tempnum = input.nextInt();
+                        }while(tempnum<0);
+
+                        input.nextLine();
+                        System.out.println("Bairro: ");
+                        tempbairro = input.nextLine();
+
+                        System.out.println("Cidade: ");
+                        tempcid = input.nextLine();
+
+                        temp.setEndereco(temprua, tempnum, tempbairro, tempcid);
+                    }
+
+                    if(op == 5)
+                    {
+                        double temprenda;
+                        do
+                        {
+                            System.out.println("Informe a nova renda: ");
+                            temprenda = input.nextDouble();
+                        }while(temprenda<0.0);
+                        temp.setRenda(temprenda);
+                    }
+
+                    if(op == 6)
+                    {
+                        int tempdep;
+                        do
+                        {
+                            System.out.println("Informe o novo numero de dependentes: ");
+                            tempdep = input.nextInt();
+                        }while(tempdep<0);
+                        temp.setDependentes(tempdep);
+                    }
+
+                    cli.set(ind, temp);
+                    printCliArq();
+
+                }  
+                else
+                    System.out.println("Nao ha clientes cadastrados");
+            } 
+
+            if(op == 3)
+            {
+                if(cli.size() == 0)
+                    System.out.println("Nao ha clientes cadastrados");
+
+                else if(cli.size() == 1)
+                {
+                    String arqCli = "Clientes.txt";
+                    cli.removeAll(cli);
+                    try
+                    {
+                        File arquivoCli = new File(arqCli);
+                        FileWriter escritorCli = new FileWriter(arquivoCli, false); 
+                    }
+                    catch(IOException e)
+                    {
+                        System.out.println(e);
+                    }
+                }
+                else
+                {
+                    int ind;
+                    printCli();
+                    System.out.println("Informe o indice do cliente a ser removido: ");
+                    ind = input.nextInt();
+                    Cliente temp = new Cliente();
+                    temp = cli.remove(ind);
+                    printCliArq();
+                }
+                
+            }
 
             if(op == 4)
             {
-                int i=0;
-                
-                while(cli.size() > i)
-                {
-                    cli.get(i).printInfo();
-                    i++;
-                }
-            }
+                if(cli.size() > 0)
+                    printCli();
+                else
+                    System.out.println("Nao ha clientes cadastrados");
+            } 
+
+
             
             if(op == 13) return 1;
 
             if(op == 0) return 0;
         }
         return 0;
+    }
+
+    public static void printCliArq()
+    {
+        int i=0;
+
+        cli.get(i).printArq(false);
+        i++;
+                
+        while(cli.size() > i)
+        {
+            cli.get(i).printArq(true);
+            i++;
+        }
+    }
+
+    public static void printCli()
+    {
+        int i=0;
+                
+        while(cli.size() > i)
+        {
+            System.out.println(i);
+            cli.get(i).printInfo();
+            i++;
+        }
     }
 
     public static void backupCli()
@@ -170,19 +350,16 @@ public class Main
             {
                 int cpf;
                 String nome;
-                int auxdata, dia, mes, ano, num;
+                int dia, mes, ano, num;
                 String rua, bairro, cidade;
                 double renda;
                 int dependentes;
 
                 cpf = Integer.parseInt(leitor.readLine());
                 nome = leitor.readLine();
-                auxdata = Integer.parseInt(leitor.readLine());
-                ano = auxdata%10000;
-                auxdata = auxdata/10000;
-                mes = auxdata%100;
-                auxdata = auxdata/100;
-                dia = auxdata;
+                dia = Integer.parseInt(leitor.readLine());
+                mes = Integer.parseInt(leitor.readLine());
+                ano = Integer.parseInt(leitor.readLine());
                 rua = leitor.readLine();
                 num = Integer.parseInt(leitor.readLine());
                 bairro = leitor.readLine();
