@@ -91,8 +91,7 @@ public class Main
             
             log = 1;
         }while(acesso != 0 && flag == 1);
-
-        
+        printCliArq();        
     }
 
     private static int menuGerente()
@@ -132,7 +131,6 @@ public class Main
                 Cliente temp = new Cliente();
                 temp = novoCli();
                 cli.add(temp);
-                temp.printArq(true);
             }   
 
             if(op == 2)
@@ -149,19 +147,8 @@ public class Main
                     System.out.println("Nao ha clientes cadastrados");
 
                 else if(cli.size() == 1)
-                {
-                    String arqCli = "Clientes.txt";
                     cli.removeAll(cli);
-                    try
-                    {
-                        File arquivoCli = new File(arqCli);
-                        FileWriter escritorCli = new FileWriter(arquivoCli, false); 
-                    }
-                    catch(IOException e)
-                    {
-                        System.out.println(e);
-                    }
-                }
+                
                 else
                 {
                     int ind;
@@ -170,7 +157,6 @@ public class Main
                     ind = input.nextInt();
                     Cliente temp = new Cliente();
                     temp = cli.remove(ind);
-                    printCliArq();
                 }
                 
             }
@@ -194,6 +180,7 @@ public class Main
 
     public static void alterarCli()
     {
+        Scanner input = new Scanner(System.in);
         int ind, opCli;
         printCli();
         System.out.println("Informe o indice do cliente que deseja alterar as informacoes");
@@ -209,10 +196,10 @@ public class Main
         do
         {
             System.out.println("Escolha a informacao que sera alterada: ");
-            op = input.nextInt();
-        }while(op<1 || op>6);
+            opCli = input.nextInt();
+        }while(opCli<1 || opCli>6);
 
-        if(op == 1)
+        if(opCli == 1)
         {
             int tempcpf;
             do
@@ -224,7 +211,7 @@ public class Main
             temp.setCpf(tempcpf);
         }
 
-        if(op == 2)
+        if(opCli == 2)
         {
             String tempnome;
             input.nextLine();
@@ -233,7 +220,7 @@ public class Main
             temp.setNome(tempnome);
         }
 
-        if(op == 3)
+        if(opCli == 3)
         {
             int tempdia, tempmes, tempano;
             System.out.println("Informe a nova data de nascimento");
@@ -258,7 +245,7 @@ public class Main
             temp.setDataNascimento(tempdia, tempmes, tempano);
         }
 
-        if(op == 4)
+        if(opCli == 4)
         {
             String temprua, tempbairro, tempcid;
             int tempnum;
@@ -285,7 +272,7 @@ public class Main
             temp.setEndereco(temprua, tempnum, tempbairro, tempcid);
         }
 
-        if(op == 5)
+        if(opCli == 5)
         {
             double temprenda;
             do
@@ -296,7 +283,7 @@ public class Main
             temp.setRenda(temprenda);
         }
 
-        if(op == 6)
+        if(opCli == 6)
         {
             int tempdep;
             do
@@ -308,7 +295,6 @@ public class Main
         }
 
         cli.set(ind, temp);
-        printCliArq();
     }
 
     public static void printCliArq()
