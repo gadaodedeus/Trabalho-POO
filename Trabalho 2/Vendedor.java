@@ -22,6 +22,31 @@ public class Vendedor extends Funcionario
     }
 
     //Setters
+    public void setRg(int rg)
+    {
+        this.rg = rg;
+    }
+
+    public void setNome(String nome)
+    {
+        this.nome = nome;
+    }
+
+    public void setSalario(double salario)
+    {
+        this.salario = salario;
+    }
+
+    public void setDataNascimento(Date nasc)
+    {
+        this.data_nasc = nasc;
+    }
+
+    public void setDataAdmi(Date admi)
+    {
+        this.data_admi = admi;
+    }
+
     public void setTempoTreino(int t)
     {
         this.t_treinamento = t;
@@ -33,6 +58,31 @@ public class Vendedor extends Funcionario
     }
 
     //Getters
+    public int getRg()
+    {
+        return this.rg;
+    }
+
+    public String getNome()
+    {
+        return this.nome;
+    }
+
+    public double getSalario()
+    {
+        return this.salario;
+    }
+
+    public Date getDataNascimento()
+    {
+        return this.data_nasc;
+    }
+
+    public Date getDataAdmi()
+    {
+        return this.data_admi;
+    }
+
     public int getTempoTreino()
     {
         return this.t_treinamento;
@@ -43,7 +93,6 @@ public class Vendedor extends Funcionario
         return this.gerente_r;
     }
 
-    
     public int getAcesso()
     {
         return this.acesso;

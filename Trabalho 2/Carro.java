@@ -93,4 +93,44 @@ public class Carro extends Veiculo{
     public void setComprimento(double comprimento) {
         this.comprimento = comprimento;
     }
+
+     public void printArq(boolean x)
+    {
+        String arqCarros = "Carros.txt";
+        try
+        {
+            File arquivoCarro = new File(arqCarros);
+            FileWriter escritorCarro = new FileWriter(arquivoCarro, x); 
+            
+            //escritorCli.write("------------------------------\n");
+            escritorCarro.write("1\n");
+            escritorCarro.write(this.getPotencia()+"\n");
+            escritorCarro.write(this.getNumCilindros()+"\n");
+            escritorCarro.write(this.getNumOcupantes()+"\n");
+            escritorCarro.write(this.getTipo()+"\n");
+            escritorCarro.write(this.getAltura()+"\n");
+            escritorCarro.write(this.getLargura()+"\n");
+            escritorCarro.write(this.getComprimento()+"\n");
+            //escritorCli.write("------------------------------\n");
+            escritorCarro.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro!\n"+e);
+        }
+    }
+
+    public void printInfo()
+    {
+        System.out.println("------------------------------\n");
+        System.out.println("Potencia: "+getPotencia());
+        System.out.println("Numero de cilindros: "+ getNumCilindros());
+        System.out.println("Numero de ocupantes: "+ getNumOcupantes());
+        System.out.println("Tipo: " + getTipo());
+        System.out.println("Altura: "+getAltura());
+        System.out.println("Largura: "+getLargura());
+        System.out.println("Comprimento: " + getComprimento());
+        System.out.println("------------------------------\n");
+    }
+
 }

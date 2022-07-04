@@ -7,6 +7,9 @@ public class Main
     public static ArrayList<Login> cadastros = new ArrayList<>();
     public static ArrayList<String> users = new ArrayList<>();
     public static ArrayList<Cliente> cli = new ArrayList<>();
+    public static ArrayList<Vendedor> vend = new ArrayList<>();
+    public static ArrayList<Carro> carros = new ArrayList<>();
+    public static ArrayList<Motocicleta> motos = new ArrayList<>();
 
     
 
@@ -95,6 +98,7 @@ public class Main
             
             log = 1;
         }while(acesso != 0 && flag == 1);
+
         printCliArq();        
     }
 
@@ -177,11 +181,12 @@ public class Main
                     System.out.println("Nao ha clientes cadastrados");
             } 
 
-            if(op == 5) //Cadastrar Vendedor
+            if(op == 5)
             {
-
+                //novoVend();
             }
 
+            
 
             if(op == 13) 
             {
@@ -229,6 +234,137 @@ public class Main
             if(op == 0) return 0;
         }
         return 0;
+    }
+
+    //Vendedor
+    
+    public static void alterarVend()
+    {
+        Scanner input = new Scanner(System.in);
+        int ind, opVend;
+
+        printVend();
+        System.out.println("Informe o indice do vendedor que deseja alterar as informacoes");
+        ind = input.nextInt();
+        Vendedor temp = new Vendedor();
+        temp = vend.get(ind);
+
+        System.out.println("1- RG");
+        System.out.println("2- Nome");
+        System.out.println("3- Salario");
+        System.out.println("4- Data de Nascimento");
+        System.out.println("5- Data de Admissao");
+        System.out.println("6- Tempo de Treinamento");
+        System.out.println("7- Gerente");
+        do
+        {
+            System.out.println("Escolha a informacao que sera alterada: ");
+            opCli = input.nextInt();
+        }while(opCli<1 || opCli>7);
+
+        if(opCli == 1)
+        {
+            int temprg;
+            do
+            {
+                System.out.println("Informe o novo RG:");
+                temprg = input.nextInt();
+            }while(temprg < 0);
+                        
+            temp.setRg(temprg);
+        }
+
+        if(op == 2)
+        {
+            String nome;
+            System.out.println("Informe o novo nome: ");
+            nome = input.nextLine();
+            temp.setNome(nome);
+        }
+
+        if(op == 3)
+        {
+            double sal;
+            do
+            {
+                System.out.println("Informe o novo salario: ");
+                sal = input.nextDouble;    
+            }while(sal<0.0);
+            temp.setSalario(sal);
+        }
+
+        if(op == 4)
+        {
+            int tempdia, tempmes, tempano;
+            System.out.println("Informe a nova data de nascimento");
+            do
+            {
+                System.out.println("Dia:");
+                tempdia = input.nextInt();
+            }while(tempdia<1 || tempdia>31);
+
+            do
+            {
+                System.out.println("Mes:");
+                tempmes = input.nextInt();
+            }while(tempmes<1 || tempmes>12);
+                    
+            do
+            {
+                System.out.println("Ano:");
+                tempano = input.nextInt();
+            }while(tempano<1900);
+                   
+            temp.setDataNascimento(tempdia, tempmes, tempano);
+        }
+
+        if(op == 5)
+        {
+            int tempdia, tempmes, tempano;
+            System.out.println("Informe a nova data de Admicao");
+            do
+            {
+                System.out.println("Dia:");
+                tempdia = input.nextInt();
+            }while(tempdia<1 || tempdia>31);
+
+            do
+            {
+                System.out.println("Mes:");
+                tempmes = input.nextInt();
+            }while(tempmes<1 || tempmes>12);
+                    
+            do
+            {
+                System.out.println("Ano:");
+                tempano = input.nextInt();
+            }while(tempano<1900);
+                   
+            temp.setDataAdmi(tempdia, tempmes, tempano);
+        }
+
+        if(op == 6)
+        {
+            int t;
+            do
+            {
+                System.out.println("Informe o novo tempo de treinamento: ");
+                t = input.nextInt();
+            }while(t<0);
+            temp.setTempoTreino(t);
+        }
+
+        if(op == 7)
+        {
+            int opG
+            //printGerente();
+            System.out.println("Informe o indice do do novo Gerente: ");
+            opG = input.nextInt();
+            //Gerente tempg = new Gerente();
+            //tempg = ArrayGerentes.get(opG);
+            //temp.setGerente(tempg);
+        }
+
     }
 
     //Cliente
@@ -381,6 +517,60 @@ public class Main
             i++;
         }
     }
+     ////////////////////////////////////////////
+    public static void printCarroArq()
+    {
+        int i=0;
+
+        carros.get(i).printArq(false);
+        i++;
+                
+        while(carros.size() > i)
+        {
+            carros.get(i).printArq(true);
+            i++;
+        }
+    }
+
+    ////////////////////////////////////////////
+    public static void printCarro()
+    {
+        int i=0;
+                
+        while(carros.size() > i)
+        {
+            System.out.println(i);
+            carros.get(i).printInfo();
+            i++;
+        }
+    }
+    ///////////////////////////////////////////
+    public static void printMotoArq()
+    {
+        int i=0;
+
+        motos.get(i).printArq(false);
+        i++;
+                
+        while(motos.size() > i)
+        {
+            motos.get(i).printArq(true);
+            i++;
+        }
+    }    
+    ///////////////////////////////////////////
+    public static void printMoto()
+    {
+        int i=0;
+                
+        while(motos.size() > i)
+        {
+            System.out.println(i);
+            motos.get(i).printInfo();
+            i++;
+        }
+    }
+
 
     //Backup
 
@@ -430,9 +620,114 @@ public class Main
 
     //Criacao de Objetos
 
+     private static Veiculo novoVeiculo(){
+        Scanner input = new Scanner(System.in);
+        int num_chassi;
+        String marca;
+        String modelo;
+        int ano;
+        double km;
+        String tipo_comb;
+        double peso;
+        boolean status;
+
+        System.out.println("Numero do chassi: ");
+        num_chassi = input.nextInt();
+
+        System.out.println("Marca: ");
+        marca = input.nextLine();
+
+        System.out.println("Modelo: ");
+        modelo = input.nextLine();
+
+        System.out.println("Ano: ");
+        ano = input.nextInt();
+
+        System.out.println("Km: ");
+        km = input.nextDouble();
+
+        System.out.println("Tipo de combustivel: ");
+        tipo_comb = input.nextLine();
+
+        System.out.println("Peso: ");
+        peso = input.nextDouble();
+        
+        System.out.println("Status: ");
+        status = input.nextBoolean();
+
+        Veiculo temp = new Veiculo(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status);
+
+        return temp;
+    }
+
     private static Vendedor novoVend()
     {
+        scanner input = new Scanner(system.in);
+        int rg;
+        String nome;
+        double salario;
+        int dia_nasc, mes_nasc, ano_nasc;
+        int dia_admi, mes_admi, ano_admi;
+        int t_treinamento;
+        Gerente temp;
+        int indice;
+
+        do{
+        System.out.println("Rg: ");
+        rg = input.nextInt();
+        }while(rg<0);
+
+        input.nextLine();
+        System.out.println("Nome: ");
+        nome = input.nextLine();
+
+        do{
+        System.out.println("Dia do nascimento: ");
+        dia_nasc = input.nextInt();
+        }while(dia_nasc < 1 || dia_nasc > 31);
+        do{
+        System.out.println("Mes do nascimento: ");
+        mes_nasc = input.nextInt();
+        }while(mes_nasc < 1 || mes_nasc > 12);
+        do{
+        System.out.println("Ano do nascimento: ");
+        ano_nasc = input.nextInt();
+        }while(ano_nasc < 1900 || ano_nasc > 2006);
+
+        do{
+        System.out.println("Dia da admissao: ");
+        dia_admi = input.nextInt();
+        }while(dia_admi < 1 || dia_admi >31);
+        do{
+        System.out.println("Mes da admissao: ");
+        mes_admi = input.nextInt();
+        }while(mes_admi < 1 || mes_admi > 12);
+        do{
+        System.out.println("Ano da admissao: ");
+        ano_admi = input.nextInt();
+        }while(ano_admi < ano<nasc || ano_admi < 1900);
+
+        do{
+        System.out.println("Tempo de treinamento: ");
+        t_treinamento = input.nextInt();
+        }while(t_treinamento < 1);
+
+        input.nextLine();
+        System.out.println("Gerente responsavel: ");
+        //printGerente()
+        System.out.println("Informe o indice do gerente: ");
+        indice = input.nextInt();
+
+        Gerente temp = new Gerente();
+        //temp = ArrayGerente.get(indice);
+
+        //menuzinho dos gerentes
         
+        
+        
+        Vendedor temp = new Vendedor(rg, nome, salario, dia_nasc, mes_nasc, ano_nasc, dia_admi, mes_admi, ano_admi, t_treinamento, temp);
+
+        return temp;
     }
 
     private static Cliente novoCli()
@@ -445,36 +740,63 @@ public class Main
         double renda;
         int dependentes;
 
-        System.out.println("CPF: ");
-        cpf = input.nextInt();
+        do
+        {
+            System.out.println("CPF: ");
+            cpf = input.nextInt();
+        }while(cpf < 1);
+       
 
         input.nextLine();
         System.out.println("Nome: ");
         nome = input.nextLine();
 
-        System.out.println("Dia: ");
-        dia = input.nextInt();
-        System.out.println("Mes: ");
-        mes = input.nextInt();
-        System.out.println("Ano: ");
-        ano = input.nextInt();
+        do
+        {
+            System.out.println("Dia: ");
+            dia = input.nextInt();
+        }while(dia<1 || dia>31);
+        
+        do
+        {
+            System.out.println("Mes: ");
+            mes = input.nextInt();
+        }while(mes<1 || mes>12);
+        
+        do
+        {
+            System.out.println("Ano: ");
+            ano = input.nextInt();
+        }while(ano<1900);
+        
 
         input.nextLine();
         System.out.println("Rua: ");
         rua = input.nextLine();
-        System.out.println("Numero: ");
-        num = input.nextInt();
+        do
+        {
+            System.out.println("Numero: ");
+            num = input.nextInt();
+        }while(num<1);
+        
         input.nextLine();
         System.out.println("Bairro: ");
         bairro = input.nextLine();
         System.out.println("Cidade: ");
         cidade = input.nextLine();
 
-        System.out.println("Renda: ");
-        renda = input.nextDouble();
+        do
+        {
+            System.out.println("Renda: ");
+            renda = input.nextDouble();
+        }while(renda<0.0);        
 
-        System.out.println("Dependentes: ");
-        dependentes = input.nextInt();
+        do
+        {
+            System.out.println("Dependentes: ");
+            dependentes = input.nextInt();
+        }while(dependentes<0);
+
 
 
 

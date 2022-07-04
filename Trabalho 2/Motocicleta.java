@@ -36,4 +36,33 @@ public class Motocicleta extends Veiculo{
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    public void printArq(boolean x)
+    {
+        String arqMotos = "Motos.txt";
+        try
+        {
+            File arquivoMotos = new File(arqMotos);
+            FileWriter escritorMoto = new FileWriter(arquivoMotos, x); 
+            
+            //escritorCli.write("------------------------------\n");
+            escritorMoto.write("1\n");
+            escritorMoto.write(this.getCilindradas()+"\n");
+            escritorMoto.write(this.getTipo()+"\n");
+            //escritorCli.write("------------------------------\n");
+            escritorMoto.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro!\n"+e);
+        }
+    }
+
+    public void printInfo()
+    {
+        System.out.println("------------------------------\n");
+        System.out.println("Cilindradas: "+ getCilindradas());
+        System.out.println("Tipo: " + getTipo());
+        System.out.println("------------------------------\n");
+    }
 }
