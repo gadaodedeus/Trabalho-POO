@@ -28,6 +28,7 @@ public class Main
                 String user = leitor.readLine();
                 String pass = leitor.readLine();
                 int acss= Integer.parseInt(leitor.readLine());
+                
                 Login admin = new Login(user, pass, acss);
                 cadastros.add(admin);
                 users.add(admin.getUser());
@@ -59,7 +60,7 @@ public class Main
                 escritor.close();
 
                 //File arquivoCli = new File(arqCli);
-                //FileWriter escritor = new FileWriter(arquivoCli, true);   
+                //FileWriter escritor = new FileWriter(arquivoCli, true);      
                 //escritor.write("1\n");
                 //escritor.close();
             }
@@ -85,6 +86,9 @@ public class Main
 
             System.out.println(acesso);
 
+            if(acesso == 2)
+                flag = menuVendedor(false);
+
             if(acesso == 3)
                 flag = menuGerente();
 
@@ -94,6 +98,9 @@ public class Main
         printCliArq();        
     }
 
+
+    //Menus 
+
     private static int menuGerente()
     {
         Scanner input = new Scanner(System.in);
@@ -101,39 +108,40 @@ public class Main
         boolean on = true;
         while(on)
         {
-            System.out.println("-----------------------------------");
+            System.out.println("-----------Menu do Gerente---------");
             System.out.println("1- Cadastrar Cliente");
             System.out.println("2- Alterar Cliente");
             System.out.println("3- Excluir Cliente");
             System.out.println("4- Mostrar Clientes");
 
-            System.out.println("5- Cadastrar Funcionario");
-            System.out.println("6- Alterar Funcionario");
-            System.out.println("7- Excluir Funcionario");
-            System.out.println("8- Mostrar Funcionarios");
+            System.out.println("5- Cadastrar Vendedor");
+            System.out.println("6- Alterar Vendedor");
+            System.out.println("7- Excluir Vendedor");
+            System.out.println("8- Mostrar Vendedor");
 
             System.out.println("9- Cadastrar Veiculo");
             System.out.println("10- Alterar Veiculo");
             System.out.println("11- Excluir Veiculo");
             System.out.println("12- Mostrar Veiculos");
 
-            System.out.println("13- Trocar Login");
+            System.out.println("13- Mais opcoes");
+            System.out.println("14- Trocar Login");
             System.out.println("0- Sair");
             System.out.println("-----------------------------------");
             do
             {
                 System.out.println("Selecione uma opcao!");
                 op = input.nextInt();
-            }while(op<0 || op>13);
+            }while(op<0 || op>14);
 
-            if(op ==1)
+            if(op ==1)  //Cadastrar cliente
             {
                 Cliente temp = new Cliente();
                 temp = novoCli();
                 cli.add(temp);
             }   
 
-            if(op == 2)
+            if(op == 2) //Alterar cliente
             {
                 if(cli.size() > 0)
                     alterarCli();  
@@ -141,7 +149,7 @@ public class Main
                     System.out.println("Nao ha clientes cadastrados");
             } 
 
-            if(op == 3)
+            if(op == 3) //Excluir cliente
             {
                 if(cli.size() == 0)
                     System.out.println("Nao ha clientes cadastrados");
@@ -161,7 +169,7 @@ public class Main
                 
             }
 
-            if(op == 4)
+            if(op == 4) //Mostrar cliente
             {
                 if(cli.size() > 0)
                     printCli();
@@ -169,14 +177,61 @@ public class Main
                     System.out.println("Nao ha clientes cadastrados");
             } 
 
+            if(op == 5) //Cadastrar Vendedor
+            {
 
-            
-            if(op == 13) return 1;
+            }
+
+
+            if(op == 13) 
+            {
+                int quak = menuVendedor(true);
+            }
+
+            if(op == 14) return 1;
 
             if(op == 0) return 0;
         }
         return 0;
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    public static int menuVendedor(boolean g)
+    {
+        Scanner input = new Scanner(System.in);
+        int op;
+        boolean on = true;
+        while(on)
+        {
+            if(!g)
+                System.out.println("----------Menu do Vendedor---------");
+            else
+                System.out.println("------------Mais Opcoes------------");
+            System.out.println("1- Mostrar Todos os Veiculos");
+            System.out.println("2- Mostrar Carros");
+            System.out.println("3- Mostrar Motocicletas");
+            System.out.println("4- Mostrar Veiculos Disponiveis");
+            System.out.println("5- Mostrar Veiculos Vendidos");
+            if(!g)
+                System.out.println("6- Trocar Login");
+            System.out.println("0- Sair");
+            System.out.println("-----------------------------------");
+            do
+            {
+                System.out.println("Selecione uma opcao!");
+                op = input.nextInt();
+            }while(op<0 || op>13);
+
+
+            if(op == 6 && !g) return 1;
+
+            if(op == 0) return 0;
+        }
+        return 0;
+    }
+
+    //Cliente
 
     public static void alterarCli()
     {
@@ -297,6 +352,8 @@ public class Main
         cli.set(ind, temp);
     }
 
+    /////////////////////////////////////////////
+
     public static void printCliArq()
     {
         int i=0;
@@ -311,6 +368,8 @@ public class Main
         }
     }
 
+    /////////////////////////////////////////////
+
     public static void printCli()
     {
         int i=0;
@@ -322,6 +381,8 @@ public class Main
             i++;
         }
     }
+
+    //Backup
 
     public static void backupCli()
     {
@@ -365,6 +426,13 @@ public class Main
         {
             System.out.println("ERRO!\n"+e);
         }
+    }
+
+    //Criacao de Objetos
+
+    private static Vendedor novoVend()
+    {
+        
     }
 
     private static Cliente novoCli()
@@ -416,48 +484,9 @@ public class Main
         return temp;
     }
 
-    private static int fazerLogin()
-    {
-        Scanner input = new Scanner(System.in);
-        String user, password;
-        int tentativas = 0;
-        boolean flag = false;
+    ////////////////////////////////////////////////////////////
 
-        System.out.println("User: ");
-        user = input.nextLine();
-        while(!users.contains(user))
-        {
-            System.out.println("Usuario invalido!\nUser: ");
-            user = input.nextLine();
-        }
-        
-        int i = users.indexOf(user);
-        
-        Login temp = cadastros.get(i);
-        
-        System.out.println("Senha: ");
-        password = input.nextLine();
-        
-        while(tentativas<3)
-        {
-            if(temp.getPassword().equals(password))
-            {
-                flag = true;
-                break;
-            }
-            tentativas++;
-            System.out.println("Senha: ");
-            password = input.nextLine();
-
-        }
-
-        if(flag)
-            return temp.getAcesso();
-
-        System.out.println("Suas tentativas acabaram!");
-        return 0;
-    }
-
+    
     private static Login novoLogin()
     {
         Scanner input = new Scanner(System.in);
@@ -476,6 +505,8 @@ public class Main
 
         return temp;
     }
+
+    /////////////////////////////////////////////////////////////////////
 
     private static Gerente novoGerente()
     {
@@ -548,7 +579,50 @@ public class Main
         return temp;
     }
 
-    
+    //Login
+
+    private static int fazerLogin()
+    {
+        Scanner input = new Scanner(System.in);
+        String user, password;
+        int tentativas = 0;
+        boolean flag = false;
+
+        System.out.println("User: ");
+        user = input.nextLine();
+        while(!users.contains(user))
+        {
+            System.out.println("Usuario invalido!\nUser: ");
+            user = input.nextLine();
+        }
+        
+        int i = users.indexOf(user);
+        
+        Login temp = cadastros.get(i);
+        
+        System.out.println("Senha: ");
+        password = input.nextLine();
+        
+        while(tentativas<3)
+        {
+            if(temp.getPassword().equals(password))
+            {
+                flag = true;
+                break;
+            }
+            tentativas++;
+            System.out.println("Senha: ");
+            password = input.nextLine();
+
+        }
+
+        if(flag)
+            return temp.getAcesso();
+
+        System.out.println("Suas tentativas acabaram!");
+        return 0;
+    }
+
 
 }
 
