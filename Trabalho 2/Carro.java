@@ -1,3 +1,4 @@
+import java.io.*;
 public class Carro extends Veiculo{
     private double potencia;   
     private int numCilindros;

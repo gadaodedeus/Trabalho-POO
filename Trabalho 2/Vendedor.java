@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class Vendedor extends Funcionario
 {
     private int t_treinamento;
@@ -96,5 +98,52 @@ public class Vendedor extends Funcionario
     public int getAcesso()
     {
         return this.acesso;
+    }
+
+    public void printInfo()
+    {
+        System.out.println("------------------------------\n");
+        System.out.println("CPF: "+getRg());
+        System.out.println("Nome: "+getNome());
+        System.out.println("Salario: R$ "+getSalario());
+        System.out.println("Data Nascimento: "+getDataNascimento().getDia()+"/"+getDataNascimento().getMes()+"/"+getDataNascimento().getAno());
+        System.out.println("Data Admissao: "+getDataAdmi().getDia()+"/"+getDataAdmi().getMes()+"/"+getDataAdmi().getAno());
+        System.out.println("Tempo de treinamento: "+getTempoTreino());
+        System.out.println("Gerente: "+getGerente().getNome());
+        System.out.println("------------------------------\n");
+    }
+
+    public void printArq(boolean x)
+    {
+        String arq = "Vendedores.txt";
+        try
+        {
+            Date datanasc = new Date();
+            Date dataad = new Date();
+            Gerente ger = new Gerente();
+            File arquivo = new File(arq);
+            FileWriter escritor = new FileWriter(arquivo, x); 
+            
+            escritor.write("1\n");
+            escritor.write(this.getRg()+"\n");
+            escritor.write(this.getNome()+"\n");
+            escritor.write(this.getSalario()+"\n");
+            datanasc = getDataNascimento();
+            escritor.write(datanasc.getDia()+"\n");
+            escritor.write(datanasc.getMes()+"\n");
+            escritor.write(datanasc.getAno()+"\n");
+            dataad = getDataAdmi();
+            escritor.write(dataad.getDia()+"\n");
+            escritor.write(dataad.getMes()+"\n");
+            escritor.write(dataad.getAno()+"\n");
+            escritor.write(this.getTempoTreino()+"\n");
+            ger = getGerente();
+            escritor.write(getGerente().getIndice()+"\n");
+            escritor.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro!\n"+e);
+        }
     }
 }

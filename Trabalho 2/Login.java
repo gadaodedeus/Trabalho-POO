@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class Login
 {
     private String user;
@@ -34,5 +36,27 @@ public class Login
     public String getPassword()
     {
         return this.password;
+    }
+
+    public void printArq(boolean x)
+    {
+        String arq = "boot.txt";
+        try
+        {
+            
+            File arquivo = new File(arq);
+            FileWriter escritor = new FileWriter(arquivo, x); 
+            
+            escritor.write("1\n");
+            escritor.write(this.getUser()+"\n");
+            escritor.write(this.getPassword()+"\n");
+            escritor.write(this.getAcesso()+"\n");
+            escritor.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erro!\n"+e);
+        }
+        
     }
 }

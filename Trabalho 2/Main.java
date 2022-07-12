@@ -6,79 +6,62 @@ public class Main
 {
     public static ArrayList<Login> cadastros = new ArrayList<>();
     public static ArrayList<String> users = new ArrayList<>();
+
     public static ArrayList<Cliente> cli = new ArrayList<>();
     public static ArrayList<Vendedor> vend = new ArrayList<>();
+    public static ArrayList<Gerente> gerentes = new ArrayList<>();
+
     public static ArrayList<Carro> carros = new ArrayList<>();
     public static ArrayList<Motocicleta> motos = new ArrayList<>();
+    
 
     
 
     public static void main(String[] args)
     {
         Scanner input = new Scanner(System.in);
-        String arqBoot = "boot.txt";
-        String arqCli = "Clientes.txt";
-
         int dados_arq;
-        try
-        {
-            FileReader arqLeitura = new FileReader(arqBoot);
-            BufferedReader leitor = new BufferedReader(arqLeitura);
-            dados_arq = Integer.parseInt(leitor.readLine());
-            
-            if(dados_arq != 0)
-            {
-                String user = leitor.readLine();
-                String pass = leitor.readLine();
-                int acss= Integer.parseInt(leitor.readLine());
-                
-                Login admin = new Login(user, pass, acss);
-                cadastros.add(admin);
-                users.add(admin.getUser());
 
-                backupCli();
-            }
-        }
-        catch(IOException e)
+        dados_arq = backupLogin();
+        if(dados_arq == 1)
         {
-            dados_arq=0;
+            backupCli();
+            backupGerente();
+            backupVend();
         }
+        
             
         if(dados_arq == 0)
         {
             try
             {
                 System.out.println("\n\n\n\tBem vindo ao sistema de vendas!\n\nPara continuar faca o cadastro do gerente local");
-
+                String arqBoot = "boot.txt";
                 File arq = new File(arqBoot);
+
                 FileWriter escritor = new FileWriter(arq, true);   
                 escritor.write("1\n");
 
                 Gerente gerente_local = new Gerente();
                 gerente_local = novoGerente();
+                
                 Login admin = new Login("admin", "adminpass", 3);
                 cadastros.add(admin);
                 users.add(admin.getUser());
+                gerentes.add(gerente_local);
+                gerente_local.setIndice(gerentes.indexOf(gerente_local));
+
                 escritor.write("admin\nadminpass\n3");
                 escritor.close();
-
-                //File arquivoCli = new File(arqCli);
-                //FileWriter escritor = new FileWriter(arquivoCli, true);      
-                //escritor.write("1\n");
-                //escritor.close();
             }
+
             catch(IOException e)
             {
                 System.out.println("Erro!\n"+e);
             }
 
         }
-            
-        //else
-        //Recuperar dados nos arquivos e reconstruir os ArrayList
-        
-
-        
+       
         int flag = 1;
         int acesso = fazerLogin();
         int log = 0;
@@ -86,8 +69,6 @@ public class Main
         {
             if(log == 1)
                 acesso = fazerLogin();
-
-            System.out.println(acesso);
 
             if(acesso == 2)
                 flag = menuVendedor(false);
@@ -100,6 +81,9 @@ public class Main
         }while(acesso != 0 && flag == 1);
 
         printCliArq();        
+        printLoginArq();
+        printArqVend();
+        printGerArq();
     }
 
 
@@ -181,14 +165,57 @@ public class Main
                     System.out.println("Nao ha clientes cadastrados");
             } 
 
-            if(op == 5)
+            if(op == 5) //Cadastrar Vendedor
             {
-                //novoVend();
+                Vendedor temp = new Vendedor();
+                temp = novoVend();
+                vend.add(temp);
+
+                Login logTemp = new Login();
+                logTemp = novoLogin(2);
+                cadastros.add(logTemp);
+                users.add(logTemp.getUser());
+            }
+
+            if(op == 6) //Alterar Vendedor
+            {
+                if(cli.size() > 0)
+                    alterarVend();  
+                else
+                    System.out.println("Nao ha vendedores cadastrados");
+            }
+
+            if(op == 7) //Excluir Vendedor
+            {
+                if(vend.size() == 0)
+                    System.out.println("Nao ha clientes cadastrados");
+
+                else if(vend.size() == 1)
+                    vend.removeAll(vend);
+                
+                else
+                {
+                    int ind;
+                    printVend();
+                    System.out.println("Informe o indice do vendedor a ser removido: ");
+                    ind = input.nextInt();
+                    Vendedor temp = new Vendedor();
+                    temp = cli.remove(ind);
+                }
+                
+            }
+
+            if(op == 8) //Mostrar Vendedores
+            {
+                if(vend.size() > 0)
+                    printVend();
+                else
+                    System.out.println("Nao ha vendedores cadastrados!");
             }
 
             
 
-            if(op == 13) 
+            if(op == 13) //Outros (Menu do Vendedor)
             {
                 int quak = menuVendedor(true);
             }
@@ -236,8 +263,17 @@ public class Main
         return 0;
     }
 
-    //Vendedor
-    
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////
+    //Vendedor//////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+
     public static void alterarVend()
     {
         Scanner input = new Scanner(System.in);
@@ -259,10 +295,10 @@ public class Main
         do
         {
             System.out.println("Escolha a informacao que sera alterada: ");
-            opCli = input.nextInt();
-        }while(opCli<1 || opCli>7);
+            opVend = input.nextInt();
+        }while(opVend<1 || opVend>7);
 
-        if(opCli == 1)
+        if(opVend == 1)
         {
             int temprg;
             do
@@ -274,7 +310,7 @@ public class Main
             temp.setRg(temprg);
         }
 
-        if(op == 2)
+        if(opVend == 2)
         {
             String nome;
             System.out.println("Informe o novo nome: ");
@@ -282,18 +318,18 @@ public class Main
             temp.setNome(nome);
         }
 
-        if(op == 3)
+        if(opVend == 3)
         {
             double sal;
             do
             {
                 System.out.println("Informe o novo salario: ");
-                sal = input.nextDouble;    
+                sal = input.nextDouble();    
             }while(sal<0.0);
             temp.setSalario(sal);
         }
 
-        if(op == 4)
+        if(opVend == 4)
         {
             int tempdia, tempmes, tempano;
             System.out.println("Informe a nova data de nascimento");
@@ -314,11 +350,12 @@ public class Main
                 System.out.println("Ano:");
                 tempano = input.nextInt();
             }while(tempano<1900);
-                   
-            temp.setDataNascimento(tempdia, tempmes, tempano);
+
+            Date newDate = new Date(tempdia, tempmes, tempano);
+            temp.setDataNascimento(newDate);
         }
 
-        if(op == 5)
+        if(opVend == 5)
         {
             int tempdia, tempmes, tempano;
             System.out.println("Informe a nova data de Admicao");
@@ -340,10 +377,11 @@ public class Main
                 tempano = input.nextInt();
             }while(tempano<1900);
                    
-            temp.setDataAdmi(tempdia, tempmes, tempano);
+            Date newDate = new Date(tempdia, tempmes, tempano);
+            temp.setDataAdmi(newDate);
         }
 
-        if(op == 6)
+        if(opVend == 6)
         {
             int t;
             do
@@ -354,20 +392,103 @@ public class Main
             temp.setTempoTreino(t);
         }
 
-        if(op == 7)
+        if(opVend == 7)
         {
-            int opG
-            //printGerente();
+            int opG;
+            printGer();
             System.out.println("Informe o indice do do novo Gerente: ");
             opG = input.nextInt();
-            //Gerente tempg = new Gerente();
-            //tempg = ArrayGerentes.get(opG);
-            //temp.setGerente(tempg);
+            Gerente tempg = new Gerente();
+            tempg = gerentes.get(opG);
+            temp.setGerente(tempg);
         }
 
     }
 
-    //Cliente
+    public static void printVend()
+    {
+        int i=0;
+                
+        while(vend.size() > i)
+        {
+            System.out.println(i);
+            vend.get(i).printInfo();
+            i++;
+        }
+    }
+
+    public static void printArqVend()
+    {
+        int i=0;
+        if(vend.size() > 0)
+        {
+            vend.get(i).printArq(false);    
+            i++;
+
+            while(vend.size() > i)
+            {
+                vend.get(i).printArq(true);
+                i++;
+            }
+        }
+
+        else
+        {
+            try
+            {
+                File temp = new File("Vendedores.txt");
+                FileWriter writer = new FileWriter(temp, false);
+                writer.close();
+            }
+        }
+        
+    }
+
+
+
+
+
+    ////////////////////////////////////////////////////////////
+    //Gerente///////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+
+    public static void printGerArq()
+    {
+        int i=0;
+
+        if(gerentes.size() > 0)
+        {
+            gerentes.get(i).printArq(false);
+            i++;
+                
+            while(gerentes.size() > i)
+            {
+                gerentes.get(i).printArq(true);
+                i++;
+            }
+        }
+
+        
+    }
+
+    public static void printGer()
+    {
+        int i=0;
+                
+        while(gerentes.size() > i)
+        {
+            System.out.println(i);
+            gerentes.get(i).printInfo();
+            i++;
+        }
+    }
+
+
+
+
+    ////////////////////////////////////////////////////////////
+    //Cliente///////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
 
     public static void alterarCli()
     {
@@ -384,11 +505,12 @@ public class Main
         System.out.println("4- Endereco");
         System.out.println("5- Renda");
         System.out.println("6- Dependentes");
+        System.out.println("7- Gerente");
         do
         {
             System.out.println("Escolha a informacao que sera alterada: ");
             opCli = input.nextInt();
-        }while(opCli<1 || opCli>6);
+        }while(opCli<1 || opCli>7);
 
         if(opCli == 1)
         {
@@ -485,26 +607,44 @@ public class Main
             temp.setDependentes(tempdep);
         }
 
+        //Genrente
+
         cli.set(ind, temp);
     }
-
-    /////////////////////////////////////////////
 
     public static void printCliArq()
     {
         int i=0;
 
-        cli.get(i).printArq(false);
-        i++;
-                
-        while(cli.size() > i)
+        if(cli.size() > 0)
         {
-            cli.get(i).printArq(true);
+            cli.get(i).printArq(false);
             i++;
+                
+            while(cli.size() > i)
+            {
+                cli.get(i).printArq(true);
+                i++;
+            }
         }
-    }
 
-    /////////////////////////////////////////////
+        else
+        {
+            try
+            {
+                File temp = new File("Clientes.txt");
+                FileWriter writer = new FileWriter(temp, false);
+                writer.close();
+            }
+            catch(IOException e)
+            {
+                System.out.println(e);
+            }
+            
+        }
+
+        
+    }
 
     public static void printCli()
     {
@@ -517,22 +657,32 @@ public class Main
             i++;
         }
     }
-     ////////////////////////////////////////////
+
+
+
+
+    ////////////////////////////////////////////////////////////
+    //Carro/////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+
     public static void printCarroArq()
     {
         int i=0;
-
-        carros.get(i).printArq(false);
-        i++;
-                
-        while(carros.size() > i)
+        if(carros.size() > 0)
         {
-            carros.get(i).printArq(true);
+            carros.get(i).printArq(false);
             i++;
+                
+            while(carros.size() > i)
+            {
+                carros.get(i).printArq(true);
+                i++;
+            }
         }
+        
     }
 
-    ////////////////////////////////////////////
+    
     public static void printCarro()
     {
         int i=0;
@@ -544,21 +694,32 @@ public class Main
             i++;
         }
     }
-    ///////////////////////////////////////////
+
+
+
+
+    ////////////////////////////////////////////////////////////
+    //Moto//////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+
     public static void printMotoArq()
     {
         int i=0;
 
-        motos.get(i).printArq(false);
-        i++;
-                
-        while(motos.size() > i)
+        if(motos.size() > 0)
         {
-            motos.get(i).printArq(true);
+            motos.get(i).printArq(false);
             i++;
+                
+            while(motos.size() > i)
+            {
+                motos.get(i).printArq(true);
+                i++;
+            }
         }
-    }    
-    ///////////////////////////////////////////
+        
+    }   
+    
     public static void printMoto()
     {
         int i=0;
@@ -572,18 +733,137 @@ public class Main
     }
 
 
-    //Backup
+
+
+    ////////////////////////////////////////////////////////////
+    //Backup////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+
+    public static void backupVend()
+    {
+        String arq = "Vendedores.txt";
+
+        try
+        {
+            FileReader arqLeitura = new FileReader(arq);
+            BufferedReader leitor = new BufferedReader(arqLeitura);
+
+            while(leitor.readLine() != null)
+            {
+                int cpf;
+                String nome;
+                double salario;
+                int dian, mesn, anon, diaa, mesa, anoa, treinamento, i;
+
+                cpf = Integer.parseInt(leitor.readLine());
+                nome = leitor.readLine();
+                salario = Double.parseDouble(leitor.readLine());
+                dian = Integer.parseInt(leitor.readLine());
+                mesn = Integer.parseInt(leitor.readLine());
+                anon = Integer.parseInt(leitor.readLine());
+                diaa = Integer.parseInt(leitor.readLine());
+                mesa = Integer.parseInt(leitor.readLine());
+                anoa = Integer.parseInt(leitor.readLine());
+                treinamento = Integer.parseInt(leitor.readLine());
+                i = Integer.parseInt(leitor.readLine());
+
+                Vendedor temp = new Vendedor(cpf, nome, salario, dian, mesn, anon, diaa, mesa, anoa, treinamento, gerentes.get(i));
+                vend.add(temp);
+
+                
+            }
+            leitor.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("ERRO!\n"+e);
+        }
+    }
+
+    public static void backupGerente()
+    {
+        String arq = "Gerentes.txt";
+
+        try
+        {
+            FileReader arqLeitura = new FileReader(arq);
+            BufferedReader leitor = new BufferedReader(arqLeitura);
+
+            while(leitor.readLine() != null)
+            {
+                int cpf;
+                String nome;
+                double salario;
+                int dian, mesn, anon, diaa, mesa, anoa, num, ind;
+
+                cpf = Integer.parseInt(leitor.readLine());
+                nome = leitor.readLine();
+                salario = Double.parseDouble(leitor.readLine());
+                dian = Integer.parseInt(leitor.readLine());
+                mesn = Integer.parseInt(leitor.readLine());
+                anon = Integer.parseInt(leitor.readLine());
+                diaa = Integer.parseInt(leitor.readLine());
+                mesa = Integer.parseInt(leitor.readLine());
+                anoa = Integer.parseInt(leitor.readLine());
+                num = Integer.parseInt(leitor.readLine());
+                ind = Integer.parseInt(leitor.readLine());
+
+                Gerente temp = new Gerente(cpf, nome, salario, dian, mesn, anon, diaa, mesa, anoa, num, ind);
+                gerentes.add(temp);
+
+                
+            }
+            leitor.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println("ERRO!\n"+e);
+        }
+    }
+
+    public static int backupLogin()
+    {
+        String arqVend = "boot.txt";
+        
+        try
+        {
+            FileReader arqLeitura = new FileReader(arqVend);
+            BufferedReader leitor = new BufferedReader(arqLeitura);
+
+            while(leitor.readLine() != null)
+            {
+                String user, pass;
+                int acesso;
+                
+                user = leitor.readLine();
+                pass = leitor.readLine();
+                acesso = Integer.parseInt(leitor.readLine());
+
+                Login temp = new Login(user, pass, acesso);
+                cadastros.add(temp);
+                users.add(temp.getUser());
+            }
+            leitor.close();
+            return 1;
+        }
+        catch(IOException e)
+        {
+            System.out.println("ERRO!\n"+e);
+            return 0;
+        }
+
+
+    }
+
 
     public static void backupCli()
     {
-        int on;
         String arqCli = "Clientes.txt";
 
         try
         {
             FileReader arqLeitura = new FileReader(arqCli);
             BufferedReader leitor = new BufferedReader(arqLeitura);
-            String lin;
 
             while(leitor.readLine() != null)
             {
@@ -611,6 +891,7 @@ public class Main
 
                 
             }
+            leitor.close();
         }
         catch(IOException e)
         {
@@ -618,58 +899,23 @@ public class Main
         }
     }
 
-    //Criacao de Objetos
 
-     private static Veiculo novoVeiculo(){
-        Scanner input = new Scanner(System.in);
-        int num_chassi;
-        String marca;
-        String modelo;
-        int ano;
-        double km;
-        String tipo_comb;
-        double peso;
-        boolean status;
 
-        System.out.println("Numero do chassi: ");
-        num_chassi = input.nextInt();
+    ////////////////////////////////////////////////////////////
+    //Criacao de Objetos////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
 
-        System.out.println("Marca: ");
-        marca = input.nextLine();
-
-        System.out.println("Modelo: ");
-        modelo = input.nextLine();
-
-        System.out.println("Ano: ");
-        ano = input.nextInt();
-
-        System.out.println("Km: ");
-        km = input.nextDouble();
-
-        System.out.println("Tipo de combustivel: ");
-        tipo_comb = input.nextLine();
-
-        System.out.println("Peso: ");
-        peso = input.nextDouble();
-        
-        System.out.println("Status: ");
-        status = input.nextBoolean();
-
-        Veiculo temp = new Veiculo(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status);
-
-        return temp;
-    }
 
     private static Vendedor novoVend()
     {
-        scanner input = new Scanner(system.in);
+        Scanner input = new Scanner(System.in);
         int rg;
         String nome;
         double salario;
         int dia_nasc, mes_nasc, ano_nasc;
         int dia_admi, mes_admi, ano_admi;
         int t_treinamento;
-        Gerente temp;
+        Gerente tempG = new Gerente();
         int indice;
 
         do{
@@ -680,6 +926,11 @@ public class Main
         input.nextLine();
         System.out.println("Nome: ");
         nome = input.nextLine();
+
+        do{
+            System.out.println("Salario: ");
+            salario = input.nextDouble();
+        }while(salario<0.0);
 
         do{
         System.out.println("Dia do nascimento: ");
@@ -705,7 +956,7 @@ public class Main
         do{
         System.out.println("Ano da admissao: ");
         ano_admi = input.nextInt();
-        }while(ano_admi < ano<nasc || ano_admi < 1900);
+        }while(ano_admi < ano_nasc || ano_admi < 1900);
 
         do{
         System.out.println("Tempo de treinamento: ");
@@ -714,18 +965,13 @@ public class Main
 
         input.nextLine();
         System.out.println("Gerente responsavel: ");
-        //printGerente()
+        printGer();
         System.out.println("Informe o indice do gerente: ");
         indice = input.nextInt();
 
-        Gerente temp = new Gerente();
-        //temp = ArrayGerente.get(indice);
-
-        //menuzinho dos gerentes
+        tempG = gerentes.get(indice);
         
-        
-        
-        Vendedor temp = new Vendedor(rg, nome, salario, dia_nasc, mes_nasc, ano_nasc, dia_admi, mes_admi, ano_admi, t_treinamento, temp);
+        Vendedor temp = new Vendedor(rg, nome, salario, dia_nasc, mes_nasc, ano_nasc, dia_admi, mes_admi, ano_admi, t_treinamento, tempG);
 
         return temp;
     }
@@ -805,11 +1051,8 @@ public class Main
 
         return temp;
     }
-
-    ////////////////////////////////////////////////////////////
-
     
-    private static Login novoLogin()
+    private static Login novoLogin(int ac)
     {
         Scanner input = new Scanner(System.in);
         String user, password;
@@ -823,12 +1066,10 @@ public class Main
         System.out.println("Senha: ");
         password = input.nextLine();
 
-        Login temp = new Login(user, password);
+        Login temp = new Login(user, password, ac);
 
         return temp;
     }
-
-    /////////////////////////////////////////////////////////////////////
 
     private static Gerente novoGerente()
     {
@@ -901,7 +1142,12 @@ public class Main
         return temp;
     }
 
-    //Login
+
+
+
+    ////////////////////////////////////////////////////////////
+    //Login/////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
 
     private static int fazerLogin()
     {
@@ -945,6 +1191,20 @@ public class Main
         return 0;
     }
 
+    public static void printLoginArq()
+    {
+        int i=0;
 
+        cadastros.get(i).printArq(false);
+        i++;
+                
+        while(cadastros.size() > i)
+        {
+            cadastros.get(i).printArq(true);
+            i++;
+        }
+    }
 }
+
+
 

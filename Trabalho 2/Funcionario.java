@@ -7,13 +7,6 @@ public abstract class Funcionario{
   protected double salario;
   protected Date data_nasc;
   protected Date data_admi;
-  protected Login log;
-
-  //setters
-  public void setLogin(Login x)
-  {
-    this.log = x;
-  }
 
   public void setRg(int rg)
   {
@@ -72,6 +65,15 @@ public abstract class Funcionario{
    public int getAno_admi()
   {
     return this.data_admi.getAno();
+  }
+
+  public Date getDataNascimento()
+  {
+    return this.data_nasc;
+  }
+  public Date getDataAdmi()
+  {
+    return this.data_admi;
   }
   
 }
