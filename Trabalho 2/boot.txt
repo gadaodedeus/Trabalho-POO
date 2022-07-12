@@ -1,4 +1,0 @@
-1
-admin
-adminpass
-3
