@@ -6,8 +6,16 @@ public class Motocicleta extends Veiculo{
 
     //Constructors--------------------
     public Motocicleta(int num_chassi, String marca, String modelo, int ano, double km, String tipo_comb, double peso,
-            boolean status, int cilindradas, String tipo) {
-        super(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status);
+            boolean status, int cilindradas, String tipo) 
+    {
+        this.num_chassi = num_chassi;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.km = km; 
+        this.tipo_comb = tipo_comb;
+        this.peso = peso;
+        this.status = status;
         this.cilindradas = cilindradas;
         this.tipo = tipo;
     }
@@ -46,12 +54,19 @@ public class Motocicleta extends Veiculo{
         {
             File arquivoMotos = new File(arqMotos);
             FileWriter escritorMoto = new FileWriter(arquivoMotos, x); 
-            
-            //escritorCli.write("------------------------------\n");
+           
             escritorMoto.write("1\n");
+            escritorMoto.write(this.getChassi()+"\n");
+            escritorMoto.write(this.getMarca()+"\n");
+            escritorMoto.write(this.getModelo()+"\n");
+            escritorMoto.write(this.getAno()+"\n");
+            escritorMoto.write(this.getKm()+"\n");
+            escritorMoto.write(this.getComb()+"\n");
+            escritorMoto.write(this.getPeso()+"\n");
+            escritorMoto.write(this.getStatus()+"\n");
             escritorMoto.write(this.getCilindradas()+"\n");
             escritorMoto.write(this.getTipo()+"\n");
-            //escritorCli.write("------------------------------\n");
+
             escritorMoto.close();
         }
         catch(IOException e)
@@ -63,6 +78,18 @@ public class Motocicleta extends Veiculo{
     public void printInfo()
     {
         System.out.println("------------------------------\n");
+        System.out.println("Numero do chassi: "+getChassi()); 
+        System.out.println("Marca: "+getMarca());
+        System.out.println("Modelo: "+getModelo());
+        System.out.println("Ano: "+getAno());
+        System.out.println("Quilometragem: "+getKm());
+        System.out.println("Tipo de combustivel: "+getComb());
+        System.out.println("Peso: "+getPeso());
+        System.out.print("Status: ");
+        if(getStatus())
+            System.out.println("A venda");
+        else
+            System.out.println("Vendido");
         System.out.println("Cilindradas: "+ getCilindradas());
         System.out.println("Tipo: " + getTipo());
         System.out.println("------------------------------\n");

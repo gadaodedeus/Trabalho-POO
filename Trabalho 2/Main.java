@@ -28,6 +28,8 @@ public class Main
             backupCli();
             backupGerente();
             backupVend();
+            backupCarro();
+            backupMoto();
         }
         
             
@@ -84,6 +86,8 @@ public class Main
         printLoginArq();
         printArqVend();
         printGerArq();
+        printCarroArq();
+        printMotoArq();
     }
 
 
@@ -112,15 +116,20 @@ public class Main
             System.out.println("11- Excluir Veiculo");
             System.out.println("12- Mostrar Veiculos");
 
-            System.out.println("13- Mais opcoes");
-            System.out.println("14- Trocar Login");
+            System.out.println("13- Cadastrar Gerente");
+            System.out.println("14- Alterar Gerente");
+            System.out.println("15- Excluir Gerente");
+            System.out.println("16- Mostrar Gerentes");
+
+            System.out.println("17- Mais opcoes");
+            System.out.println("18- Trocar Login");
             System.out.println("0- Sair");
             System.out.println("-----------------------------------");
             do
             {
                 System.out.println("Selecione uma opcao!");
                 op = input.nextInt();
-            }while(op<0 || op>14);
+            }while(op<0 || op>18);
 
             if(op ==1)  //Cadastrar cliente
             {
@@ -179,7 +188,7 @@ public class Main
 
             if(op == 6) //Alterar Vendedor
             {
-                if(cli.size() > 0)
+                if(vend.size() > 0)
                     alterarVend();  
                 else
                     System.out.println("Nao ha vendedores cadastrados");
@@ -200,7 +209,7 @@ public class Main
                     System.out.println("Informe o indice do vendedor a ser removido: ");
                     ind = input.nextInt();
                     Vendedor temp = new Vendedor();
-                    temp = cli.remove(ind);
+                    temp = vend.remove(ind);
                 }
                 
             }
@@ -213,14 +222,118 @@ public class Main
                     System.out.println("Nao ha vendedores cadastrados!");
             }
 
-            
+            if(op == 9) //Cadastrar Veiculo
+            {
+                int veic;
+                do{
+                    System.out.println("Cadastrar carro(1) ou moto(2)?");
+                    veic = input.nextInt();
+                }while(veic != 1 && veic != 2);                
 
-            if(op == 13) //Outros (Menu do Vendedor)
+                if(veic == 1)   //Carro
+                {
+                    Carro temp = new Carro();
+                    temp = novoCarro();
+                    carros.add(temp);
+                }
+
+                else    //Moto
+                {
+                    Motocicleta temp = new Motocicleta();
+                    temp = novoMoto();
+                    motos.add(temp);
+                }
+
+            }
+
+            if(op == 10) //Alterar Veiculo
+            {
+                int veic;
+                do{
+                    System.out.println("Alterar carro(1) ou moto(2)?");
+                    veic = input.nextInt();
+                }while(veic != 1 && veic != 2);   
+                
+                if(veic == 1) alterarCarro();
+
+                else alterarMoto();
+            }
+
+            if(op == 11) //Excluir Veiculo
+            {
+                int veic;
+                do{
+                    System.out.println("Excluir carro(1) ou moto(2)?");
+                    veic = input.nextInt();
+                }while(veic != 1 && veic != 2);   
+
+                if(op == 1)
+                {
+                    if(carros.size() == 0) System.out.println("Nao ha carros para serem removidos");
+
+                    else if(carros.size() == 1)
+                        carros.removeAll(carros);
+                    
+                    else
+                    {
+                        int opCar;
+                        printCarro();
+                        System.out.println("Selecione um carro pelo indice");
+                        opCar = input.nextInt();
+                        Carro temp = new Carro();
+                        temp = carros.remove(opCar);
+                    }
+                    
+
+                }
+
+                else
+                {
+                    if(motos.size() == 0) System.out.println("Nao ha motos para serem removidas");
+
+                    else if(motos.size() == 1)
+                        motos.removeAll(motos);
+                    
+                    else
+                    {
+                        int opMoto;
+                        printMoto();
+                        System.out.println("Selecione uma moto pelo indice");
+                        opMoto = input.nextInt();
+                        Motocicleta temp = new Motocicleta();
+                        temp = motos.remove(opMoto);
+                    }
+                }
+            }
+
+            if(op == 12) //Mostrar Veiculos
+            {
+                int x;
+                do
+                {
+                    System.out.println("Mostrar apenas carros(1), apenas motos(2) ou ambos(0)?");
+                    x = input.nextInt();
+                }while(x < 0 || x > 2);
+                
+                if(op == 1) printCarro();
+
+                if(op == 2) printMoto();
+
+                else
+                {
+                    printCarro();
+                    printMoto();
+                }
+            }
+            
+            //Opcoes de gerente
+
+            if(op == 17) //Outros (Menu do Vendedor)
             {
                 int quak = menuVendedor(true);
             }
 
-            if(op == 14) return 1;
+            if(op == 18) return 1;
 
             if(op == 0) return 0;
         }
@@ -245,6 +358,8 @@ public class Main
             System.out.println("3- Mostrar Motocicletas");
             System.out.println("4- Mostrar Veiculos Disponiveis");
             System.out.println("5- Mostrar Veiculos Vendidos");
+
+
             if(!g)
                 System.out.println("6- Trocar Login");
             System.out.println("0- Sair");
@@ -254,6 +369,31 @@ public class Main
                 System.out.println("Selecione uma opcao!");
                 op = input.nextInt();
             }while(op<0 || op>13);
+
+            if(op == 1)
+            {
+                if(carros.size() > 0) printCarro();
+
+                else System.out.println("Nao ha carros cadastrados");
+
+                if(motos.size() > 0) printMoto();
+
+                else System.out.println("Nao ha motos cadastradas");
+            }
+
+            if(op == 2)
+            {
+                if(carros.size() > 0) printCarro();
+
+                else System.out.println("Nao ha carros cadastrados");
+            }
+
+            if(op == 3)
+            {
+                if(motos.size() > 0) printMoto();
+
+                else System.out.println("Nao ha motos cadastradas");
+            }
 
 
             if(op == 6 && !g) return 1;
@@ -278,7 +418,8 @@ public class Main
     {
         Scanner input = new Scanner(System.in);
         int ind, opVend;
-
+        if(vend.size() == 0)
+            return;
         printVend();
         System.out.println("Informe o indice do vendedor que deseja alterar as informacoes");
         ind = input.nextInt();
@@ -312,6 +453,7 @@ public class Main
 
         if(opVend == 2)
         {
+            input.nextLine();
             String nome;
             System.out.println("Informe o novo nome: ");
             nome = input.nextLine();
@@ -403,6 +545,7 @@ public class Main
             temp.setGerente(tempg);
         }
 
+        vend.set(ind, temp);
     }
 
     public static void printVend()
@@ -440,9 +583,18 @@ public class Main
                 FileWriter writer = new FileWriter(temp, false);
                 writer.close();
             }
+            catch(IOException e) 
+            {
+                System.out.println(e);
+            }
         }
         
     }
+
+
+
+
+
 
 
 
@@ -486,6 +638,14 @@ public class Main
 
 
 
+
+
+
+
+
+
+
+
     ////////////////////////////////////////////////////////////
     //Cliente///////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
@@ -494,6 +654,8 @@ public class Main
     {
         Scanner input = new Scanner(System.in);
         int ind, opCli;
+        if(cli.size() == 0)
+            return;
         printCli();
         System.out.println("Informe o indice do cliente que deseja alterar as informacoes");
         ind = input.nextInt();
@@ -505,7 +667,6 @@ public class Main
         System.out.println("4- Endereco");
         System.out.println("5- Renda");
         System.out.println("6- Dependentes");
-        System.out.println("7- Gerente");
         do
         {
             System.out.println("Escolha a informacao que sera alterada: ");
@@ -607,8 +768,6 @@ public class Main
             temp.setDependentes(tempdep);
         }
 
-        //Genrente
-
         cli.set(ind, temp);
     }
 
@@ -661,6 +820,10 @@ public class Main
 
 
 
+
+
+
+
     ////////////////////////////////////////////////////////////
     //Carro/////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
@@ -679,6 +842,19 @@ public class Main
                 i++;
             }
         }
+        else
+        {
+            try
+            {
+                File temp = new File("Carros.txt");
+                FileWriter writer = new FileWriter(temp, false);
+                writer.close();
+            }
+            catch(IOException e)
+            {
+                System.out.println(e);
+            }
+        }
         
     }
 
@@ -687,6 +863,7 @@ public class Main
     {
         int i=0;
                 
+        System.out.println("Carros: ");
         while(carros.size() > i)
         {
             System.out.println(i);
@@ -694,6 +871,193 @@ public class Main
             i++;
         }
     }
+
+    public static void alterarCarro()
+    {
+        Scanner input = new Scanner(System.in);
+        if(carros.size() == 0)
+            return;
+        printCarro();
+        System.out.println("Informe o indice do carro que deseja alterar as informacoes");
+        int ind = input.nextInt();
+        Carro temp = new Carro();
+        temp = carros.get(ind);
+         
+        int op;
+
+        System.out.println("1- Numero do chassi");
+        System.out.println("2- Marca");
+        System.out.println("3- Modelo");
+        System.out.println("4- Ano");
+        System.out.println("5- Quilometragem");
+        System.out.println("6- Tipo do combustivel");
+        System.out.println("7- Peso");
+        System.out.println("8- Status");
+        System.out.println("9- Potencia");
+        System.out.println("10- Numero de cilindros");
+        System.out.println("11- Numero de ocupantes");
+        System.out.println("12- Tipo");
+        System.out.println("13- Altura");
+        System.out.println("14- Largura");
+        System.out.println("15- Comprimento");
+        do{
+            System.out.println("Escolha a Informacao que deseja alterar: ");
+            op = input.nextInt();
+        }while(op<1 || op>15);
+
+        if(op == 1)
+        {
+            int num_chassi;
+            do{
+                System.out.println("Informe o novo numero do chassi");
+                num_chassi = input.nextInt();
+            }while(num_chassi < 0.0);
+           
+            temp.setChassi(num_chassi);
+        }
+
+        if(op == 2)
+        {
+            input.nextLine();
+            System.out.println("Informe a nova marca");
+            String marca = input.nextLine();
+            temp.setMarca(marca);
+        }
+
+        if(op == 3)
+        {
+            input.nextLine();
+            System.out.println("Informe o novo modelo");
+            String modelo = input.nextLine();
+            temp.setModelo(modelo);
+        }
+
+        if(op == 4)
+        {
+            int ano;
+            do{
+                System.out.println("Informe o novo ano");
+                ano = input.nextInt();
+            }while(ano < 1900);
+            
+            temp.setAno(ano);
+        }
+
+        if(op == 5)
+        {   
+            double km;
+            do{
+                System.out.println("Informe a nova quilometragem");
+                km = input.nextDouble();
+            }while(km < 0.0);
+            
+            temp.setKm(km);
+        }
+
+        if(op == 6)
+        {
+            input.nextLine();
+            System.out.println("Informe o novo tipo de combustivel");
+            String tipo_comb = input.nextLine();
+            temp.setComb(tipo_comb);
+        }
+
+        if(op == 7)
+        {
+            double peso;
+            do{
+                System.out.println("Informe o novo peso");
+                peso = input.nextDouble();
+            }while(peso < 0.0);
+            temp.setPeso(peso);
+        }
+
+        if(op == 8)
+        {
+            if(temp.getStatus())
+                temp.setStatus(false);
+            else   
+                temp.setStatus(true);
+        }
+
+        if(op == 9)
+        {
+            double potencia;
+            do{
+                System.out.println("Informe a nova potencia");
+                potencia = input.nextDouble();
+            }while(potencia < 0.0);
+            temp.setPotencia(potencia);
+        }
+        
+        if(op == 10)
+        {
+            int numCilindros;
+            do{
+                System.out.println("Informe o novo numero de cilindros");
+                numCilindros = input.nextInt();
+            }while(numCilindros < 1);
+            temp.setNumCilindros(numCilindros);
+        }
+        
+        if(op == 11)
+        {
+            int numOcupantes;
+            do{
+                System.out.println("Informe o novo numero de ocupantes");
+                numOcupantes = input.nextInt();
+            }while(numOcupantes < 3);
+            temp.setNumOcupantes(numOcupantes);
+        }
+
+        if(op == 12)
+        {
+            input.nextLine();
+            System.out.println("Informe o novo tipo do carro");
+            String tipo = input.nextLine();
+            temp.setTipo(tipo);
+        }
+
+        if(op == 13)
+        {
+            double altura;
+            do{
+                System.out.println("Informe a nova altura");
+                altura = input.nextDouble();
+            }while(altura < 0.0);
+            temp.setAltura(altura);
+        }
+
+        if(op == 14)
+        {
+            double largura;
+            do{
+                System.out.println("Informe a nova largura");
+                largura = input.nextDouble();
+            }while(largura < 0.0);
+            temp.setLargura(largura);
+        }
+
+        if(op == 15)
+        {
+            double comprimento;
+            do{
+                System.out.println("Informe o novo comprimento");
+                comprimento = input.nextDouble();
+            }while(comprimento < 0.0);
+            temp.setComprimento(comprimento);
+        }
+
+        carros.set(ind, temp);
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -717,6 +1081,19 @@ public class Main
                 i++;
             }
         }
+        else
+        {
+            try
+            {
+                File temp = new File("Motos.txt");
+                FileWriter writer = new FileWriter(temp, false);
+                writer.close();
+            }
+            catch(IOException e)
+            {
+                System.out.println(e);
+            }
+        }
         
     }   
     
@@ -724,6 +1101,7 @@ public class Main
     {
         int i=0;
                 
+        System.out.println("Motos: ");
         while(motos.size() > i)
         {
             System.out.println(i);
@@ -732,12 +1110,211 @@ public class Main
         }
     }
 
+    public static void alterarMoto()
+    {
+        Scanner input = new Scanner(System.in);
+        if(motos.size() == 0)
+            return;
+        printMoto();
+        System.out.println("Informe o indice da moto que deseja alterar as informacoes");
+        int ind = input.nextInt();
+        Motocicleta temp = new Motocicleta();
+        temp = motos.get(ind);
+         
+        int op;
+
+        System.out.println("1- Numero do chassi");
+        System.out.println("2- Marca");
+        System.out.println("3- Modelo");
+        System.out.println("4- Ano");
+        System.out.println("5- Quilometragem");
+        System.out.println("6- Tipo do combustivel");
+        System.out.println("7- Peso");
+        System.out.println("8- Status");
+        System.out.println("9- Cilindradas");
+        System.out.println("10- Tipo");
+        do{
+            System.out.println("Escolha a Informacao que deseja alterar: ");
+            op = input.nextInt();
+        }while(op<1 || op>10);
+
+        if(op == 1)
+        {
+            int num_chassi;
+            do{
+                System.out.println("Informe o novo numero do chassi");
+                num_chassi = input.nextInt();
+            }while(num_chassi < 0.0);
+           
+            temp.setChassi(num_chassi);
+        }
+
+        if(op == 2)
+        {
+            input.nextLine();
+            System.out.println("Informe a nova marca");
+            String marca = input.nextLine();
+            temp.setMarca(marca);
+        }
+
+        if(op == 3)
+        {
+            System.out.println("Informe o novo modelo");
+            String modelo = input.nextLine();
+            temp.setModelo(modelo);
+        }
+
+        if(op == 4)
+        {
+            int ano;
+            do{
+                System.out.println("Informe o novo ano");
+                ano = input.nextInt();
+            }while(ano < 1900);
+            
+            temp.setAno(ano);
+        }
+
+        if(op == 5)
+        {   
+            double km;
+            do{
+                System.out.println("Informe a nova quilometragem");
+                km = input.nextDouble();
+            }while(km < 0.0);
+            
+            temp.setKm(km);
+        }
+
+        if(op == 6)
+        {
+            input.nextLine();
+            System.out.println("Informe o novo tipo de combustivel");
+            String tipo_comb = input.nextLine();
+            temp.setComb(tipo_comb);
+        }
+
+        if(op == 7)
+        {
+            double peso;
+            do{
+                System.out.println("Informe o novo peso");
+                peso = input.nextDouble();
+            }while(peso < 0.0);
+            temp.setPeso(peso);
+        }
+
+        if(op == 8)
+        {
+            if(temp.getStatus())
+                temp.setStatus(false);
+            else   
+                temp.setStatus(true);
+        }
+
+        if(op == 9)
+        {
+            int cilindradas;
+            do{
+                System.out.println("Informe a nova cilindrada");
+                cilindradas = input.nextInt();
+            }while(cilindradas < 1);
+            temp.setCilindradas(cilindradas);
+        }
+        
+        if(op == 10)
+        {
+            input.nextLine();
+            System.out.println("Informe o novo tipo");
+            String tipo = input.nextLine();
+            temp.setTipo(tipo);
+        }
+
+        motos.set(ind, temp);
+    }
+
+
+
+
+
+
 
 
 
     ////////////////////////////////////////////////////////////
     //Backup////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
+
+    public static void backupCarro()
+    {
+        String arq = "Carros.txt";
+
+        try
+        {
+            FileReader arqLeitura = new FileReader(arq);
+            BufferedReader leitor = new BufferedReader(arqLeitura);
+
+            while(leitor.readLine() != null)
+            {
+                int num_chassi = Integer.parseInt(leitor.readLine());
+                String marca = leitor.readLine();
+                String modelo = leitor.readLine();
+                int ano = Integer.parseInt(leitor.readLine());
+                double km = Double.parseDouble(leitor.readLine());
+                String tipo_comb = leitor.readLine();
+                double peso = Double.parseDouble(leitor.readLine());
+                boolean status = Boolean.getBoolean(leitor.readLine());
+                double potencia = Double.parseDouble(leitor.readLine());
+                int numCilindros = Integer.parseInt(leitor.readLine());
+                int numOcupantes = Integer.parseInt(leitor.readLine());
+                String tipo = leitor.readLine();
+                double altura = Double.parseDouble(leitor.readLine());
+                double largura = Double.parseDouble(leitor.readLine());
+                double comprimento = Double.parseDouble(leitor.readLine());
+
+                Carro temp = new Carro(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status, potencia, numCilindros, numOcupantes, tipo, altura, largura, comprimento);
+                carros.add(temp);
+            }
+            leitor.close();
+        }
+        catch(IOException e)
+        {
+          System.out.println(e);
+        }
+    }
+
+    public static void backupMoto()
+    {
+        String arq = "Motos.txt";
+
+        try
+        {
+            FileReader arqLeitura = new FileReader(arq);
+            BufferedReader leitor = new BufferedReader(arqLeitura);
+
+            while(leitor.readLine() != null)
+            {
+                int num_chassi = Integer.parseInt(leitor.readLine());
+                String marca = leitor.readLine();
+                String modelo = leitor.readLine();
+                int ano = Integer.parseInt(leitor.readLine());
+                double km = Double.parseDouble(leitor.readLine());
+                String tipo_comb = leitor.readLine();
+                double peso = Double.parseDouble(leitor.readLine());
+                boolean status = Boolean.getBoolean(leitor.readLine());
+                int cilindradas = Integer.parseInt(leitor.readLine());
+                String tipo = leitor.readLine();
+                
+                Motocicleta temp = new Motocicleta(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status, cilindradas, tipo);
+                motos.add(temp);
+            }
+            leitor.close();
+        }
+        catch(IOException e)
+        {
+          System.out.println(e);
+        }
+    }
 
     public static void backupVend()
     {
@@ -769,8 +1346,6 @@ public class Main
 
                 Vendedor temp = new Vendedor(cpf, nome, salario, dian, mesn, anon, diaa, mesa, anoa, treinamento, gerentes.get(i));
                 vend.add(temp);
-
-                
             }
             leitor.close();
         }
@@ -901,10 +1476,166 @@ public class Main
 
 
 
+
+
+
+
+
     ////////////////////////////////////////////////////////////
     //Criacao de Objetos////////////////////////////////////////
     ////////////////////////////////////////////////////////////
 
+    public static Carro novoCarro()
+    {
+        Scanner input = new Scanner(System.in);
+
+        int num_chassi;
+        String marca;
+        String modelo;
+        int ano;
+        double km;
+        String tipo_comb;
+        double peso;
+        boolean status;
+        double potencia;
+        int numCilindros;
+        int numOcupantes;
+        String tipo;
+        double altura;
+        double largura;
+        double comprimento;
+
+        do{
+            System.out.println("Numero do chassi: ");
+            num_chassi = input.nextInt();
+        }while(num_chassi < 0);
+
+        input.nextLine();
+        System.out.println("Marca: ");
+        marca = input.nextLine();
+
+        System.out.println("Modelo: ");
+        modelo = input.nextLine();
+
+        do{
+            System.out.println("Ano: ");
+            ano = input.nextInt();
+        }while(ano < 1900);
+
+        do{
+            System.out.println("Km: ");
+            km = input.nextDouble();
+        }while(km < 0.0);
+
+        input.nextLine();
+        System.out.println("Tipo de combustivel: ");
+        tipo_comb = input.nextLine();
+
+        do{
+            System.out.println("Peso: ");
+            peso = input.nextDouble();
+        }while(peso < 0.0);
+
+        status = true;
+
+        do{
+            System.out.println("Potencia: ");
+            potencia = input.nextDouble();
+        }while(potencia < 0.0);
+
+        do{
+            System.out.println("Numero de cilindradas: ");
+            numCilindros = input.nextInt();
+        }while(numCilindros < 0);
+
+        do{
+            System.out.println("Numero de ocupantes: ");
+            numOcupantes = input.nextInt();
+        }while(numOcupantes < 3);
+
+        input.nextLine();
+        System.out.println("Tipo: ");
+        tipo = input.nextLine();
+
+        do{
+            System.out.println("Altura: ");
+            altura = input.nextDouble();
+        }while(altura < 0.0);
+
+        do{
+            System.out.println("Largura: ");
+            largura = input.nextDouble();
+        }while(largura < 0.0);
+
+        do{
+            System.out.println("Comprimento: ");
+            comprimento = input.nextDouble();
+        }while(comprimento < 0.0);
+
+        Carro temp = new Carro(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status, potencia, numCilindros, numOcupantes, tipo, altura, largura, comprimento);
+        return temp;
+    }
+
+    public static Motocicleta novoMoto()
+    {
+        Scanner input = new Scanner(System.in);
+
+        int num_chassi;
+        String marca;
+        String modelo;
+        int ano;
+        double km;
+        String tipo_comb;
+        double peso;
+        boolean status;
+        int cilindradas;
+        String tipo;
+
+        do{
+            System.out.println("Numero do chassi: ");
+            num_chassi = input.nextInt();
+        }while(num_chassi < 0);
+
+        input.nextLine();
+        System.out.println("Marca: ");
+        marca = input.nextLine();
+
+        System.out.println("Modelo: ");
+        modelo = input.nextLine();
+
+        do{
+            System.out.println("Ano: ");
+            ano = input.nextInt();
+        }while(ano < 1900);
+
+        do{
+            System.out.println("Km: ");
+            km = input.nextDouble();
+        }while(km < 0.0);
+
+        input.nextLine();
+        System.out.println("Tipo de combustivel: ");
+        tipo_comb = input.nextLine();
+
+        do{
+            System.out.println("Peso: ");
+            peso = input.nextDouble();
+        }while(peso < 0.0);
+
+        status = true;
+
+        do{
+            System.out.println("Cilindradas: ");
+            cilindradas = input.nextInt();
+        }while(cilindradas < 0);
+
+        input.nextLine();
+        System.out.println("Tipo: ");
+        tipo = input.nextLine();
+
+        Motocicleta temp = new Motocicleta(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status, cilindradas, tipo);
+        return temp;
+    }
 
     private static Vendedor novoVend()
     {
@@ -1043,12 +1774,7 @@ public class Main
             dependentes = input.nextInt();
         }while(dependentes<0);
 
-
-
-
         Cliente temp = new Cliente(cpf, nome, dia, mes, ano, rua, num, bairro, cidade, renda, dependentes);
-
-
         return temp;
     }
     
@@ -1141,6 +1867,10 @@ public class Main
         
         return temp;
     }
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-public class Veiculo
+public abstract class Veiculo
 {
     protected int num_chassi;
     protected String marca;
@@ -8,24 +8,6 @@ public class Veiculo
     protected String tipo_comb;
     protected double peso;
     protected boolean status; //1: A venda, 0: Vendido
-
-    //Construtores
-    public Veiculo(int num_chassi, String marca, String modelo, int ano, double km, String tipo_comb, double peso, boolean status)
-    {
-        this.num_chassi = num_chassi;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.ano = ano;
-        this.km = km; 
-        this.tipo_comb = tipo_comb;
-        this.peso = peso;
-        this.status = status;
-    }
-
-    public Veiculo()
-    {
-        this(0, "", "", 0, 0.0, "", 0.0, false);
-    }
 
     //Setters
     public void setChassi(int n)

@@ -1,4 +1,5 @@
 import java.io.*;
+
 public class Carro extends Veiculo{
     private double potencia;   
     private int numCilindros;
@@ -11,8 +12,16 @@ public class Carro extends Veiculo{
     //Constructors---------------
     public Carro(int num_chassi, String marca, String modelo, int ano, double km, String tipo_comb, double peso,
             boolean status, double potencia, int numCilindros, int numOcupantes, String tipo, double altura,
-            double largura, double comprimento) {
-        super(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status);
+            double largura, double comprimento) 
+    {
+        this.num_chassi = num_chassi;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.km = km; 
+        this.tipo_comb = tipo_comb;
+        this.peso = peso;
+        this.status = status;
         this.potencia = potencia;
         this.numCilindros = numCilindros;
         this.numOcupantes = numOcupantes;
@@ -103,8 +112,16 @@ public class Carro extends Veiculo{
             File arquivoCarro = new File(arqCarros);
             FileWriter escritorCarro = new FileWriter(arquivoCarro, x); 
             
-            //escritorCli.write("------------------------------\n");
+            
             escritorCarro.write("1\n");
+            escritorCarro.write(this.getChassi()+"\n");
+            escritorCarro.write(this.getMarca()+"\n");
+            escritorCarro.write(this.getModelo()+"\n");
+            escritorCarro.write(this.getAno()+"\n");
+            escritorCarro.write(this.getKm()+"\n");
+            escritorCarro.write(this.getComb()+"\n");
+            escritorCarro.write(this.getPeso()+"\n");
+            escritorCarro.write(this.getStatus()+"\n");
             escritorCarro.write(this.getPotencia()+"\n");
             escritorCarro.write(this.getNumCilindros()+"\n");
             escritorCarro.write(this.getNumOcupantes()+"\n");
@@ -112,7 +129,7 @@ public class Carro extends Veiculo{
             escritorCarro.write(this.getAltura()+"\n");
             escritorCarro.write(this.getLargura()+"\n");
             escritorCarro.write(this.getComprimento()+"\n");
-            //escritorCli.write("------------------------------\n");
+
             escritorCarro.close();
         }
         catch(IOException e)
@@ -124,6 +141,18 @@ public class Carro extends Veiculo{
     public void printInfo()
     {
         System.out.println("------------------------------\n");
+        System.out.println("Numero do chassi: "+getChassi()); 
+        System.out.println("Marca: "+getMarca());
+        System.out.println("Modelo: "+getModelo());
+        System.out.println("Ano: "+getAno());
+        System.out.println("Quilometragem: "+getKm());
+        System.out.println("Tipo de combustivel: "+getComb());
+        System.out.println("Peso: "+getPeso());
+        System.out.print("Status: ");
+        if(getStatus())
+            System.out.println("A venda");
+        else
+            System.out.println("Vendido");
         System.out.println("Potencia: "+getPotencia());
         System.out.println("Numero de cilindros: "+ getNumCilindros());
         System.out.println("Numero de ocupantes: "+ getNumOcupantes());
