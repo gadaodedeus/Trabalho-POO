@@ -1,3 +1,4 @@
+import java.io.*;
 public class Venda
 {
     private int tipo_venda; //1- Carro //0- Moto
@@ -15,6 +16,7 @@ public class Venda
         this.tipo_venda = tipo;
         this.id = id;
         this.vend = vend;
+        this.cli = cli;
         if(tipo == 1)
         {
             this.carro = car;
@@ -60,9 +62,9 @@ public class Venda
         this.moto = moto;
     }
 
-    public void setPreco(double preco)
+    public void setValor(double preco)
     {
-        this.preco = preco;
+        this.valor = valor;
     }
 
     public void setData(Date d)

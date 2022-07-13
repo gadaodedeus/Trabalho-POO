@@ -25,7 +25,7 @@ public class Vendedor extends Funcionario
     }
 
     //Setters
-    public void setInd()
+    public void setInd(int i)
     {
         this.ind = i;
     }

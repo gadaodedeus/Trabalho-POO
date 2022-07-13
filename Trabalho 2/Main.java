@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.lang.model.util.ElementScanner14;
+
 import java.io.*;
 import java.time.Year;
 
@@ -90,6 +93,7 @@ public class Main
         printGerArq();
         printCarroArq();
         printMotoArq();
+        printVendaArq();
     }
 
 
@@ -336,7 +340,48 @@ public class Main
                 }
             }
             
-            //Opcoes de gerente
+           if(op == 13) //Novo gerente
+           {
+                Gerente temp = new Gerente();
+                temp = novoGerente();
+                gerentes.add(temp);
+                int i = gerentes.indexOf(temp);
+                temp.setIndice(i);
+
+                Login logTemp = new Login();
+                logTemp = novoLogin(3);
+                cadastros.add(logTemp);
+                users.add(logTemp.getUser());
+           }
+
+           if(op == 14) //Alterar Gerente
+           {
+                if(gerentes.size() == 0) System.out.println("Nao ha gerentes cadastrados");
+
+                else 
+                    alterarGerente();
+           }
+
+           if(op == 15) //Excluir Gerente
+           {
+                if(gerentes.size() == 0) System.out.println("Nao ha gerentes cadastrados");
+                
+                if(gerentes.size() == 1) gerentes.clear();
+
+                else
+                {
+                    int i;
+                    printGer();
+                    System.out.println("Informe o indice do gerente a ser removido");
+                    i = input.nextInt();
+                    gerentes.remove(i);
+                }
+           }
+
+           if(op == 16) //Mostrar Gerentes
+           {
+                printGer();
+           }
 
             if(op == 17) //Outros (Menu do Vendedor)
             {
@@ -368,19 +413,21 @@ public class Main
             System.out.println("3- Mostrar Motocicletas");
             System.out.println("4- Mostrar Veiculos Disponiveis");
             System.out.println("5- Mostrar Veiculos Vendidos");
+            System.out.println("6- Realizar Venda");
+            System.out.println("7- Mostrar Vendas");
 
 
             if(!g)
-                System.out.println("6- Trocar Login");
+                System.out.println("8- Trocar Login");
             System.out.println("0- Sair");
             System.out.println("-----------------------------------");
             do
             {
                 System.out.println("Selecione uma opcao!");
                 op = input.nextInt();
-            }while(op<0 || op>13);
+            }while(op<0 || op>8);
 
-            if(op == 1)
+            if(op == 1) //Mostrar todos os veiculos
             {
                 if(carros.size() > 0) printCarro();
 
@@ -391,34 +438,40 @@ public class Main
                 else System.out.println("Nao ha motos cadastradas");
             }
 
-            if(op == 2)
+            if(op == 2) //Mostrar todos os carros
             {
                 if(carros.size() > 0) printCarro();
 
                 else System.out.println("Nao ha carros cadastrados");
             }
 
-            if(op == 3)
+            if(op == 3) //Mostrar todas as motos
             {
                 if(motos.size() > 0) printMoto();
 
                 else System.out.println("Nao ha motos cadastradas");
             }
 
-            if(op == 4)
+            if(op == 4) //Mostrar veiculos disponiveis
             {
-                if(carros.size() > 0) printCarro();
+                if(carros.size() != 0) printCarroDisp();
 
                 else System.out.println("Nao ha carros cadastrados");
 
-                if(motos.size() > 0) printMoto();
+                if(motos.size() != 0) printMotoDisp();
 
-                else System.out.println("Nao ha motos cadastradas");
+                else System.out.println("Nao ha motos cadastrados");
             }
 
-            if(op == 5)
+            if(op == 5) //Vendidos
             {
-                
+                if(carros.size() != 0) printCarroIndisp();
+
+                else System.out.println("Nao ha carros cadastrados");
+
+                if(motos.size() != 0) printMotoIndisp();
+
+                else System.out.println("Nao ha motos cadastrados");
             }
 
             if(op == 6)
@@ -430,12 +483,12 @@ public class Main
 
             if(op == 7)
             {
-
+                printVenda();
             }
 
 
 
-            if(op == 6 && !g) return 1;
+            if(op == 8 && !g) return 1;
 
             if(op == 0) return 0;
         }
@@ -981,6 +1034,38 @@ public class Main
     //Carro/////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
 
+    public static void printCarroDisp()
+    {
+        int i=0;
+        System.out.println("Carros: ");
+        while(i < carros.size())
+        {
+            if(carros.get(i).getStatus() == true)
+            {
+                System.out.println(i);
+                carros.get(i).printInfo();
+            }
+                
+            i++;
+        }
+    }
+
+    public static void printCarroIndisp()
+    {
+        int i=0;
+        System.out.println("Carros: ");
+        while(i < carros.size())
+        {
+            if(carros.get(i).getStatus() == false)
+            {
+                System.out.println(i);
+                carros.get(i).printInfo();
+            }
+                
+            i++;
+        }
+    }
+
     public static void printCarroArq()
     {
         int i=0;
@@ -1219,6 +1304,38 @@ public class Main
     //Moto//////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
 
+    public static void printMotoDisp()
+    {
+        int i=0;
+        System.out.println("Motos: ");
+        while(i < motos.size())
+        {
+            if(motos.get(i).getStatus() == true)
+            {
+                System.out.println(i);
+                motos.get(i).printInfo();
+            }
+                
+            i++;
+        }
+    }
+
+    public static void printMotoIndisp()
+    {
+        int i=0;
+        System.out.println("Motos: ");
+        while(i < motos.size())
+        {
+            if(motos.get(i).getStatus() == false)
+            {
+                System.out.println(i);
+                motos.get(i).printInfo();
+            }
+                
+            i++;
+        }
+    }
+
     public static void printMotoArq()
     {
         int i=0;
@@ -1422,9 +1539,9 @@ public class Main
                 int min = Integer.parseInt(leitor.readLine());
                 Venda temp;
                 if(tipoV == 1)
-                    temp = Venda(tipoV, id, vend.get(iVend), cli.get(iCli), carros.get(iVeic), null, valor, dia, mes, ano, hora, min);
+                    temp = new Venda(tipoV, id, vend.get(iVend), cli.get(iCli), carros.get(iVeic), null, valor, dia, mes, ano, hora, min);
                 else
-                    temp = Venda(tipoV, id, vend.get(iVend), cli.get(iCli), null, motos.get(iVeic), valor, dia, mes, ano, hora, min);
+                    temp = new Venda(tipoV, id, vend.get(iVend), cli.get(iCli), null, motos.get(iVeic), valor, dia, mes, ano, hora, min);
                 venda.add(temp);
             }
             leitor.close();
@@ -1670,7 +1787,18 @@ public class Main
         }
     }
 
-    //Vendas
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////
+    //Vendas////////////////////////////////////////////
+    ////////////////////////////////////////////////////
 
     public static void printVenda()
     {
@@ -1735,25 +1863,65 @@ public class Main
 
         int tipo_venda;
         int id;
-        Vendedor tempvend = new Vendedor();
-        Cliente tempcli = new Cliente(); 
-        Carro tempcarro = new Carro() ;
-        Motocicleta tempmoto = new Motocicleta();
+        int iVend;
+        int iCli;
+        int iVeic;
         double valor;
         int dia, mes, ano, hora, min;  //Ja contem o horario
 
+        Venda temp;
+
         do
         {
-            System.out.println("Digite o tipo da venda: ");
+            System.out.println("Digite o tipo da venda (1-carro/0-moto): ");
             tipo_venda = input.nextInt();
-        }while(tipo_venda != 1 || tipo_venda != 0);
+        }while(tipo_venda != 1 && tipo_venda != 0);
 
         do
         {
             System.out.println("digite o id da venda: ");
             id = input.nextInt();
         }while(id < 0);
-    
+
+        printVend();
+        do
+        {
+            System.out.println("Selecione o vendedor que realizou a venda");
+            iVend = input.nextInt();
+        }while(iVend <  0 || iVend > (vend.size()-1));
+        
+
+        printCli();
+        do
+        {
+            System.out.println("Selecione o cliente que comprou o veiculo");
+            iCli = input.nextInt();
+        }while(iCli <  0 || iCli > (vend.size()-1));
+
+        if(tipo_venda == 1)
+        {
+            printCarroDisp();
+            do
+            {
+                System.out.println("Informe o indice do carro vendido");
+                iVeic = input.nextInt();
+            }while(iVeic < 0 || iVeic > (vend.size()-1));
+
+            carros.get(iVeic).setStatus(false);
+        }
+
+        else
+        {
+            printMotoDisp();
+            do
+            {
+                System.out.println("Informe o indice da moto vendida");
+                iVeic = input.nextInt();
+            }while(iVeic < 0 || iVeic > (vend.size()-1));
+
+            motos.get(iVeic).setStatus(false);
+        }
+
         do
         {
             System.out.println("Digite o valor da venda: ");
@@ -1790,7 +1958,10 @@ public class Main
             min = input.nextInt(); 
         }while(min < 0 || min > 59);
 
-        Venda temp = new Venda(tipo_venda, id, tempvend, tempcli, tempcarro, tempmoto, valor, dia, mes, ano, hora, min);
+        if(tipo_venda == 1)
+            temp = new Venda(tipo_venda, id, vend.get(iVend), cli.get(iCli), carros.get(iVeic), null, valor, dia, mes, ano, hora, min);
+        else
+            temp = new Venda(tipo_venda, id, vend.get(iVend), cli.get(iCli), null, motos.get(iVeic), valor, dia, mes, ano, hora, min);
         
         return temp;
     }

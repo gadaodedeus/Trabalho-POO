@@ -98,7 +98,7 @@ public class Motocicleta extends Veiculo{
         System.out.println("Tipo de combustivel: "+getComb());
         System.out.println("Peso: "+getPeso());
         System.out.print("Status: ");
-        if(getStatus())
+        if(getStatus() == true)
             System.out.println("A venda");
         else
             System.out.println("Vendido");
