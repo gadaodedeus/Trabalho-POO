@@ -8,6 +8,7 @@ public class Carro extends Veiculo{
     private double altura;
     private double largura;
     private double comprimento;
+    private int ind;
 
     //Constructors---------------
     public Carro(int num_chassi, String marca, String modelo, int ano, double km, String tipo_comb, double peso,
@@ -47,6 +48,11 @@ public class Carro extends Veiculo{
     }
 
     //Getters--------------------
+    public int getIndice()
+    {
+        return this.ind;
+    }
+
     public double getPotencia() {
         return potencia;
     }
@@ -76,6 +82,11 @@ public class Carro extends Veiculo{
     }
 
     //Setters--------------------
+    public void setInd(int i)
+    {
+        this.ind = i;
+    }
+
     public void setPotencia(double potencia) {
         this.potencia = potencia;
     }
@@ -129,6 +140,7 @@ public class Carro extends Veiculo{
             escritorCarro.write(this.getAltura()+"\n");
             escritorCarro.write(this.getLargura()+"\n");
             escritorCarro.write(this.getComprimento()+"\n");
+            escritorCarro.write(this.getIndice()+"\n");
 
             escritorCarro.close();
         }

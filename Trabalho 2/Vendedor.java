@@ -5,6 +5,7 @@ public class Vendedor extends Funcionario
     private int t_treinamento;
     private Gerente gerente_r;
     private static int acesso = 2;
+    private int ind;
 
     //Construtores
     public Vendedor(int rg, String nome, double salario, int dia_nasc, int mes_nasc, int ano_nasc, int dia_admi, int mes_admi, int ano_admi, int t_treinamento, Gerente gr)
@@ -24,6 +25,11 @@ public class Vendedor extends Funcionario
     }
 
     //Setters
+    public void setInd()
+    {
+        this.ind = i;
+    }
+
     public void setRg(int rg)
     {
         this.rg = rg;
@@ -60,6 +66,11 @@ public class Vendedor extends Funcionario
     }
 
     //Getters
+    public int getInd()
+    {
+        return this.ind;
+    }
+
     public int getRg()
     {
         return this.rg;
@@ -139,6 +150,7 @@ public class Vendedor extends Funcionario
             escritor.write(this.getTempoTreino()+"\n");
             ger = getGerente();
             escritor.write(getGerente().getIndice()+"\n");
+            escritor.write(getInd()+"\n");
             escritor.close();
         }
         catch(IOException e)

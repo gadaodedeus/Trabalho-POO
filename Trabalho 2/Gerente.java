@@ -101,7 +101,7 @@ public class Gerente extends Funcionario
             System.out.println("Erro!\n"+e);
         }
     }
-    
+
     public void setDataNascimento(Date nasc){
         this.data_nasc = nasc;
     }

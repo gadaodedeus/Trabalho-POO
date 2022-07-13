@@ -8,6 +8,7 @@ public class Cliente
     private Endereco endereco;
     private double renda;
     private int dependentes;
+    private int ind;
 
     //Construtores
     public Cliente(int cpf, String nome, int dia, int mes, int ano, String rua, int num, String bairro, String cidade, double renda, int dependentes)
@@ -33,6 +34,11 @@ public class Cliente
     }
 
     //Setters
+    public void setInd(int i)
+    {
+        this.ind = i;
+    }
+
     public void setCpf(int cpf)
     {
         this.cpf = cpf;
@@ -66,6 +72,11 @@ public class Cliente
     }
 
     //Getters
+    public int getInd()
+    {
+        return this.ind;
+    }
+
     public int getCpf()
     {
         return this.cpf;
@@ -106,7 +117,6 @@ public class Cliente
             File arquivoCli = new File(arqCli);
             FileWriter escritorCli = new FileWriter(arquivoCli, x); 
             
-            //escritorCli.write("------------------------------\n");
             escritorCli.write("1\n");
             escritorCli.write(this.getCpf()+"\n");
             escritorCli.write(this.getNome()+"\n");
@@ -121,7 +131,7 @@ public class Cliente
             escritorCli.write(endaux.getCidade()+"\n");
             escritorCli.write(this.getRenda()+"\n");
             escritorCli.write(this.getDependentes()+"\n");
-            //escritorCli.write("------------------------------\n");
+            escritorCli.write(this.getInd()+"\n");
             escritorCli.close();
         }
         catch(IOException e)

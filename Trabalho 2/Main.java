@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
+import java.time.Year;
 
 public class Main
 {
@@ -13,7 +14,7 @@ public class Main
 
     public static ArrayList<Carro> carros = new ArrayList<>();
     public static ArrayList<Motocicleta> motos = new ArrayList<>();
-    
+    public static ArrayList<Venda> venda = new ArrayList<>();
 
     
 
@@ -30,6 +31,7 @@ public class Main
             backupVend();
             backupCarro();
             backupMoto();
+            backupVenda();
         }
         
             
@@ -136,6 +138,8 @@ public class Main
                 Cliente temp = new Cliente();
                 temp = novoCli();
                 cli.add(temp);
+                int i = cli.indexOf(temp);
+                temp.setInd(i);
             }   
 
             if(op == 2) //Alterar cliente
@@ -179,6 +183,8 @@ public class Main
                 Vendedor temp = new Vendedor();
                 temp = novoVend();
                 vend.add(temp);
+                int i = vend.indexOf(temp);
+                temp.setInd(i);
 
                 Login logTemp = new Login();
                 logTemp = novoLogin(2);
@@ -235,6 +241,8 @@ public class Main
                     Carro temp = new Carro();
                     temp = novoCarro();
                     carros.add(temp);
+                    int i = carros.indexOf(temp);
+                    temp.setInd(i);
                 }
 
                 else    //Moto
@@ -242,6 +250,8 @@ public class Main
                     Motocicleta temp = new Motocicleta();
                     temp = novoMoto();
                     motos.add(temp);
+                    int i = motos.indexOf(temp);
+                    temp.setInd(i);
                 }
 
             }
@@ -394,6 +404,35 @@ public class Main
 
                 else System.out.println("Nao ha motos cadastradas");
             }
+
+            if(op == 4)
+            {
+                if(carros.size() > 0) printCarro();
+
+                else System.out.println("Nao ha carros cadastrados");
+
+                if(motos.size() > 0) printMoto();
+
+                else System.out.println("Nao ha motos cadastradas");
+            }
+
+            if(op == 5)
+            {
+                
+            }
+
+            if(op == 6)
+            {
+                Venda temp = new Venda();
+                temp = novaVenda();
+                venda.add(temp);
+            }
+
+            if(op == 7)
+            {
+
+            }
+
 
 
             if(op == 6 && !g) return 1;
@@ -603,6 +642,120 @@ public class Main
     ////////////////////////////////////////////////////////////
     //Gerente///////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
+
+    public static void alterarGerente(){
+        Scanner input = new Scanner(System.in);
+        int ind, opGerente;
+        if(gerentes.size() == 0)
+            return;
+        printGer();
+        System.out.println("informe o índice do vendedor que deseja alterar: ");
+        ind = input.nextInt();
+        Gerente temp = new Gerente();
+        temp = gerentes.get(ind);
+        
+        System.out.println("1 - RG");
+        System.out.println("2 - Nome");
+        System.out.println("3 - Salário");
+        System.out.println("3 - Data de Nascimento");
+        System.out.println("4 - Data de Admissão");
+        System.out.println("5 - Anos de experiência");
+
+        do{
+            System.out.println("Escolha a informacao que sera alterada: ");
+            opGerente = input.nextInt();
+        }while(opGerente < 1 || opGerente > 6);
+
+        if(opGerente == 1){
+            int temprg;
+            do
+            {
+                System.out.println("Informe o novo RG:");
+                temprg = input.nextInt();
+            }while(temprg < 0);
+                        
+            temp.setRg(temprg);
+        }
+
+        if(opGerente == 2){
+            input.nextLine();
+            String nome;
+            System.out.println("Informe o novo nome: ");
+            nome = input.nextLine();
+            temp.setNome(nome);
+        }
+
+        if(opGerente == 3){
+            double sal;
+            do
+            {
+                System.out.println("Informe o novo salario: ");
+                sal = input.nextDouble();    
+            }while(sal<0.0);
+            temp.setSalario(sal);
+        }
+
+        if(opGerente == 4){
+            int tempdia, tempmes, tempano;
+            System.out.println("Informe a nova data de nascimento");
+            do
+            {
+                System.out.println("Dia:");
+                tempdia = input.nextInt();
+            }while(tempdia<1 || tempdia>31);
+
+            do
+            {
+                System.out.println("Mes:");
+                tempmes = input.nextInt();
+            }while(tempmes<1 || tempmes>12);
+                    
+            do
+            {
+                System.out.println("Ano:");
+                tempano = input.nextInt();
+            }while(tempano<1900);
+
+            Date newDate = new Date(tempdia, tempmes, tempano);
+            temp.setDataNascimento(newDate);
+        }
+
+        if(opGerente == 5){
+            int tempdia, tempmes, tempano;
+            System.out.println("Informe a nova data de Admicao");
+            do
+            {
+                System.out.println("Dia:");
+                tempdia = input.nextInt();
+            }while(tempdia<1 || tempdia>31);
+
+            do
+            {
+                System.out.println("Mes:");
+                tempmes = input.nextInt();
+            }while(tempmes<1 || tempmes>12);
+                    
+            do
+            {
+                System.out.println("Ano:");
+                tempano = input.nextInt();
+            }while(tempano<1900);
+                   
+            Date newDate = new Date(tempdia, tempmes, tempano);
+            temp.setDataAdmi(newDate);
+        }
+
+        if(opGerente == 6){
+            int opExp;
+            do {
+                System.out.println("Digite a nova quantidade de anos de experiencia: ");
+                opExp = input.nextInt();
+            } while (opExp < 1 || opExp > 100);
+
+            temp.setAnos(opExp);
+        }
+
+    } //Fim - Alterar Gerente
 
     public static void printGerArq()
     {
@@ -1245,6 +1398,43 @@ public class Main
     //Backup////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
 
+    public static void backupVenda()
+    {
+        String arq = "Carros.txt";
+
+        try
+        {
+            FileReader arqLeitura = new FileReader(arq);
+            BufferedReader leitor = new BufferedReader(arqLeitura);
+
+            while(leitor.readLine() != null)
+            {
+                int tipoV = Integer.parseInt(leitor.readLine());
+                int id = Integer.parseInt(leitor.readLine());
+                int iVend = Integer.parseInt(leitor.readLine());
+                int iCli = Integer.parseInt(leitor.readLine());
+                int iVeic = Integer.parseInt(leitor.readLine());
+                double valor = Double.parseDouble(leitor.readLine());
+                int dia = Integer.parseInt(leitor.readLine());
+                int mes = Integer.parseInt(leitor.readLine());
+                int ano = Integer.parseInt(leitor.readLine());
+                int hora = Integer.parseInt(leitor.readLine());
+                int min = Integer.parseInt(leitor.readLine());
+                Venda temp;
+                if(tipoV == 1)
+                    temp = Venda(tipoV, id, vend.get(iVend), cli.get(iCli), carros.get(iVeic), null, valor, dia, mes, ano, hora, min);
+                else
+                    temp = Venda(tipoV, id, vend.get(iVend), cli.get(iCli), null, motos.get(iVeic), valor, dia, mes, ano, hora, min);
+                venda.add(temp);
+            }
+            leitor.close();
+        }
+        catch(IOException e)
+        {
+          System.out.println(e);
+        }
+    }
+
     public static void backupCarro()
     {
         String arq = "Carros.txt";
@@ -1271,8 +1461,10 @@ public class Main
                 double altura = Double.parseDouble(leitor.readLine());
                 double largura = Double.parseDouble(leitor.readLine());
                 double comprimento = Double.parseDouble(leitor.readLine());
+                int i = Integer.parseInt(leitor.readLine());
 
                 Carro temp = new Carro(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status, potencia, numCilindros, numOcupantes, tipo, altura, largura, comprimento);
+                temp.setInd(i);
                 carros.add(temp);
             }
             leitor.close();
@@ -1304,8 +1496,10 @@ public class Main
                 boolean status = Boolean.getBoolean(leitor.readLine());
                 int cilindradas = Integer.parseInt(leitor.readLine());
                 String tipo = leitor.readLine();
+                int i = Integer.parseInt(leitor.readLine());
                 
                 Motocicleta temp = new Motocicleta(num_chassi, marca, modelo, ano, km, tipo_comb, peso, status, cilindradas, tipo);
+                temp.setInd(i);
                 motos.add(temp);
             }
             leitor.close();
@@ -1342,9 +1536,11 @@ public class Main
                 mesa = Integer.parseInt(leitor.readLine());
                 anoa = Integer.parseInt(leitor.readLine());
                 treinamento = Integer.parseInt(leitor.readLine());
-                i = Integer.parseInt(leitor.readLine());
+                i = Integer.parseInt(leitor.readLine());        //Indice do gerente
+                int ind = Integer.parseInt(leitor.readLine());  //Indice do vendedor
 
                 Vendedor temp = new Vendedor(cpf, nome, salario, dian, mesn, anon, diaa, mesa, anoa, treinamento, gerentes.get(i));
+                temp.setInd(ind);
                 vend.add(temp);
             }
             leitor.close();
@@ -1460,11 +1656,11 @@ public class Main
                 cidade = leitor.readLine();
                 renda = Double.parseDouble(leitor.readLine());
                 dependentes = Integer.parseInt(leitor.readLine());
+                int i = Integer.parseInt(leitor.readLine());
 
                 Cliente temp = new Cliente(cpf, nome, dia, mes, ano, rua, num, bairro, cidade, renda, dependentes);
+                temp.setInd(i);
                 cli.add(temp);
-
-                
             }
             leitor.close();
         }
@@ -1473,6 +1669,53 @@ public class Main
             System.out.println("ERRO!\n"+e);
         }
     }
+
+    //Vendas
+
+    public static void printVenda()
+    {
+        int i=0;
+                
+        System.out.println("Vendas: ");
+        while(venda.size() > i)
+        {
+            System.out.println(i);
+            venda.get(i).printInfo();
+            i++;
+        }
+    }
+
+    public static void printVendaArq()
+    {
+        int i=0;
+
+        if(venda.size() > 0)
+        {
+            venda.get(i).printArq(false);
+            i++;
+                
+            while(venda.size() > i)
+            {
+                venda.get(i).printArq(true);
+                i++;
+            }
+        }
+        else
+        {
+            try
+            {
+                File temp = new File("Vendas.txt");
+                FileWriter writer = new FileWriter(temp, false);
+                writer.close();
+            }
+            catch(IOException e)
+            {
+                System.out.println(e);
+            }
+        }
+        
+    }   
+
 
 
 
@@ -1484,6 +1727,74 @@ public class Main
     ////////////////////////////////////////////////////////////
     //Criacao de Objetos////////////////////////////////////////
     ////////////////////////////////////////////////////////////
+
+    public static Venda novaVenda()
+    {
+        
+        Scanner input = new Scanner(System.in);
+
+        int tipo_venda;
+        int id;
+        Vendedor tempvend = new Vendedor();
+        Cliente tempcli = new Cliente(); 
+        Carro tempcarro = new Carro() ;
+        Motocicleta tempmoto = new Motocicleta();
+        double valor;
+        int dia, mes, ano, hora, min;  //Ja contem o horario
+
+        do
+        {
+            System.out.println("Digite o tipo da venda: ");
+            tipo_venda = input.nextInt();
+        }while(tipo_venda != 1 || tipo_venda != 0);
+
+        do
+        {
+            System.out.println("digite o id da venda: ");
+            id = input.nextInt();
+        }while(id < 0);
+    
+        do
+        {
+            System.out.println("Digite o valor da venda: ");
+            valor = input.nextDouble();
+        }while(valor < 0.0);
+
+        do
+        {
+            System.out.println("Digite o dia da venda: ");
+            dia = input.nextInt();
+        }while(dia<1 || dia>31);
+
+        do
+        {
+            System.out.println("Digite o mes da venda:");
+            mes = input.nextInt(); 
+        }while(mes < 1 || mes > 12);
+
+        do
+        {
+            System.out.println("Digite o ano da venda:");
+            ano = input.nextInt(); 
+        }while(ano > 2022);
+
+        do
+        {
+            System.out.println("Digite a hora da venda:");
+            hora = input.nextInt(); 
+        }while(hora < 0 || hora > 23);
+
+        do
+        {
+            System.out.println("Digite o minuto da venda:");
+            min = input.nextInt(); 
+        }while(min < 0 || min > 59);
+
+        Venda temp = new Venda(tipo_venda, id, tempvend, tempcli, tempcarro, tempmoto, valor, dia, mes, ano, hora, min);
+        
+        return temp;
+    }
+
 
     public static Carro novoCarro()
     {

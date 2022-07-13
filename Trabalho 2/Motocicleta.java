@@ -3,6 +3,7 @@ import java.io.*;
 public class Motocicleta extends Veiculo{
     private int cilindradas;
     private String tipo;
+    private int ind;
 
     //Constructors--------------------
     public Motocicleta(int num_chassi, String marca, String modelo, int ano, double km, String tipo_comb, double peso,
@@ -38,6 +39,11 @@ public class Motocicleta extends Veiculo{
         return tipo;
     }
 
+    public int getInd()
+    {
+        return ind;
+    }
+
     //Setters-------------------------
     public void setCilindradas(int cilindradas) {
         this.cilindradas = cilindradas;
@@ -45,6 +51,11 @@ public class Motocicleta extends Veiculo{
     
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public void setInd(int i)
+    {
+        this.ind = i;
     }
 
     public void printArq(boolean x)
@@ -66,6 +77,7 @@ public class Motocicleta extends Veiculo{
             escritorMoto.write(this.getStatus()+"\n");
             escritorMoto.write(this.getCilindradas()+"\n");
             escritorMoto.write(this.getTipo()+"\n");
+            escritorMoto.write(this.getInd()+"\n");
 
             escritorMoto.close();
         }
