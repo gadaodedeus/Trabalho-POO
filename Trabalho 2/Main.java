@@ -207,7 +207,7 @@ public class Main
             if(op == 7) //Excluir Vendedor
             {
                 if(vend.size() == 0)
-                    System.out.println("Nao ha clientes cadastrados");
+                    System.out.println("Nao ha vendedores cadastrados");
 
                 else if(vend.size() == 1)
                     vend.removeAll(vend);
@@ -263,14 +263,21 @@ public class Main
             if(op == 10) //Alterar Veiculo
             {
                 int veic;
-                do{
-                    System.out.println("Alterar carro(1) ou moto(2)?");
-                    veic = input.nextInt();
-                }while(veic != 1 && veic != 2);   
-                
-                if(veic == 1) alterarCarro();
+                if(carros.size() == 0 && motos.size() == 0){
+                    System.out.println("Nao ha veiculos cadastrados.");
+                    
+                }else{
+                    do{
+                        System.out.println("Alterar carro(1) ou moto(2)?");
+                        veic = input.nextInt();
+                    }while(veic != 1 && veic != 2);   
 
-                else alterarMoto();
+                    if(veic == 1) 
+                        alterarCarro();
+                    else 
+                        alterarMoto();
+                } 
+               
             }
 
             if(op == 11) //Excluir Veiculo
@@ -281,7 +288,7 @@ public class Main
                     veic = input.nextInt();
                 }while(veic != 1 && veic != 2);   
 
-                if(op == 1)
+                if(veic == 1)
                 {
                     if(carros.size() == 0) System.out.println("Nao ha carros para serem removidos");
 
@@ -329,12 +336,11 @@ public class Main
                     x = input.nextInt();
                 }while(x < 0 || x > 2);
                 
-                if(op == 1) printCarro();
-
-                if(op == 2) printMoto();
-
-                else
-                {
+                if(x == 1) 
+                    printCarro();
+                else if(x == 2) 
+                    printMoto();
+                else{
                     printCarro();
                     printMoto();
                 }
@@ -356,8 +362,8 @@ public class Main
 
            if(op == 14) //Alterar Gerente
            {
-                if(gerentes.size() == 0) System.out.println("Nao ha gerentes cadastrados");
-
+                if(gerentes.size() == 0) 
+                    System.out.println("Nao ha gerentes cadastrados");
                 else 
                     alterarGerente();
            }
@@ -702,112 +708,118 @@ public class Main
         if(gerentes.size() == 0)
             return;
         printGer();
+
         System.out.println("informe o índice do vendedor que deseja alterar: ");
         ind = input.nextInt();
-        Gerente temp = new Gerente();
-        temp = gerentes.get(ind);
-        
-        System.out.println("1 - RG");
-        System.out.println("2 - Nome");
-        System.out.println("3 - Salário");
-        System.out.println("3 - Data de Nascimento");
-        System.out.println("4 - Data de Admissão");
-        System.out.println("5 - Anos de experiência");
+        if(ind >= gerentes.size() + 1){
+            System.out.println("Nao ha gerente referente a esse indice");
+        }else{
+            Gerente temp = new Gerente();
+            temp = gerentes.get(ind);
+            
+            System.out.println("1 - RG");
+            System.out.println("2 - Nome");
+            System.out.println("3 - Salário");
+            System.out.println("3 - Data de Nascimento");
+            System.out.println("4 - Data de Admissão");
+            System.out.println("5 - Anos de experiência");
 
-        do{
-            System.out.println("Escolha a informacao que sera alterada: ");
-            opGerente = input.nextInt();
-        }while(opGerente < 1 || opGerente > 6);
+            do{
+                System.out.println("Escolha a informacao que sera alterada: ");
+                opGerente = input.nextInt();
+            }while(opGerente < 1 || opGerente > 6);
 
-        if(opGerente == 1){
-            int temprg;
-            do
-            {
-                System.out.println("Informe o novo RG:");
-                temprg = input.nextInt();
-            }while(temprg < 0);
+            if(opGerente == 1){
+                int temprg;
+                do
+                {
+                    System.out.println("Informe o novo RG:");
+                    temprg = input.nextInt();
+                }while(temprg < 0);
+                            
+                temp.setRg(temprg);
+            }
+
+            if(opGerente == 2){
+                input.nextLine();
+                String nome;
+                System.out.println("Informe o novo nome: ");
+                nome = input.nextLine();
+                temp.setNome(nome);
+            }
+
+            if(opGerente == 3){
+                double sal;
+                do
+                {
+                    System.out.println("Informe o novo salario: ");
+                    sal = input.nextDouble();    
+                }while(sal<0.0);
+                temp.setSalario(sal);
+            }
+
+            if(opGerente == 4){
+                int tempdia, tempmes, tempano;
+                System.out.println("Informe a nova data de nascimento");
+                do
+                {
+                    System.out.println("Dia:");
+                    tempdia = input.nextInt();
+                }while(tempdia<1 || tempdia>31);
+
+                do
+                {
+                    System.out.println("Mes:");
+                    tempmes = input.nextInt();
+                }while(tempmes<1 || tempmes>12);
                         
-            temp.setRg(temprg);
-        }
+                do
+                {
+                    System.out.println("Ano:");
+                    tempano = input.nextInt();
+                }while(tempano<1900);
 
-        if(opGerente == 2){
-            input.nextLine();
-            String nome;
-            System.out.println("Informe o novo nome: ");
-            nome = input.nextLine();
-            temp.setNome(nome);
-        }
+                Date newDate = new Date(tempdia, tempmes, tempano);
+                temp.setDataNascimento(newDate);
+            }
 
-        if(opGerente == 3){
-            double sal;
-            do
-            {
-                System.out.println("Informe o novo salario: ");
-                sal = input.nextDouble();    
-            }while(sal<0.0);
-            temp.setSalario(sal);
-        }
+            if(opGerente == 5){
+                int tempdia, tempmes, tempano;
+                System.out.println("Informe a nova data de Admicao");
+                do
+                {
+                    System.out.println("Dia:");
+                    tempdia = input.nextInt();
+                }while(tempdia<1 || tempdia>31);
 
-        if(opGerente == 4){
-            int tempdia, tempmes, tempano;
-            System.out.println("Informe a nova data de nascimento");
-            do
-            {
-                System.out.println("Dia:");
-                tempdia = input.nextInt();
-            }while(tempdia<1 || tempdia>31);
-
-            do
-            {
-                System.out.println("Mes:");
-                tempmes = input.nextInt();
-            }while(tempmes<1 || tempmes>12);
+                do
+                {
+                    System.out.println("Mes:");
+                    tempmes = input.nextInt();
+                }while(tempmes<1 || tempmes>12);
+                        
+                do
+                {
+                    System.out.println("Ano:");
+                    tempano = input.nextInt();
+                }while(tempano<1900);
                     
-            do
-            {
-                System.out.println("Ano:");
-                tempano = input.nextInt();
-            }while(tempano<1900);
+                Date newDate = new Date(tempdia, tempmes, tempano);
+                temp.setDataAdmi(newDate);
+            }
 
-            Date newDate = new Date(tempdia, tempmes, tempano);
-            temp.setDataNascimento(newDate);
+            if(opGerente == 6){
+                int opExp;
+                do {
+                    System.out.println("Digite a nova quantidade de anos de experiencia: ");
+                    opExp = input.nextInt();
+                } while (opExp < 1 || opExp > 100);
+
+                temp.setAnos(opExp);
+            }
+
         }
-
-        if(opGerente == 5){
-            int tempdia, tempmes, tempano;
-            System.out.println("Informe a nova data de Admicao");
-            do
-            {
-                System.out.println("Dia:");
-                tempdia = input.nextInt();
-            }while(tempdia<1 || tempdia>31);
-
-            do
-            {
-                System.out.println("Mes:");
-                tempmes = input.nextInt();
-            }while(tempmes<1 || tempmes>12);
-                    
-            do
-            {
-                System.out.println("Ano:");
-                tempano = input.nextInt();
-            }while(tempano<1900);
-                   
-            Date newDate = new Date(tempdia, tempmes, tempano);
-            temp.setDataAdmi(newDate);
-        }
-
-        if(opGerente == 6){
-            int opExp;
-            do {
-                System.out.println("Digite a nova quantidade de anos de experiencia: ");
-                opExp = input.nextInt();
-            } while (opExp < 1 || opExp > 100);
-
-            temp.setAnos(opExp);
-        }
-
+        
     } //Fim - Alterar Gerente
 
     public static void printGerArq()
@@ -1879,14 +1891,14 @@ public class Main
 
         do
         {
-            System.out.println("digite o id da venda: ");
+            System.out.println("Digite o id da venda: ");
             id = input.nextInt();
         }while(id < 0);
 
         printVend();
         do
         {
-            System.out.println("Selecione o vendedor que realizou a venda");
+            System.out.println("Selecione o indice do vendedor que realizou a venda");
             iVend = input.nextInt();
         }while(iVend <  0 || iVend > (vend.size()-1));
         
@@ -2417,6 +2429,4 @@ public class Main
         }
     }
 }
-
-
 
